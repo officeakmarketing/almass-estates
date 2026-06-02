@@ -1,114 +1,157 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const processSteps = [
   {
-    step: 1,
-    title: "We assess your property",
-    desc: "One call. We visit, assess and make you a guaranteed rent offer within 72 hours. No obligation.",
-    img: "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    id: "01",
+    tab: "STEP 1",
+    title: "Property Assessment",
+    description: "We conduct a thorough, no-obligation valuation of your property. We analyze the market and present you with a competitive, guaranteed rent offer within 24 hours.",
+    // Using high-end real estate placeholders - replace with your actual assets
+    image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&q=80&w=1200",
   },
   {
-    step: 2,
-    title: "We sign the agreement",
-    desc: "Once accepted, we handle all the paperwork and sign a commercial lease, giving you absolute financial security.",
-    img: "https://images.unsplash.com/photo-1556912173-3bb406ef7e77?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    id: "02",
+    tab: "STEP 2",
+    title: "Agreement & Setup",
+    description: "Once accepted, we handle all the paperwork. We sign a long-term agreement (typically 3-5 years) ensuring your income is locked in, regardless of market fluctuations.",
+    image: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&q=80&w=1200",
   },
   {
-    step: 3,
-    title: "You start getting paid",
-    desc: "Rent hits your bank account on the exact same day every month for the next 3 to 5 years, completely stress-free.",
-    img: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-  }
+    id: "03",
+    tab: "STEP 3",
+    title: "We take over completely",
+    description: "Keys handed. We manage everything from day one—tenant sourcing, maintenance, and compliance. Your only job is checking your bank account.",
+    image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW50ZXJpb3IlMjBkZXNpZ258ZW58MHx8MHx8fDA%3D",
+  },
 ];
 
-const Process = () => {
-  const [activeStep, setActiveStep] = useState(1);
+export default function Process() {
+  const [activeStep, setActiveStep] = useState(0);
+
+  // Auto-play logic: Changes every 5 seconds
+  // Adding `activeStep` to the dependency array means if the user clicks a tab, 
+  // the 5-second timer restarts, preventing sudden jumps right after a click!
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveStep((prev) => (prev + 1) % processSteps.length);
+    }, 5000);
+
+    return () => clearInterval(timer);
+  }, [activeStep]);
+
+  // Framer Motion variants for smooth crossfading without jumps
+  const contentVariants = {
+    hidden: { opacity: 0, y: 15 },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      transition: { duration: 0.5, ease: "easeOut" } 
+    },
+    exit: { 
+      opacity: 0, 
+      y: -15, 
+      transition: { duration: 0.3, ease: "easeIn" } 
+    },
+  };
 
   return (
-    <div className="w-full bg-[#0D0D0D] font-sans text-[#F0EDE8] selection:bg-[#C8A96E] selection:text-[#0D0D0D]" style={{ fontFamily: "'Jost', sans-serif" }}>
-      
-      {/* --- SECTION: PROCESS TABS --- */}
-      <section className="py-24 px-6 md:px-12 lg:px-24 max-w-[1400px] mx-auto border-t border-[#333333]">
+    <section className="bg-brand-black text-white py-24 px-6 relative overflow-hidden">
+      <div className="max-w-6xl mx-auto">
         
-        {/* Header */}
-        <div className="text-center mb-12">
-          <span className="bg-[#F0EDE8] text-[#0D0D0D] px-5 py-1.5 rounded-full text-sm font-semibold mb-6 inline-block">
+        {/* Header Section */}
+        <div className="flex flex-col items-center text-center mb-16">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="bg-white text-brand-black px-5 py-1.5 rounded-full text-sm font-medium tracking-wide mb-6"
+          >
             Process
-          </span>
-          <h2 className="text-3xl md:text-5xl font-bold text-[#F0EDE8] mb-4">
+          </motion.div>
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-4xl md:text-5xl font-sans font-medium mb-4"
+          >
             How guaranteed rent works
-          </h2>
-          <p className="text-[#C8C4BC] text-base md:text-lg">
+          </motion.h2>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="text-gray-400 text-lg"
+          >
             Three steps to guaranteed income and complete peace of mind.
-          </p>
+          </motion.p>
         </div>
 
-        {/* Outer Dark Container */}
-        <div className="bg-[#111111] border border-[#222222] rounded-[16px] p-4 md:p-8 lg:p-12 shadow-2xl">
+        {/* Main Card Container */}
+        <div className="bg-brand-card border border-brand-border rounded-2xl p-2 md:p-8 shadow-2xl">
           
-          {/* Tab Buttons */}
-          <div className="flex flex-col md:flex-row gap-3 md:gap-4 mb-10">
-            {[1, 2, 3].map((step) => (
-              <button
-                key={step}
-                onClick={() => setActiveStep(step)}
-                className={`flex-1 py-4 text-sm font-bold tracking-wide uppercase rounded-[8px] transition-all duration-300 border ${
-                  activeStep === step 
-                    ? 'bg-[#C8A96E] text-[#0D0D0D] border-[#C8A96E] shadow-lg' 
-                    : 'bg-[#1A1A1A] text-[#C8C4BC] border-[#333333] hover:bg-[#222222]'
-                }`}
-              >
-                Step {step}
-              </button>
-            ))}
+          {/* Tabs Navigation */}
+          <div className="flex flex-col md:flex-row gap-2 md:gap-4 mb-8">
+            {processSteps.map((step, index) => {
+              const isActive = activeStep === index;
+              return (
+                <button
+                  key={step.id}
+                  onClick={() => setActiveStep(index)}
+                  className={`flex-1 py-4 px-6 rounded-lg font-medium text-sm md:text-base tracking-widest transition-all duration-300 ${
+                    isActive 
+                      ? "bg-brand-gold text-brand-black shadow-[0_0_20px_rgba(196,164,124,0.3)]" 
+                      : "bg-[#2a241c] text-brand-gold/60 hover:bg-[#382f23] hover:text-brand-gold"
+                  }`}
+                >
+                  {step.tab}
+                </button>
+              );
+            })}
           </div>
 
-          {/* Tab Content */}
-          <div className="relative overflow-hidden min-h-[400px] md:min-h-[450px]">
+          {/* Content Area - mode="wait" ensures old content leaves before new enters (NO JUMPS) */}
+          <div className="relative min-h-[400px] md:min-h-[450px]">
             <AnimatePresence mode="wait">
-              {processSteps.map((item) => (
-                item.step === activeStep && (
-                  <motion.div
-                    key={item.step}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    transition={{ duration: 0.3 }}
-                    className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center absolute inset-0"
-                  >
-                    {/* Image */}
-                    <div className="w-full h-[300px] md:h-full rounded-[8px] overflow-hidden order-2 md:order-1">
-                      <img 
-                        src={item.img} 
-                        alt={item.title}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    
-                    {/* Text Details */}
-                    <div className="flex flex-col justify-center order-1 md:order-2 px-2 md:px-8">
-                      <span className="text-4xl md:text-5xl font-bold text-[#C8A96E] mb-4">
-                        0{item.step}
-                      </span>
-                      <h3 className="text-2xl md:text-3xl font-bold text-[#F0EDE8] mb-4">
-                        {item.title}
-                      </h3>
-                      <p className="text-[#C8C4BC] text-base md:text-lg leading-relaxed">
-                        {item.desc}
-                      </p>
-                    </div>
-                  </motion.div>
-                )
-              ))}
+              <motion.div
+                key={activeStep}
+                variants={contentVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center"
+              >
+                {/* Image Section */}
+                <div className="relative w-full aspect-[4/3] md:aspect-video lg:aspect-[4/3] rounded-xl overflow-hidden border border-brand-border/50">
+                  <img 
+                    src={processSteps[activeStep].image} 
+                    alt={processSteps[activeStep].title}
+                    className="w-full h-full object-cover"
+                  />
+                  {/* Subtle overlay to blend image with dark theme */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-brand-black/40 to-transparent pointer-events-none"></div>
+                </div>
+
+                {/* Text Section */}
+                <div className="flex flex-col justify-center px-4 pb-6 lg:pb-0 lg:px-0">
+                  <span className="text-brand-gold text-2xl font-bold mb-4 font-sans">
+                    {processSteps[activeStep].id}
+                  </span>
+                  <h3 className="text-3xl md:text-4xl font-medium text-white mb-6 leading-tight">
+                    {processSteps[activeStep].title}
+                  </h3>
+                  <p className="text-gray-400 text-lg leading-relaxed">
+                    {processSteps[activeStep].description}
+                  </p>
+                </div>
+              </motion.div>
             </AnimatePresence>
           </div>
 
         </div>
-      </section>
-
-    </div>
+      </div>
+    </section>
   );
-};
-
-export default Process;
+}

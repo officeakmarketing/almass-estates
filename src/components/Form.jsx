@@ -177,7 +177,7 @@ const Form = () => {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="group w-full flex items-center justify-between md:justify-center md:gap-4 bg-[#C8A96E] text-[#0D0D0D] pl-6 pr-2 py-2 rounded-full text-lg font-medium hover:bg-[#d6b980] active:scale-[0.98] transition-all duration-300 disabled:opacity-70 disabled:active:scale-100 shadow-[0_0_30px_rgba(200,169,110,0.1)]"
+                    className="group w-full flex items-center justify-between md:justify-center md:gap-4 bg-[#C8A96E] text-[#0D0D0D] pl-6 pr-2 py-2 rounded-full text-lg font-medium hover:bg-[#d6b980] active:scale-[0.98] transition-all duration-300 disabled:opacity-70 disabled:active:scale-100 shadow-[0_0_30px_rgba(200,169,110,0.1)] cursor-pointer"
                   >
                     {isSubmitting ? (
                       <span className="animate-pulse tracking-wide mr-4">Checking Requirements...</span>
@@ -185,7 +185,7 @@ const Form = () => {
                       <span className="tracking-wide">Check My Property Now</span>
                     )}
 
-                    <span className="bg-[#0D0D0D] text-[#C8A96E] p-3 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:rotate-45 shrink-0">
+                    <span className="bg-[#0D0D0D] text-[#C8A96E] p-2 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:rotate-45 shrink-0">
                       <ArrowUpRight size={22} strokeWidth={2.5} />
                     </span>
                   </button>
