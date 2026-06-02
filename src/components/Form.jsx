@@ -1,12 +1,12 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShieldCheck, CheckCircle, ArrowUpRight } from 'lucide-react';
+import { ShieldCheck, CheckCircle, ArrowUpRight, ChevronDown } from 'lucide-react';
 
 const Form = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Reduced from 40 → 15 particles; positions are stable (useMemo)
+  // Floating particles
   const particles = useMemo(() => {
     return Array.from({ length: 15 }).map((_, i) => ({
       id: i,
@@ -18,7 +18,6 @@ const Form = () => {
     }));
   }, []);
 
-  // Form submission handler
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -29,14 +28,15 @@ const Form = () => {
   };
 
   // Premium input styling class
-  const inputClass = "w-full bg-[#050505] text-[#F0EDE8] placeholder-[#666666] border border-[#222222] rounded-2xl p-4 focus:outline-none focus:border-[#C8A96E] focus:ring-1 focus:ring-[#C8A96E]/30 transition-all duration-300 font-light text-base shadow-inner";
+  const inputClass = "w-full bg-[#050505] text-[#F0EDE8] placeholder-[#666666] border border-[#222222] rounded-xl sm:rounded-2xl p-4 focus:outline-none focus:border-[#C8A96E] focus:ring-1 focus:ring-[#C8A96E]/30 transition-all duration-300 font-light text-base shadow-inner";
 
   return (
     <div
-      className="relative min-h-screen flex items-center justify-center p-4 sm:p-6 md:p-8 lg:p-12 bg-[#030303] selection:bg-[#C8A96E] selection:text-[#0D0D0D] antialiased overflow-hidden z-20"
+      // p-0 on mobile makes it full width, sm:p-6 adds padding back on tablets/laptops
+      className="relative min-h-[100dvh] flex items-center justify-center p-0 sm:p-6 md:p-8 lg:p-12 bg-[#030303] selection:bg-[#C8A96E] selection:text-[#0D0D0D] antialiased overflow-hidden z-20"
       style={{ fontFamily: "'Jost', sans-serif" }}
     >
-      {/* --- BACKGROUND: cheap radial-gradient orb (replaces expensive blur-[100px]) --- */}
+      {/* --- BACKGROUND --- */}
       <div
         className="absolute inset-0 pointer-events-none z-0"
         style={{
@@ -44,7 +44,7 @@ const Form = () => {
         }}
       />
 
-      {/* --- FLOATING PARTICLES (15, GPU-composited via will-change) --- */}
+      {/* --- FLOATING PARTICLES --- */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         {particles.map(p => (
           <div
@@ -63,13 +63,18 @@ const Form = () => {
       </div>
 
       {/* --- MAIN FORM CARD --- */}
-      <div className="relative z-10 w-full max-w-[800px]">
+      <div className="relative z-10 w-full max-w-[800px] h-full sm:h-auto">
 
-        {/* Glassmorphism Card */}
-        <div className="bg-[#0D0D0D]/90 backdrop-blur-xl rounded-[2rem] shadow-2xl shadow-black border border-white/10 relative overflow-hidden">
+        {/* 
+          Glassmorphism Card 
+          - rounded-none on mobile, sm:rounded-[2rem] on desktop
+          - border-0 on mobile, sm:border on desktop
+          - min-h-[100dvh] on mobile ensures it fills the vertical screen completely 
+        */}
+        <div className="bg-[#0D0D0D]/90 backdrop-blur-xl rounded-none sm:rounded-[2rem] shadow-2xl shadow-black border-0 sm:border border-white/10 relative overflow-hidden min-h-[100dvh] sm:min-h-0 flex flex-col justify-center">
 
-          {/* Subtle top highlight line for depth */}
-          <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+          {/* Subtle top highlight line for depth (hidden on mobile for cleaner edge) */}
+          <div className="hidden sm:block absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
 
           <AnimatePresence mode="wait">
             {!isSubmitted ? (
@@ -79,58 +84,53 @@ const Form = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.98, filter: "blur(4px)" }}
                 transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="p-6 sm:p-8 md:p-12"
+                className="p-5 py-10 sm:p-8 md:p-12 w-full"
               >
                 {/* HEADINGS */}
-                <div className="text-center mb-10">
-                  <h2 className="text-[#F0EDE8] text-3xl md:text-4xl lg:text-5xl font-medium leading-[1.15] mb-5 tracking-tight">
+                <div className="text-center mb-8 sm:mb-10">
+                  <h2 className="text-[#F0EDE8] text-3xl sm:text-4xl lg:text-5xl font-medium leading-[1.15] mb-3 sm:mb-5 tracking-tight">
                     Find Out If We Can<br className="hidden md:block"/> Guarantee Your Rent.
                   </h2>
-                  <p className="text-[#C8C4BC] text-base md:text-lg max-w-2xl mx-auto leading-relaxed font-light">
+                  <p className="text-[#C8C4BC] text-[15px] sm:text-lg max-w-2xl mx-auto leading-relaxed font-light">
                     Fill in your property details. Our system instantly checks if your property matches our current requirements.
                   </p>
                 </div>
 
                 {/* TRUST STRIP */}
-                <div className="flex flex-wrap justify-center items-center gap-x-5 gap-y-3 mb-12 text-[13px] md:text-sm font-light text-[#C8C4BC] bg-[#050505] py-4 px-6 rounded-2xl border border-white/5 shadow-inner">
-                  <span className="flex items-center gap-2 whitespace-nowrap">
-                    <ShieldCheck size={18} className="text-[#C8A96E]" />
+                <div className="flex flex-wrap justify-center items-center gap-x-4 sm:gap-x-5 gap-y-3 mb-10 text-[12px] sm:text-[13px] md:text-sm font-light text-[#C8C4BC] bg-[#050505] py-4 px-4 sm:px-6 rounded-xl sm:rounded-2xl border border-white/5 shadow-inner">
+                  <span className="flex items-center gap-1.5 whitespace-nowrap">
+                    <ShieldCheck size={16} className="text-[#C8A96E] sm:w-[18px] sm:h-[18px]" />
                     100+ Landlords
                   </span>
-                  <div className="hidden md:block w-px h-4 bg-[#333333]"></div>
+                  <div className="hidden sm:block w-px h-4 bg-[#333333]"></div>
 
-                  <span className="flex items-center gap-2 whitespace-nowrap">
-                    <ShieldCheck size={18} className="text-[#C8A96E]" />
+                  <span className="flex items-center gap-1.5 whitespace-nowrap">
+                    <ShieldCheck size={16} className="text-[#C8A96E] sm:w-[18px] sm:h-[18px]" />
                     £1.8M paid in 2025
                   </span>
                   <div className="hidden lg:block w-px h-4 bg-[#333333]"></div>
 
-                  <span className="flex items-center gap-2 whitespace-nowrap">
-                    <ShieldCheck size={18} className="text-[#C8A96E]" />
+                  <span className="flex items-center gap-1.5 whitespace-nowrap">
+                    <ShieldCheck size={16} className="text-[#C8A96E] sm:w-[18px] sm:h-[18px]" />
                     3-5 year leases
-                  </span>
-                  <div className="hidden md:block w-px h-4 bg-[#333333]"></div>
-
-                  <span className="flex items-center gap-2 whitespace-nowrap text-[#C8A96E] font-medium">
-                    Instant response
                   </span>
                 </div>
 
                 {/* FORM FIELDS */}
-                <form onSubmit={handleSubmit} className="space-y-5">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
                     <input type="text" required placeholder="First Name" className={inputClass} />
                     <input type="text" required placeholder="Last Name" className={inputClass} />
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
                     <input type="email" required placeholder="Email Address" className={inputClass} />
                     <input type="tel" required placeholder="Phone Number" className={inputClass} />
                   </div>
 
                   <input type="text" required placeholder="Property Postcode" className={inputClass} />
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
                     <div className="relative group">
                       <select required className={`${inputClass} appearance-none cursor-pointer`} defaultValue="">
                         <option value="" disabled className="text-[#666666]">Property Type</option>
@@ -139,6 +139,7 @@ const Form = () => {
                         <option value="hmo" className="bg-[#111111] text-[#F0EDE8]">HMO</option>
                         <option value="block" className="bg-[#111111] text-[#F0EDE8]">Block of Flats</option>
                       </select>
+                      <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-[#666666] pointer-events-none" size={20} />
                     </div>
 
                     <div className="relative group">
@@ -149,11 +150,12 @@ const Form = () => {
                         <option value="3" className="bg-[#111111] text-[#F0EDE8]">3 Bedrooms</option>
                         <option value="4+" className="bg-[#111111] text-[#F0EDE8]">4+ Bedrooms</option>
                       </select>
+                      <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-[#666666] pointer-events-none" size={20} />
                     </div>
                   </div>
 
                   {/* GDPR Checkbox */}
-                  <div className="flex items-start gap-3.5 mt-8 mb-10">
+                  <div className="flex items-start gap-3 mt-6 sm:mt-8 mb-8 sm:mb-10">
                     <div className="relative flex items-center pt-0.5">
                       <input
                         type="checkbox"
@@ -167,7 +169,7 @@ const Form = () => {
                     </div>
                     <label htmlFor="gdpr" className="text-[13px] md:text-sm text-[#C8C4BC] leading-relaxed cursor-pointer select-none font-light">
                       I consent to my data being processed in accordance with the{' '}
-                      <a href="https://almassestates.co.uk/privacy" target="_blank" rel="noreferrer" className="text-[#C8A96E] hover:text-[#e3c58b] hover:underline underline-offset-4 transition-all font-medium">
+                      <a href="#" className="text-[#C8A96E] hover:text-[#e3c58b] hover:underline underline-offset-4 transition-all font-medium">
                         Privacy Policy
                       </a>.
                     </label>
@@ -177,7 +179,7 @@ const Form = () => {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="group w-full flex items-center justify-between md:justify-center md:gap-4 bg-[#C8A96E] text-[#0D0D0D] pl-6 pr-2 py-2 rounded-full text-lg font-medium hover:bg-[#d6b980] active:scale-[0.98] transition-all duration-300 disabled:opacity-70 disabled:active:scale-100 shadow-[0_0_30px_rgba(200,169,110,0.1)] cursor-pointer"
+                    className="group w-full flex items-center justify-between md:justify-center md:gap-4 bg-[#C8A96E] text-[#0D0D0D] pl-6 pr-2 py-2 rounded-full text-[17px] sm:text-lg font-medium hover:bg-[#d6b980] active:scale-[0.98] transition-all duration-300 disabled:opacity-70 disabled:active:scale-100 shadow-[0_0_30px_rgba(200,169,110,0.1)] cursor-pointer"
                   >
                     {isSubmitting ? (
                       <span className="animate-pulse tracking-wide mr-4">Checking Requirements...</span>
@@ -186,7 +188,7 @@ const Form = () => {
                     )}
 
                     <span className="bg-[#0D0D0D] text-[#C8A96E] p-2 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:rotate-45 shrink-0">
-                      <ArrowUpRight size={22} strokeWidth={2.5} />
+                      <ArrowUpRight size={20} className="sm:w-[22px] sm:h-[22px]" strokeWidth={2.5} />
                     </span>
                   </button>
                 </form>
@@ -205,14 +207,14 @@ const Form = () => {
                   animate={{ scale: 1 }}
                   transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.2 }}
                 >
-                  <div className="w-24 h-24 rounded-full bg-[#C8A96E]/10 flex items-center justify-center mb-8 border border-[#C8A96E]/20 shadow-[0_0_30px_rgba(200,169,110,0.15)]">
-                    <CheckCircle size={48} className="text-[#C8A96E]" strokeWidth={2} />
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-[#C8A96E]/10 flex items-center justify-center mb-6 sm:mb-8 border border-[#C8A96E]/20 shadow-[0_0_30px_rgba(200,169,110,0.15)]">
+                    <CheckCircle className="w-10 h-10 sm:w-12 sm:h-12 text-[#C8A96E]" strokeWidth={2} />
                   </div>
                 </motion.div>
-                <h2 className="text-[#F0EDE8] text-3xl md:text-4xl font-medium mb-4 tracking-tight">
+                <h2 className="text-[#F0EDE8] text-2xl sm:text-3xl md:text-4xl font-medium mb-3 sm:mb-4 tracking-tight">
                   Checking your property now.
                 </h2>
-                <p className="text-[#C8C4BC] text-lg md:text-xl max-w-md font-light leading-relaxed">
+                <p className="text-[#C8C4BC] text-base sm:text-lg md:text-xl max-w-md font-light leading-relaxed">
                   You will receive an email from our team within the next few minutes.
                 </p>
               </motion.div>

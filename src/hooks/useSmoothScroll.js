@@ -46,6 +46,10 @@ export default function useSmoothScroll(lerp = 0.09) {
 
     // ── Wheel: accumulate delta, clamp to page bounds ────────────────
     const onWheel = (e) => {
+      if (e.ctrlKey) {
+        // Let the browser handle zoom when Ctrl+scroll is used
+        return;
+      }
       e.preventDefault();
       targetY = Math.max(0, Math.min(targetY + e.deltaY * 1.2, maxScroll()));
       startLoop();
@@ -77,17 +81,22 @@ export default function useSmoothScroll(lerp = 0.09) {
       startLoop();
     };
 
-    window.addEventListener('wheel',      onWheel,      { passive: false });
-    window.addEventListener('touchstart', onTouchStart, { passive: false });
-    window.addEventListener('touchmove',  onTouchMove,  { passive: false });
-    document.addEventListener('click',    onAnchorClick);
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    if (!isTouchDevice) {
+      window.addEventListener('wheel', onWheel, { passive: false });
+      window.addEventListener('touchstart', onTouchStart, { passive: false });
+      window.addEventListener('touchmove', onTouchMove, { passive: false });
+    }
+    document.addEventListener('click', onAnchorClick);
 
     return () => {
       if (rafId) cancelAnimationFrame(rafId);
-      window.removeEventListener('wheel',      onWheel);
-      window.removeEventListener('touchstart', onTouchStart);
-      window.removeEventListener('touchmove',  onTouchMove);
-      document.removeEventListener('click',    onAnchorClick);
+      if (!isTouchDevice) {
+        window.removeEventListener('wheel', onWheel);
+        window.removeEventListener('touchstart', onTouchStart);
+        window.removeEventListener('touchmove', onTouchMove);
+      }
+      document.removeEventListener('click', onAnchorClick);
     };
   }, [lerp]);
 }

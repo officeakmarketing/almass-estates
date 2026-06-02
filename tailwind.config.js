@@ -8,7 +8,7 @@ export default {
     extend: {
       colors: {
         brand: {
-          gold: '#c4a47c',
+          gold: '#C8A96E',
           darkGold: '#a68a64',
           black: '#050505',
           card: '#111111',

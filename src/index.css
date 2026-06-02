@@ -1,7 +1,13 @@
 @import "tailwindcss";
 @config "../tailwind.config.js";
+@import "tailwindcss";
 
-body { background-color: #050505; color: #ffffff; overflow-x: hidden; }
+/* Add this to prevent ANY horizontal scrolling/resizing issues */
+html, body {
+  width: 100%;
+  position: relative;
+}
+body { background-color: #0D0D0D; color: #F0EDE8; }
 ::-webkit-scrollbar { width: 0; }
 
 .cinematic-glow { text-shadow: 0 0 40px rgba(255, 255, 255, 0.5), 0 0 100px rgba(196, 164, 124, 0.3); }

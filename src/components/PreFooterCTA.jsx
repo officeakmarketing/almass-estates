@@ -9,7 +9,7 @@ export default function PreFooterCTA() {
       left: `${Math.random() * 100}%`,
       top: `${Math.random() * 100}%`,
       size: `${Math.random() * 3 + 1}px`,
-      duration: `${Math.random() * 15 + 10}s`,
+      duration: `${Math.random() * 15 + 8}s`,
       delay: `${Math.random() * 5}s`
     }));
   }, []);
