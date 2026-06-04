@@ -8,7 +8,8 @@ import useSmoothScroll from "./hooks/useSmoothScroll";
 import Process from "./components/Process";
 import Testimonials from "./components/Testimonials";
 import FAQ from "./components/FAQ";
-import Chat from "./components/Chat";
+import PasswordGate from "./components/PasswordGate";
+
 import brandConfig from "./config/brand";
 
 // Thin gold progress bar that fills as the user scrolls
@@ -52,18 +53,20 @@ export default function App() {
   useSmoothScroll(0.09);
 
   return (
-    <div className="font-sans antialiased bg-black min-h-screen">
-      <ScrollProgressBar />
-    
-      <Hero />
-      <TrustStrip />
-      <PainPoints />
-     
-      <Process/>   
-      <Testimonials />
-      <FAQ />
-      <PreFooterCTA />
-      <Chat/>
-    </div>
+    <PasswordGate>
+      <div className="font-sans antialiased bg-black min-h-screen">
+        <ScrollProgressBar />
+      
+        <Hero />
+        <TrustStrip />
+        <PainPoints />
+       
+        <Process/>   
+        <Testimonials />
+        <FAQ />
+        <PreFooterCTA />
+  
+      </div>
+    </PasswordGate>
   );
 }

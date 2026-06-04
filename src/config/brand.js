@@ -5,6 +5,7 @@ const brandConfig = {
     description: "Find out in minutes if Almass Estates can guarantee your rent. Join 100+ London landlords with 3–5 year leases and £1.8M+ paid out in 2025.",
     favicon: "/fav.png",
   },
+  sitePassword: "almass", // set to empty string to disable password protection
   fonts: {
     googleFontsUrl: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Jost:wght@300;400;500;600;700&display=swap",
     sans: ['Jost', 'sans-serif'],
@@ -26,7 +27,7 @@ const brandConfig = {
       heading1: "Guaranteed Rent",
       heading2: "Every Month.",
       heading3: "We Handle Everything Else.",
-      subheading: "Fill in your property details. Our system instantly checks if your property matches our current requirements and sends you a response within minutes.",
+      subheading: "Our AI instantly checks if your property qualifies and sends you a result within minutes.",
       ctaButton: "Read Client Stories",
       successHeading: "Checking your property now.",
       successMessage: "You will receive an email with your result within the next few minutes.",
@@ -34,16 +35,15 @@ const brandConfig = {
       formHeading: "Property Details",
       gdprText: "I agree to the processing of my data in accordance with the privacy policy.",
       gdprLink: "https://almassestates.co.uk/privacy",
-      submitButton: "Check My Property Now"
+      submitButton: "Check My Property Now",
+      submitButtonTopMicro: "Takes 60 seconds",
+      submitButtonBottomMicro: "Free assessment. No obligation. No fees."
     },
     trustStrip: {
       items: [
-        "£1.8M paid in 2025",
-        "100+ properties managed across london",
-        "3–5 year long-term leases",
-        "No void periods",
-        "Guaranteed income",
-        "Instant response"
+        "£1.8M+ paid in 2025",
+        "100+ properties managed",
+        "3–5 year leases"
       ]
     },
     painPoints: {
@@ -84,57 +84,64 @@ const brandConfig = {
     },
     testimonials: {
       tag: "Testimonials",
-      heading: "London landlords who stopped worrying.",
+      heading: "Don't take our word for it. Take theirs.",
+      subheading: "Every landlord asks the same question. Will they actually pay? Here is what the companies we work with say... in writing.",
+      proofStrip: [
+        "£0 missed across every property",
+        "7+ properties across these references",
+        "3 independent landlord companies"
+      ],
+      riskReversal: {
+        text: "No obligation. No fees. No tie-in. If you don't like the offer, you walk away.",
+        subtext: "Free assessment · Response within minutes · 3–5 year lease on your terms"
+      },
       items: [
         {
           id: 1,
-          name: "IMF PROPERTY INVESTMENTS LTD",
-          title: "Mohammed Imran — Director",
-          text: "Almass Estates has never missed a payment, with all rents paid on or before the due date without exception. The property has been kept in excellent condition with no complaints from neighbours or third parties.",
-          statBoxText: "£4,000/month guaranteed since Dec 2024",
-          addressBoxTextParts: ["60 Sturgess Avenue", "5-bed house", "£4,000/mo"],
-          bottomBarLeft: "Zero missed payments since Dec 2024",
+          name: "RGR CAPITAL LTD",
+          title: "Regev Farkas — Director",
+          text: "Almass Estates has consistently paid rent early or on time and has never missed a single payment. They have achieved exceptional rental returns on our behalf and proven to be a trustworthy and proactive partner in our investment strategy.",
+          statBoxText: "£10,700/month guaranteed across 3 properties",
+          propertyTags: [
+            "23 Manor Park Crescent, HA8 7NH · 2 x 3-bed flats · £2,850/mo each",
+            "36 Glengall Road, HA8 8SU · 6-bed house · £5,000/mo"
+          ],
+          bottomBarLeft: "Zero missed payments since Sep 2024",
           bottomBarRight: "FORMAL LETTER",
           verifiedText: "VERIFIED REFERENCE"
         },
         {
           id: 2,
-          name: "LISA MATTHEWS",
-          title: "Landlord — Barnet",
-          text: "Totally impressed with Almass Estates, particularly Coen. Such a professional service I completely felt in safe hands. He found a tenant that moved in within 9 days.",
-          statBoxText: "Tenant secured and moved in within 9 days",
-          addressBoxTextParts: ["Barnet", "Residential Property", "Fast Let"],
-          bottomBarLeft: "Zero void periods",
-          bottomBarRight: "GOOGLE REVIEW",
+          name: "PRIME LONDON OPCO LTD",
+          title: "Eli Moren — Director",
+          text: "All rental payments have been made on time or early, without a single missed payment. Properties kept in excellent condition throughout. We would confidently recommend Almass Estates for any future partnerships.",
+          statBoxText: "£8,125/month guaranteed across 2 properties",
+          propertyTags: [
+            "74 Mount Grove, HA8 9SX · £4,700/mo from Feb 2025",
+            "99 Southfield, NW4 4NA · £3,425/mo from Sep 2024"
+          ],
+          bottomBarLeft: "Zero missed payments",
+          bottomBarRight: "FORMAL LETTER",
           verifiedText: "VERIFIED REFERENCE"
         },
         {
           id: 3,
-          name: "FASIHULLAH QAZI",
-          title: "Repeat Client",
-          text: "Have worked with Coen over a year. Very professional, amazing communication. Have closed many deals looking forward to more.",
-          statBoxText: "Multiple successful deals closed over 1+ years",
-          addressBoxTextParts: ["Portfolio Landlord", "Multiple Properties"],
-          bottomBarLeft: "Consistent performance",
-          bottomBarRight: "GOOGLE REVIEW",
-          verifiedText: "VERIFIED CLIENT"
-        },
-        {
-          id: 4,
-          name: "EBILA B",
-          title: "Verified Client",
-          text: "It was an absolute pleasure working with Almass Estates. Communication was brilliant and I was regularly reassured throughout the whole process.",
-          statBoxText: "Seamless communication and complete reassurance",
-          addressBoxTextParts: ["London", "Guaranteed Rent"],
-          bottomBarLeft: "100% Peace of mind",
-          bottomBarRight: "TRUSTPILOT",
-          verifiedText: "VERIFIED CLIENT"
+          name: "IMF PROPERTY INVESTMENTS LTD",
+          title: "Mohammed Imran — Director",
+          text: "Almass Estates has never missed a payment, with all rents paid on or before the due date without exception. The property has been kept in excellent condition with no complaints from neighbours or third parties.",
+          statBoxText: "£4,000/month guaranteed since Dec 2024",
+          propertyTags: [
+            "60 Sturgess Avenue · 5-bed house · £4,000/mo"
+          ],
+          bottomBarLeft: "Zero missed payments since Dec 2024",
+          bottomBarRight: "FORMAL LETTER",
+          verifiedText: "VERIFIED REFERENCE"
         }
       ]
     },
     faq: {
       tag: "FAQ — 5 Questions",
-      heading: "Frequently Asked Questions",
+      heading: "Everything you want to know before saying yes.",
       items: [
         {
           id: "Q1",

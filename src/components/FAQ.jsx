@@ -13,7 +13,7 @@ export default function FAQ() {
   };
 
   return (
-    <section className="bg-brand-black py-24 px-3 sm:px-10 font-sans border-t border-white/5 relative">
+    <section className="bg-brand-black py-12 px-3 sm:px-10 font-sans border-t border-white/5 relative">
       <div className="max-w-[800px] mx-auto">
         
         {/* Header */}

@@ -18,7 +18,7 @@ export default function PreFooterCTA() {
   const ctaCopy = brandConfig.copy.cta;
 
   return (
-    <section className="relative w-full py-40 flex flex-col items-center justify-center bg-[#030303] border-t border-white/5 overflow-hidden z-20">
+    <section className="relative w-full py-20 flex flex-col items-center justify-center bg-[#030303] border-t border-white/5 overflow-hidden z-20">
       {/* Cheap radial-gradient orb — replaces the expensive blur-[100px] */}
       <div
         className="absolute inset-0 pointer-events-none z-0"
@@ -65,10 +65,10 @@ export default function PreFooterCTA() {
         </Reveal>
 
         <Reveal delay={300}>
-          <a href="#hero" className="group flex items-center gap-4 bg-white hover:bg-gray-200 text-black pl-6 pr-1.5 py-1.5 rounded-full font-sans font-medium transition-all duration-300 hover:scale-105">
+          <a href="#hero" className="group flex items-center gap-4 bg-[#C8A96E] hover:brightness-110 text-[#0D0D0D] pl-6 pr-1.5 py-1.5 rounded-full font-sans font-medium transition-all duration-300 hover:scale-105">
             <span className="text-sm tracking-wide">{ctaCopy.buttonText}</span>
-            <div className="w-9 h-9 bg-black rounded-full flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1">
-              <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 19L19 5M19 5v10M19 5H9"></path></svg>
+            <div className="w-9 h-9 bg-[#0D0D0D] rounded-full flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1">
+              <svg className="w-4 h-4 text-[#C8A96E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 19L19 5M19 5v10M19 5H9"></path></svg>
             </div>
           </a>
         </Reveal>

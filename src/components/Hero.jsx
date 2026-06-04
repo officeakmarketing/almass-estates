@@ -83,19 +83,7 @@ const Hero = () => {
             {heroCopy.subheading}
           </p>
 
-          {/* Option 4: Subtle Glow Rectangle */}
-          <motion.div variants={fadeUp}>
-            <a
-              href="#testimonials"
-              className="group relative flex items-center gap-4 px-7 py-3.5 border border-brand-gold/40 rounded-xl bg-[#0a0a0a] transition-all duration-300 w-max overflow-hidden cursor-pointer"
-            >
-              <span className="relative z-10 text-[14px] text-brand-gold font-medium tracking-wide transition-colors">
-                {heroCopy.ctaButton}
-              </span>
-              <div className="relative z-10 w-[1px] h-4 bg-[#333] group-hover:bg-brand-gold/30 transition-colors" />
-              <ArrowDown size={16} className="relative z-10 text-brand-gold transition-all" strokeWidth={2} />
-            </a>
-          </motion.div>
+         
         </motion.div>
 
         {/* Right: The High-Trust Form */}
@@ -238,16 +226,28 @@ const Hero = () => {
                 </span>
               </label>
 
-              <button
-                type="submit"
-                className="w-full group bg-brand-gold text-brand-black py-3 rounded-xl text-base font-medium hover:bg-white transition-all shadow-[0_0_20px_rgba(196,164,124,0.15)] mt-2 flex items-center justify-center gap-2"
-              >
-                {heroCopy.submitButton}{" "}
-                <ArrowUpRight
-                  size={18}
-                  className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"
-                />
-              </button>
+              <div className="flex flex-col gap-2 mt-4">
+                {heroCopy.submitButtonTopMicro && (
+                  <div className="text-center text-xs font-medium text-brand-gold/90 uppercase tracking-widest">
+                    {heroCopy.submitButtonTopMicro}
+                  </div>
+                )}
+                <button
+                  type="submit"
+                  className="w-full group bg-brand-gold text-brand-black py-3.5 rounded-xl text-base font-medium hover:bg-white transition-all shadow-[0_0_20px_rgba(196,164,124,0.15)] flex items-center justify-center gap-2"
+                >
+                  {heroCopy.submitButton}{" "}
+                  <ArrowUpRight
+                    size={18}
+                    className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"
+                  />
+                </button>
+                {heroCopy.submitButtonBottomMicro && (
+                  <div className="text-center text-xs text-gray-400 font-light mt-1">
+                    {heroCopy.submitButtonBottomMicro}
+                  </div>
+                )}
+              </div>
             </form>
           )}
         </motion.div>
