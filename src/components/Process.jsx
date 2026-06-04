@@ -33,12 +33,13 @@ export default function Process() {
             >
               {/* Portrait Image (No borders) */}
               <div className="w-full aspect-[4/5] overflow-hidden rounded-xl mb-8 relative">
-                <div className="absolute inset-0 bg-brand-black/20 mix-blend-multiply z-10 group-hover:bg-transparent transition-colors duration-700" />
-                <img 
-                  src={step.image} 
-                  alt={step.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000 ease-out"
-                />
+                <div className="absolute inset-0  mix-blend-multiply z-10 group-hover:bg-transparent transition-colors duration-700" />
+<img 
+  src={step.image} 
+  alt={step.title}
+  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000 ease-out"
+  style={step.id === "02" ? { objectPosition: "30% 0%" } : { objectPosition: "center" }}
+/>
               </div>
 
               {/* Minimalist Typography */}

@@ -1,3 +1,4 @@
+
 const brandConfig = {
   metadata: {
     title: "Almass Estates — Guaranteed Rent for London Landlords",
@@ -65,19 +66,19 @@ const brandConfig = {
           id: "01",
           title: "Step 1",
           description: "Submit your property details. Takes less than 60 seconds. Our system instantly checks your property across North West, North, West and Central London.",
-          image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&q=80&w=1200",
+          image: "/images/step1.webp",
         },
         {
           id: "02",
           title: "Step 2",
           description: "Receive your result by email within minutes. Match found we confirm interest and next steps. No match we add you to our priority waiting list.",
-          image: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&q=80&w=1200",
+          image: "/images/step2.webp",
         },
         {
           id: "03",
           title: "Step 3",
           description: "A member of our team visits your property, assesses its value and makes you a guaranteed rent offer within 72 hours. No obligation. Completely free.",
-          image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=1200",
+          image: "/images/step3.webp",
         }
       ]
     },
