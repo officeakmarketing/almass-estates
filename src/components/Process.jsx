@@ -1,25 +1,7 @@
 import { motion } from "framer-motion";
+import brandConfig from '../config/brand';
 
-const processSteps = [
-  {
-    id: "01",
-    title: "Step 1",
-    description: "Submit your property details. Takes less than 60 seconds. Our system instantly checks your property across North West, North, West and Central London.",
-    image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&q=80&w=1200",
-  },
-  {
-    id: "02",
-    title: "Step 2",
-    description: "Receive your result by email within minutes. Match found we confirm interest and next steps. No match we add you to our priority waiting list.",
-    image: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&q=80&w=1200",
-  },
-  {
-    id: "03",
-    title: "Step 3",
-    description: "A member of our team visits your property, assesses its value and makes you a guaranteed rent offer within 72 hours. No obligation. Completely free.",
-    image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=1200",
-  }
-];
+const processSteps = brandConfig.copy.process.items;
 
 export default function Process() {
   return (
@@ -30,11 +12,11 @@ export default function Process() {
         <div className="text-center mb-20 lg:mb-28">
           <div className="flex items-center justify-center gap-4 mb-6">
             <div className="w-8 h-[1px] bg-brand-gold" />
-            <span className="text-brand-gold text-xs tracking-widest uppercase font-medium">How It Works — 3 Steps</span>
+            <span className="text-brand-gold text-xs tracking-widest uppercase font-medium">{brandConfig.copy.process.tag}</span>
             <div className="w-8 h-[1px] bg-brand-gold" />
           </div>
           <h2 className="text-4xl sm:text-5xl lg:text-[4rem] font-medium text-white tracking-tight mb-6 leading-[1.1]">
-            From submission to guaranteed income.
+            {brandConfig.copy.process.heading}
           </h2>
         </div>
 

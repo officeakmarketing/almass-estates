@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import Reveal from './Reveal';
+import brandConfig from '../config/brand';
 
 export default function PreFooterCTA() {
   // Reduced from 40 → 15 particles; GPU-composited with will-change
@@ -13,6 +14,8 @@ export default function PreFooterCTA() {
       delay: `${Math.random() * 5}s`
     }));
   }, []);
+
+  const ctaCopy = brandConfig.copy.cta;
 
   return (
     <section className="relative w-full py-40 flex flex-col items-center justify-center bg-[#030303] border-t border-white/5 overflow-hidden z-20">
@@ -45,25 +48,25 @@ export default function PreFooterCTA() {
       <div className="relative z-10 flex flex-col items-center text-center px-6">
         <Reveal className="flex items-center gap-4 mb-6">
           <div className="w-10 md:w-16 h-[1px] bg-white/20"></div>
-          <span className="text-xs md:text-sm italic text-brand-muted font-light tracking-wide">Get started</span>
+          <span className="text-xs md:text-sm italic text-brand-muted font-light tracking-wide">{ctaCopy.tag}</span>
           <div className="w-10 md:w-16 h-[1px] bg-white/20"></div>
         </Reveal>
 
         <Reveal delay={100}>
           <h2 className="text-4xl md:text-5xl font-light text-white leading-tight mb-4">
-            Your property. Our responsibility.<br />Your guaranteed income.
+            {ctaCopy.headingLine1}<br />{ctaCopy.headingLine2}
           </h2>
         </Reveal>
 
         <Reveal delay={200}>
           <p className="text-sm md:text-base text-brand-muted font-light mb-10">
-Join over 100 London landlords who never chase rent again. Check if your property qualifies in under 60 seconds.
+            {ctaCopy.subheading}
           </p>
         </Reveal>
 
         <Reveal delay={300}>
           <a href="#hero" className="group flex items-center gap-4 bg-white hover:bg-gray-200 text-black pl-6 pr-1.5 py-1.5 rounded-full font-sans font-medium transition-all duration-300 hover:scale-105">
-            <span className="text-sm tracking-wide">Check My Property Now</span>
+            <span className="text-sm tracking-wide">{ctaCopy.buttonText}</span>
             <div className="w-9 h-9 bg-black rounded-full flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1">
               <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 19L19 5M19 5v10M19 5H9"></path></svg>
             </div>

@@ -1,15 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import brandConfig from '../config/brand';
 
 const TrustStrip = () => {
-  const items = [
-    "£1.8M paid in 2025",
-    "100+ properties managed across london",
-    "3–5 year long-term leases",
-    "No void periods",
-    "Guaranteed income",
-    "Instant response"
-  ];
+  const items = brandConfig.copy.trustStrip.items;
 
   // We duplicate the items so the scroll loops seamlessly without a gap
   const duplicatedItems = [...items, ...items, ...items];

@@ -1,12 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import brandConfig from '../config/brand';
 
-const painPoints = [
-  { num: "01", title: "Rent that never arrives on time", desc: "With us, rent lands on the same date every month. Occupied or empty, it makes no difference to your income." },
-  { num: "02", title: "Maintenance calls at all hours", desc: "We assume full responsibility for repairs, bills and compliance. You will never receive a 2am call about a broken boiler again." },
-  { num: "03", title: "The Renters Rights Bill", desc: "Our commercial lease means the Renters Rights Bill does not apply to you. We take on all the risk not you." },
-  { num: "04", title: "Empty properties losing money", desc: "From the day we sign, your rent is guaranteed whether anyone is in the property or not." }
-];
+const painPoints = brandConfig.copy.painPoints.items;
 
 const PainPoints = () => {
   return (
@@ -17,14 +13,14 @@ const PainPoints = () => {
         <div className="text-center mb-20 md:mb-24">
           <div className="flex items-center justify-center gap-4 mb-6">
             <div className="w-8 h-[1px] bg-brand-gold" />
-            <span className="text-brand-gold text-xs tracking-widest uppercase font-medium">Why Landlords Choose Us</span>
+            <span className="text-brand-gold text-xs tracking-widest uppercase font-medium">{brandConfig.copy.painPoints.tag}</span>
             <div className="w-8 h-[1px] bg-brand-gold" />
           </div>
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-light text-[#F5F5F5] tracking-tight mb-6">
-            The problems we <span className="text-brand-gold italic font-medium">eliminate.</span>
+            {brandConfig.copy.painPoints.heading1}<span className="text-brand-gold italic font-medium">{brandConfig.copy.painPoints.headingHighlight}</span>
           </h2>
           <p className="text-[#888] text-lg max-w-2xl mx-auto font-light leading-relaxed">
-            Being a landlord shouldn't be a second job. Stop losing time and money to these common headaches.
+            {brandConfig.copy.painPoints.subheading}
           </p>
         </div>
 

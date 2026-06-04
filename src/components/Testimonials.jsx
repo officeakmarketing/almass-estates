@@ -1,68 +1,8 @@
 import React from "react";
 import { motion } from "framer-motion";
+import brandConfig from '../config/brand';
 
-const testimonials = [
-  {
-    id: 1,
-    name: "IMF PROPERTY INVESTMENTS LTD",
-    title: "Mohammed Imran — Director",
-    text: "Almass Estates has never missed a payment, with all rents paid on or before the due date without exception. The property has been kept in excellent condition with no complaints from neighbours or third parties.",
-    statBoxText: "£4,000/month guaranteed since Dec 2024",
-    addressBoxText: (
-      <>
-        60 Sturgess Avenue &middot; <span className="text-white font-medium">5-bed house</span> &middot; £4,000/mo
-      </>
-    ),
-    bottomBarLeft: "Zero missed payments since Dec 2024",
-    bottomBarRight: "FORMAL LETTER",
-    verifiedText: "VERIFIED REFERENCE"
-  },
-  {
-    id: 2,
-    name: "LISA MATTHEWS",
-    title: "Landlord — Barnet",
-    text: "Totally impressed with Almass Estates, particularly Coen. Such a professional service I completely felt in safe hands. He found a tenant that moved in within 9 days.",
-    statBoxText: "Tenant secured and moved in within 9 days",
-    addressBoxText: (
-      <>
-        Barnet &middot; <span className="text-white font-medium">Residential Property</span> &middot; Fast Let
-      </>
-    ),
-    bottomBarLeft: "Zero void periods",
-    bottomBarRight: "GOOGLE REVIEW",
-    verifiedText: "VERIFIED REFERENCE"
-  },
-  {
-    id: 3,
-    name: "FASIHULLAH QAZI",
-    title: "Repeat Client",
-    text: "Have worked with Coen over a year. Very professional, amazing communication. Have closed many deals looking forward to more.",
-    statBoxText: "Multiple successful deals closed over 1+ years",
-    addressBoxText: (
-      <>
-        Portfolio Landlord &middot; <span className="text-white font-medium">Multiple Properties</span>
-      </>
-    ),
-    bottomBarLeft: "Consistent performance",
-    bottomBarRight: "GOOGLE REVIEW",
-    verifiedText: "VERIFIED CLIENT"
-  },
-  {
-    id: 4,
-    name: "EBILA B",
-    title: "Verified Client",
-    text: "It was an absolute pleasure working with Almass Estates. Communication was brilliant and I was regularly reassured throughout the whole process.",
-    statBoxText: "Seamless communication and complete reassurance",
-    addressBoxText: (
-      <>
-        London &middot; <span className="text-white font-medium">Guaranteed Rent</span>
-      </>
-    ),
-    bottomBarLeft: "100% Peace of mind",
-    bottomBarRight: "TRUSTPILOT",
-    verifiedText: "VERIFIED CLIENT"
-  }
-];
+const testimonials = brandConfig.copy.testimonials.items;
 
 export default function Testimonials() {
   return (
@@ -74,11 +14,11 @@ export default function Testimonials() {
         <div className="text-center mb-20">
           <div className="flex items-center justify-center gap-4 mb-6">
             <div className="w-8 h-[1px] bg-brand-gold" />
-            <span className="text-brand-gold text-xs tracking-widest uppercase font-medium">Testimonials</span>
+            <span className="text-brand-gold text-xs tracking-widest uppercase font-medium">{brandConfig.copy.testimonials.tag}</span>
             <div className="w-8 h-[1px] bg-brand-gold" />
           </div>
           <h2 className="text-4xl sm:text-5xl lg:text-[4rem] font-medium text-white tracking-tight mb-6 leading-[1.1]">
-            London landlords who stopped worrying.
+            {brandConfig.copy.testimonials.heading}
           </h2>
         </div>
 
@@ -133,7 +73,12 @@ export default function Testimonials() {
                 {/* Grey Address Box */}
                 <div className="border border-[#222] bg-[#111] rounded-lg p-2.5 px-3 inline-flex w-max max-w-full overflow-hidden">
                   <span className="text-[#888] text-[12px] truncate">
-                    {t.addressBoxText}
+                    {t.addressBoxTextParts.map((part, idx) => (
+                      <React.Fragment key={idx}>
+                        {idx > 0 && <> &middot; </>}
+                        {idx === 1 ? <span className="text-white font-medium">{part}</span> : part}
+                      </React.Fragment>
+                    ))}
                   </span>
                 </div>
               </div>

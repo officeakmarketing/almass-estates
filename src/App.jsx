@@ -8,6 +8,8 @@ import useSmoothScroll from "./hooks/useSmoothScroll";
 import Process from "./components/Process";
 import Testimonials from "./components/Testimonials";
 import FAQ from "./components/FAQ";
+import Chat from "./components/Chat";
+import brandConfig from "./config/brand";
 
 // Thin gold progress bar that fills as the user scrolls
 function ScrollProgressBar() {
@@ -35,12 +37,12 @@ function ScrollProgressBar() {
         left: 0,
         width: "100%",
         height: "2px",
-        background: "linear-gradient(90deg, #c4a47c, #e8d5b0)",
+        background: `linear-gradient(90deg, ${brandConfig.colors.gold}, ${brandConfig.colors.primary})`,
         transformOrigin: "left center",
         transform: "scaleX(0)",
         zIndex: 9999,
         pointerEvents: "none",
-        boxShadow: "0 0 8px rgba(196, 164, 124, 0.6)",
+        boxShadow: `0 0 8px ${brandConfig.colors.gold}99`,
       }}
     />
   );
@@ -61,6 +63,7 @@ export default function App() {
       <Testimonials />
       <FAQ />
       <PreFooterCTA />
+      <Chat/>
     </div>
   );
 }

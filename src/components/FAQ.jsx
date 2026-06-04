@@ -1,34 +1,9 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Minus } from "lucide-react";
+import brandConfig from '../config/brand';
 
-const faqs = [
-  {
-    id: "Q1",
-    question: "What is guaranteed rent and how does it work?",
-    answer: "We become your tenant and pay you a fixed monthly rent whether the property is occupied or not. Long-term lease of 3 to 5 years."
-  },
-  {
-    id: "Q2",
-    question: "Who pays the bills and maintenance?",
-    answer: "We do. All bills, maintenance and repair costs covered by Almass Estates. Zero deductions, zero surprise costs."
-  },
-  {
-    id: "Q3",
-    question: "What types of properties do you take on?",
-    answer: "All types residential, HMO, social housing, blocks and everything in between. If it is in London, we want to hear from you."
-  },
-  {
-    id: "Q4",
-    question: "How quickly can you take on my property?",
-    answer: "Agreement in place within 1 to 2 weeks of initial assessment. We move fast so you start receiving guaranteed rent as soon as possible."
-  },
-  {
-    id: "Q5",
-    question: "What if my property does not match right now?",
-    answer: "Added to our priority waiting list. The moment we are looking for a property matching yours in your area, you will be the first we contact."
-  }
-];
+const faqs = brandConfig.copy.faq.items;
 
 export default function FAQ() {
   const [openId, setOpenId] = useState("Q1"); // First one open by default
@@ -45,11 +20,11 @@ export default function FAQ() {
         <div className="text-center mb-16 lg:mb-20">
           <div className="flex items-center justify-center gap-4 mb-6">
             <div className="w-8 h-[1px] bg-brand-gold" />
-            <span className="text-brand-gold text-xs tracking-widest uppercase font-medium">FAQ — 5 Questions</span>
+            <span className="text-brand-gold text-xs tracking-widest uppercase font-medium">{brandConfig.copy.faq.tag}</span>
             <div className="w-8 h-[1px] bg-brand-gold" />
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium text-white tracking-tight leading-tight">
-            Frequently Asked Questions
+            {brandConfig.copy.faq.heading}
           </h2>
         </div>
 

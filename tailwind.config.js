@@ -1,3 +1,5 @@
+import brandConfig from './src/config/brand.js';
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -7,21 +9,11 @@ export default {
   theme: {
     extend: {
       colors: {
-        brand: {
-          background: '#0D0D0D',
-          card: '#1A1A1A',
-          gold: '#C8A96E',
-          primary: '#F0EDE8',
-          secondary: '#C8C4BC',
-          muted: '#888780',
-          darkGold: '#a68a64',
-          black: '#0D0D0D',
-          border: 'rgba(255, 255, 255, 0.08)'
-        }
+        brand: brandConfig.colors
       },
       fontFamily: {
-        sans: ['Jost', 'sans-serif'],
-        serif: ['"Cormorant Garamond"', 'serif'],
+        sans: brandConfig.fonts.sans,
+        serif: brandConfig.fonts.serif,
       },
       animation: {
         'slow-pan': 'slow-pan 30s ease-in-out infinite alternate',

@@ -7,6 +7,8 @@ import {
   Lock,
   ArrowDown,
 } from "lucide-react";
+import brandConfig from '../config/brand';
+
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
   show: {
@@ -57,6 +59,8 @@ const Hero = () => {
     });
   };
 
+  const heroCopy = brandConfig.copy.hero;
+
   return (
     <section id="hero" className="relative w-full min-h-[100dvh] bg-[#050505] flex items-center justify-center py-6  sm:px-10 font-sans z-10">
       {/* Background glow to anchor the layout */}
@@ -71,14 +75,12 @@ const Hero = () => {
           className="w-full lg:w-[55%] flex flex-col pt-10 lg:pt-0 px-3"
         >
           <h1 className="text-[2.5rem] sm:text-5xl lg:text-[4.5rem] font-medium leading-[1.1] mb-5 lg:mb-6 text-white tracking-tight">
-            <span className="text-brand-gold italic pr-1.5">Guaranteed Rent</span><br className="hidden sm:block" />{" "}
-            Every Month. <br /> We Handle Everything Else.
+            <span className="text-brand-gold italic pr-1.5">{heroCopy.heading1}</span><br className="hidden sm:block" />{" "}
+            {heroCopy.heading2} <br /> {heroCopy.heading3}
           </h1>
 
           <p className="text-gray-400 text-base sm:text-lg mb-8 lg:mb-10 max-w-lg leading-relaxed font-light">
-            Fill in your property details. Our system instantly checks if your
-            property matches our current requirements and sends you a response
-            within minutes.
+            {heroCopy.subheading}
           </p>
 
           {/* Option 4: Subtle Glow Rectangle */}
@@ -88,7 +90,7 @@ const Hero = () => {
               className="group relative flex items-center gap-4 px-7 py-3.5 border border-brand-gold/40 rounded-xl bg-[#0a0a0a] transition-all duration-300 w-max overflow-hidden cursor-pointer"
             >
               <span className="relative z-10 text-[14px] text-brand-gold font-medium tracking-wide transition-colors">
-                Read Client Stories
+                {heroCopy.ctaButton}
               </span>
               <div className="relative z-10 w-[1px] h-4 bg-[#333] group-hover:bg-brand-gold/30 transition-colors" />
               <ArrowDown size={16} className="relative z-10 text-brand-gold transition-all" strokeWidth={2} />
@@ -110,23 +112,23 @@ const Hero = () => {
                 <CheckCircle2 className="text-brand-gold w-10 h-10" />
               </div>
               <h3 className="text-2xl sm:text-3xl font-medium text-white mb-3">
-                Checking your property now.
+                {heroCopy.successHeading}
               </h3>
               <p className="text-gray-400 text-base font-light mb-8 max-w-sm mx-auto">
-                You will receive an email with your result within the next few minutes.
+                {heroCopy.successMessage}
               </p>
               <button
                 onClick={resetForm}
                 className="text-brand-gold hover:text-white transition-colors text-sm uppercase tracking-widest font-medium"
               >
-                Submit another property
+                {heroCopy.submitAnother}
               </button>
             </div>
           ) : (
             /* Form */
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
               <h3 className="text-xl sm:text-2xl text-white font-medium mb-2">
-                Property Details
+                {heroCopy.formHeading}
               </h3>
 
               <div className="flex flex-col sm:flex-row gap-4">
@@ -230,7 +232,7 @@ const Hero = () => {
                 </div>
                 <span className="text-xs text-gray-400 leading-relaxed font-light">
                   I agree to the processing of my data in accordance with the{' '}
-                  <a href="https://almassestates.co.uk/privacy" target="_blank" rel="noopener noreferrer" className="text-brand-gold hover:underline">
+                  <a href={heroCopy.gdprLink} target="_blank" rel="noopener noreferrer" className="text-brand-gold hover:underline">
                     privacy policy
                   </a>.
                 </span>
@@ -240,7 +242,7 @@ const Hero = () => {
                 type="submit"
                 className="w-full group bg-brand-gold text-brand-black py-3 rounded-xl text-base font-medium hover:bg-white transition-all shadow-[0_0_20px_rgba(196,164,124,0.15)] mt-2 flex items-center justify-center gap-2"
               >
-                Check My Property Now{" "}
+                {heroCopy.submitButton}{" "}
                 <ArrowUpRight
                   size={18}
                   className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"

@@ -1,0 +1,180 @@
+const brandConfig = {
+  metadata: {
+    title: "Almass Estates — Guaranteed Rent for London Landlords",
+    description: "Find out in minutes if Almass Estates can guarantee your rent. Join 100+ London landlords with 3–5 year leases and £1.8M+ paid out in 2025.",
+    favicon: "/fav.png",
+  },
+  fonts: {
+    googleFontsUrl: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Jost:wght@300;400;500;600;700&display=swap",
+    sans: ['Jost', 'sans-serif'],
+    serif: ['"Cormorant Garamond"', 'serif'],
+  },
+  colors: {
+    background: '#0D0D0D',
+    card: '#1A1A1A',
+    gold: '#C8A96E',
+    primary: '#F0EDE8',
+    secondary: '#C8C4BC',
+    muted: '#888780',
+    darkGold: '#a68a64',
+    black: '#0D0D0D',
+    border: 'rgba(255, 255, 255, 0.08)'
+  },
+  copy: {
+    hero: {
+      heading1: "Guaranteed Rent",
+      heading2: "Every Month.",
+      heading3: "We Handle Everything Else.",
+      subheading: "Fill in your property details. Our system instantly checks if your property matches our current requirements and sends you a response within minutes.",
+      ctaButton: "Read Client Stories",
+      successHeading: "Checking your property now.",
+      successMessage: "You will receive an email with your result within the next few minutes.",
+      submitAnother: "Submit another property",
+      formHeading: "Property Details",
+      gdprText: "I agree to the processing of my data in accordance with the privacy policy.",
+      gdprLink: "https://almassestates.co.uk/privacy",
+      submitButton: "Check My Property Now"
+    },
+    trustStrip: {
+      items: [
+        "£1.8M paid in 2025",
+        "100+ properties managed across london",
+        "3–5 year long-term leases",
+        "No void periods",
+        "Guaranteed income",
+        "Instant response"
+      ]
+    },
+    painPoints: {
+      tag: "Why Landlords Choose Us",
+      heading1: "The problems we ",
+      headingHighlight: "eliminate.",
+      subheading: "Being a landlord shouldn't be a second job. Stop losing time and money to these common headaches.",
+      items: [
+        { num: "01", title: "Rent that never arrives on time", desc: "With us, rent lands on the same date every month. Occupied or empty, it makes no difference to your income." },
+        { num: "02", title: "Maintenance calls at all hours", desc: "We assume full responsibility for repairs, bills and compliance. You will never receive a 2am call about a broken boiler again." },
+        { num: "03", title: "The Renters Rights Bill", desc: "Our commercial lease means the Renters Rights Bill does not apply to you. We take on all the risk not you." },
+        { num: "04", title: "Empty properties losing money", desc: "From the day we sign, your rent is guaranteed whether anyone is in the property or not." }
+      ]
+    },
+    process: {
+      tag: "How It Works — 3 Steps",
+      heading: "From submission to guaranteed income.",
+      items: [
+        {
+          id: "01",
+          title: "Step 1",
+          description: "Submit your property details. Takes less than 60 seconds. Our system instantly checks your property across North West, North, West and Central London.",
+          image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&q=80&w=1200",
+        },
+        {
+          id: "02",
+          title: "Step 2",
+          description: "Receive your result by email within minutes. Match found we confirm interest and next steps. No match we add you to our priority waiting list.",
+          image: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&q=80&w=1200",
+        },
+        {
+          id: "03",
+          title: "Step 3",
+          description: "A member of our team visits your property, assesses its value and makes you a guaranteed rent offer within 72 hours. No obligation. Completely free.",
+          image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=1200",
+        }
+      ]
+    },
+    testimonials: {
+      tag: "Testimonials",
+      heading: "London landlords who stopped worrying.",
+      items: [
+        {
+          id: 1,
+          name: "IMF PROPERTY INVESTMENTS LTD",
+          title: "Mohammed Imran — Director",
+          text: "Almass Estates has never missed a payment, with all rents paid on or before the due date without exception. The property has been kept in excellent condition with no complaints from neighbours or third parties.",
+          statBoxText: "£4,000/month guaranteed since Dec 2024",
+          addressBoxTextParts: ["60 Sturgess Avenue", "5-bed house", "£4,000/mo"],
+          bottomBarLeft: "Zero missed payments since Dec 2024",
+          bottomBarRight: "FORMAL LETTER",
+          verifiedText: "VERIFIED REFERENCE"
+        },
+        {
+          id: 2,
+          name: "LISA MATTHEWS",
+          title: "Landlord — Barnet",
+          text: "Totally impressed with Almass Estates, particularly Coen. Such a professional service I completely felt in safe hands. He found a tenant that moved in within 9 days.",
+          statBoxText: "Tenant secured and moved in within 9 days",
+          addressBoxTextParts: ["Barnet", "Residential Property", "Fast Let"],
+          bottomBarLeft: "Zero void periods",
+          bottomBarRight: "GOOGLE REVIEW",
+          verifiedText: "VERIFIED REFERENCE"
+        },
+        {
+          id: 3,
+          name: "FASIHULLAH QAZI",
+          title: "Repeat Client",
+          text: "Have worked with Coen over a year. Very professional, amazing communication. Have closed many deals looking forward to more.",
+          statBoxText: "Multiple successful deals closed over 1+ years",
+          addressBoxTextParts: ["Portfolio Landlord", "Multiple Properties"],
+          bottomBarLeft: "Consistent performance",
+          bottomBarRight: "GOOGLE REVIEW",
+          verifiedText: "VERIFIED CLIENT"
+        },
+        {
+          id: 4,
+          name: "EBILA B",
+          title: "Verified Client",
+          text: "It was an absolute pleasure working with Almass Estates. Communication was brilliant and I was regularly reassured throughout the whole process.",
+          statBoxText: "Seamless communication and complete reassurance",
+          addressBoxTextParts: ["London", "Guaranteed Rent"],
+          bottomBarLeft: "100% Peace of mind",
+          bottomBarRight: "TRUSTPILOT",
+          verifiedText: "VERIFIED CLIENT"
+        }
+      ]
+    },
+    faq: {
+      tag: "FAQ — 5 Questions",
+      heading: "Frequently Asked Questions",
+      items: [
+        {
+          id: "Q1",
+          question: "What is guaranteed rent and how does it work?",
+          answer: "We become your tenant and pay you a fixed monthly rent whether the property is occupied or not. Long-term lease of 3 to 5 years."
+        },
+        {
+          id: "Q2",
+          question: "Who pays the bills and maintenance?",
+          answer: "We do. All bills, maintenance and repair costs covered by Almass Estates. Zero deductions, zero surprise costs."
+        },
+        {
+          id: "Q3",
+          question: "What types of properties do you take on?",
+          answer: "All types residential, HMO, social housing, blocks and everything in between. If it is in London, we want to hear from you."
+        },
+        {
+          id: "Q4",
+          question: "How quickly can you take on my property?",
+          answer: "Agreement in place within 1 to 2 weeks of initial assessment. We move fast so you start receiving guaranteed rent as soon as possible."
+        },
+        {
+          id: "Q5",
+          question: "What if my property does not match right now?",
+          answer: "Added to our priority waiting list. The moment we are looking for a property matching yours in your area, you will be the first we contact."
+        }
+      ]
+    },
+    cta: {
+      tag: "Get started",
+      headingLine1: "Your property. Our responsibility.",
+      headingLine2: "Your guaranteed income.",
+      subheading: "Join over 100 London landlords who never chase rent again. Check if your property qualifies in under 60 seconds.",
+      buttonText: "Check My Property Now"
+    },
+    chat: {
+      botName: "Aria",
+      botAvatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+      greeting: "Hi! I'm Aria, the property assistant for Almass Estates. How can I help?"
+    }
+  }
+};
+
+export default brandConfig;
