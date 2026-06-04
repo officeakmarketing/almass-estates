@@ -74,6 +74,10 @@ export default function useSmoothScroll(lerp = 0.09) {
       const el = document.getElementById(id);
       if (!el) return;
       e.preventDefault();
+      
+      // Sync state with actual browser scroll position (crucial for mobile/touch)
+      currentY = window.scrollY;
+      
       targetY = Math.max(
         0,
         Math.min(el.getBoundingClientRect().top + currentY - 80, maxScroll())
@@ -86,7 +90,20 @@ export default function useSmoothScroll(lerp = 0.09) {
       window.addEventListener('wheel', onWheel, { passive: false });
       window.addEventListener('touchstart', onTouchStart, { passive: false });
       window.addEventListener('touchmove', onTouchMove, { passive: false });
+    } else {
+      // On mobile, if a programmatic animation is running and the user touches the screen,
+      // we must instantly cancel the animation so it doesn't fight their native swipe!
+      window.addEventListener('touchstart', () => {
+        if (isRunning) {
+          isRunning = false;
+          if (rafId) cancelAnimationFrame(rafId);
+          rafId = null;
+          currentY = window.scrollY;
+          targetY = window.scrollY;
+        }
+      }, { passive: true });
     }
+    
     document.addEventListener('click', onAnchorClick);
 
     return () => {

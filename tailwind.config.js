@@ -8,16 +8,20 @@ export default {
     extend: {
       colors: {
         brand: {
+          background: '#0D0D0D',
+          card: '#1A1A1A',
           gold: '#C8A96E',
+          primary: '#F0EDE8',
+          secondary: '#C8C4BC',
+          muted: '#888780',
           darkGold: '#a68a64',
-          black: '#050505',
-          card: '#111111',
+          black: '#0D0D0D',
           border: 'rgba(255, 255, 255, 0.08)'
         }
       },
       fontFamily: {
         sans: ['Jost', 'sans-serif'],
-        serif: ['Jost', 'sans-serif'],
+        serif: ['"Cormorant Garamond"', 'serif'],
       },
       animation: {
         'slow-pan': 'slow-pan 30s ease-in-out infinite alternate',

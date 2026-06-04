@@ -1,12 +1,14 @@
 import React, { useEffect, useRef } from "react";
 import Hero from "./components/Hero";
+import TrustStrip from "./components/TrustStrip";
+import PainPoints from "./components/PainPoints";
 import PreFooterCTA from "./components/PreFooterCTA";
 import useSmoothScroll from "./hooks/useSmoothScroll";
-import Form from "./components/Form";
-import Chat from "./components/Chat";
-import WhatWeOffer from "./components/WhatWeOffer";
-import WhyChooseUs from "./components/WhyChooseUs";
+
 import Process from "./components/Process";
+import Testimonials from "./components/Testimonials";
+import FAQ from "./components/FAQ";
+
 // Thin gold progress bar that fills as the user scrolls
 function ScrollProgressBar() {
   const barRef = useRef(null);
@@ -50,14 +52,15 @@ export default function App() {
   return (
     <div className="font-sans antialiased bg-black min-h-screen">
       <ScrollProgressBar />
-
+    
       <Hero />
-      <WhatWeOffer/>
-      <WhyChooseUs/>
-      <Process/>     <Form/>  
+      <TrustStrip />
+      <PainPoints />
+     
+      <Process/>   
+      <Testimonials />
+      <FAQ />
       <PreFooterCTA />
-      <Chat/>
-
-        </div>
+    </div>
   );
 }
