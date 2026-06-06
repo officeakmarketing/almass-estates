@@ -52,31 +52,32 @@ const brandConfig = {
       headingHighlight: "eliminate.",
       subheading: "Being a landlord shouldn't be a second job. Stop losing time and money to these common headaches.",
       items: [
-        { num: "01", title: "Rent that never arrives on time", desc: "With us, rent lands on the same date every month. Occupied or empty, it makes no difference to your income." },
-        { num: "02", title: "Maintenance calls at all hours", desc: "We assume full responsibility for repairs, bills and compliance. You will never receive a 2am call about a broken boiler again." },
-        { num: "03", title: "The Renters Rights Bill", desc: "Our commercial lease means the Renters Rights Bill does not apply to you. We take on all the risk not you." },
-        { num: "04", title: "Empty properties losing money", desc: "From the day we sign, your rent is guaranteed whether anyone is in the property or not." }
+        { num: "01", title: "Rent that never arrives on time", desc: "Chasing late payments destroys your peace of mind and ruins your cash flow. With us, rent lands on the same date every month. Occupied or empty, it makes no difference to your income." },
+        { num: "02", title: "Maintenance calls at all hours", desc: "Coordinating contractors and handling tenant complaints turns a passive investment into a stressful second job. We assume full responsibility for repairs, bills and compliance. You will never receive a 2am call about a broken boiler again." },
+        { num: "03", title: "The Renters Rights Bill", desc: "Constantly changing regulations make compliance a minefield and leave you exposed to difficult evictions. Our commercial lease means the Renters Rights Bill does not apply to you. We take on all the risk, not you." },
+        { num: "04", title: "Empty properties losing money", desc: "Every week your property sits vacant between tenancies is profit disappearing straight out of your pocket. From the day we sign, your rent is guaranteed whether anyone is in the property or not." }
       ]
     },
     process: {
       tag: "How It Works — 3 Steps",
-      heading: "From submission to guaranteed income.",
+      heading1: "From submission to ",
+      headingHighlight: "guaranteed income.",
       items: [
         {
           id: "01",
-          title: "Step 1",
+          title: "Submit Property Details",
           description: "Submit your property details. Takes less than 60 seconds. Our system instantly checks your property across North West, North, West and Central London.",
           image: "/images/step1.webp",
         },
         {
           id: "02",
-          title: "Step 2",
-          description: "Receive your result by email within minutes. Match found we confirm interest and next steps. No match we add you to our priority waiting list.",
+          title: "Instant AI Assessment",
+          description: "Our AI analyzes your details and emails your result within minutes. Match found we confirm interest and next steps. No match we add you to our priority waiting list.",
           image: "/images/step2.webp",
         },
         {
           id: "03",
-          title: "Step 3",
+          title: "Guaranteed Rent Offer",
           description: "A member of our team visits your property, assesses its value and makes you a guaranteed rent offer within 72 hours. No obligation. Completely free.",
           image: "/images/step3.webp",
         }
@@ -84,7 +85,8 @@ const brandConfig = {
     },
     testimonials: {
       tag: "Testimonials",
-      heading: "Don't take our word for it. Take theirs.",
+      heading1: "Don't take our word for it. ",
+      headingHighlight: "Take theirs.",
       subheading: "Every landlord asks the same question. Will they actually pay? Here is what the companies we work with say... in writing.",
       proofStrip: [
         "£0 missed across every property",
@@ -141,7 +143,8 @@ const brandConfig = {
     },
     faq: {
       tag: "FAQ — 5 Questions",
-      heading: "Everything you want to know before saying yes.",
+      heading1: "Everything you want to know before ",
+      headingHighlight: "saying yes.",
       items: [
         {
           id: "Q1",

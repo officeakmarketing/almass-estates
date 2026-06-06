@@ -58,9 +58,7 @@ export default function App() {
         <ScrollProgressBar />
       
         <Hero />
-        <TrustStrip />
         <PainPoints />
-       
         <Process/>   
         <Testimonials />
         <FAQ />

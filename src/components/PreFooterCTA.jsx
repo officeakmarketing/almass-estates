@@ -65,9 +65,9 @@ export default function PreFooterCTA() {
         </Reveal>
 
         <Reveal delay={300}>
-          <a href="#hero" className="group flex items-center gap-4 bg-[#C8A96E] hover:brightness-110 text-[#0D0D0D] pl-6 pr-1.5 py-1.5 rounded-full font-sans font-medium transition-all duration-300 hover:scale-105">
+          <a href="#hero" className="sleek-btn group flex w-fit mx-auto items-center gap-4 pl-6 pr-1.5 py-1.5 font-sans font-medium">
             <span className="text-sm tracking-wide">{ctaCopy.buttonText}</span>
-            <div className="w-9 h-9 bg-[#0D0D0D] rounded-full flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1">
+            <div className="w-9 h-9 bg-[#0D0D0D] rounded-sm flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1">
               <svg className="w-4 h-4 text-[#C8A96E]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 19L19 5M19 5v10M19 5H9"></path></svg>
             </div>
           </a>

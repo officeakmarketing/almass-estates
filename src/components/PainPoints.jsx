@@ -17,7 +17,7 @@ const PainPoints = () => {
             <div className="w-8 h-[1px] bg-brand-gold" />
           </div>
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-light text-[#F5F5F5] tracking-tight mb-6">
-            {brandConfig.copy.painPoints.heading1}<span className="text-brand-gold italic font-medium">{brandConfig.copy.painPoints.headingHighlight}</span>
+            {brandConfig.copy.painPoints.heading1}<span className="text-gradient-gold italic font-medium">{brandConfig.copy.painPoints.headingHighlight}</span>
           </h2>
           <p className="text-[#888] text-lg max-w-2xl mx-auto font-light leading-relaxed">
             {brandConfig.copy.painPoints.subheading}
@@ -33,20 +33,18 @@ const PainPoints = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ delay: idx * 0.15, duration: 0.7 }}
-              className="flex flex-col group"
+              className="flex flex-col group sleek-card p-8 justify-between"
             >
-              {/* Top border that expands on hover */}
-              <div className="w-full h-[1px] bg-[#222] mb-6 relative">
-                <div className="absolute top-0 left-0 h-full bg-brand-gold w-0 group-hover:w-full transition-all duration-700 ease-out" />
+              <div>
+                <span className="text-gradient-gold text-2xl tracking-widest font-bold mb-4 block">{point.num}</span>
+                <div className="divider-gold mb-5 opacity-50"></div>
+                <h3 className="text-2xl lg:text-3xl font-medium text-white mb-4 tracking-wide leading-tight">
+                  {point.title}
+                </h3>
+                <p className="text-[#888] text-base lg:text-lg leading-relaxed font-light">
+                  {point.desc}
+                </p>
               </div>
-              
-              <span className="text-brand-gold text-sm tracking-widest font-medium mb-4">{point.num}</span>
-              <h3 className="text-2xl lg:text-3xl font-medium text-[#EAEAEA] mb-4 tracking-wide leading-tight">
-                {point.title}
-              </h3>
-              <p className="text-[#888] text-base lg:text-lg leading-relaxed font-light">
-                {point.desc}
-              </p>
             </motion.div>
           ))}
         </div>

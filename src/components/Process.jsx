@@ -15,8 +15,8 @@ export default function Process() {
             <span className="text-brand-gold text-xs tracking-widest uppercase font-medium">{brandConfig.copy.process.tag}</span>
             <div className="w-8 h-[1px] bg-brand-gold" />
           </div>
-          <h2 className="text-4xl sm:text-5xl lg:text-[4rem] font-medium text-white tracking-tight mb-6 leading-[1.1]">
-            {brandConfig.copy.process.heading}
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-light text-[#F5F5F5] tracking-tight mb-6">
+            {brandConfig.copy.process.heading1}<span className="text-gradient-gold italic font-medium">{brandConfig.copy.process.headingHighlight}</span>
           </h2>
         </div>
 

@@ -17,8 +17,8 @@ export default function Testimonials() {
             <span className="text-brand-gold text-xs tracking-widest uppercase font-medium">{brandConfig.copy.testimonials.tag}</span>
             <div className="w-8 h-[1px] bg-brand-gold" />
           </div>
-          <h2 className="text-4xl sm:text-5xl lg:text-[4rem] font-medium text-white tracking-tight mb-6 leading-[1.1]">
-            {brandConfig.copy.testimonials.heading}
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-light text-[#F5F5F5] tracking-tight mb-6">
+            {brandConfig.copy.testimonials.heading1}<span className="text-gradient-gold italic font-medium">{brandConfig.copy.testimonials.headingHighlight}</span>
           </h2>
           <p className="text-gray-400 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed font-light">
             {brandConfig.copy.testimonials.subheading}
@@ -54,7 +54,7 @@ export default function Testimonials() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: i * 0.15 }}
-              className="bg-[#0f0f0f] rounded-xl p-6 sm:p-7 border border-[#1a1a1a] shadow-2xl flex flex-col justify-between"
+              className="sleek-card p-6 sm:p-7 flex flex-col justify-between"
             >
               {/* Header */}
               <div className="flex flex-col items-start gap-1 mb-5">

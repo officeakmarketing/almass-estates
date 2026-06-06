@@ -23,8 +23,8 @@ export default function FAQ() {
             <span className="text-brand-gold text-xs tracking-widest uppercase font-medium">{brandConfig.copy.faq.tag}</span>
             <div className="w-8 h-[1px] bg-brand-gold" />
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium text-white tracking-tight leading-tight">
-            {brandConfig.copy.faq.heading}
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-light text-[#F5F5F5] tracking-tight mb-6">
+            {brandConfig.copy.faq.heading1}<span className="text-gradient-gold italic font-medium">{brandConfig.copy.faq.headingHighlight}</span>
           </h2>
         </div>
 
@@ -35,7 +35,7 @@ export default function FAQ() {
             return (
               <div 
                 key={faq.id} 
-                className="bg-[#0f0f0f] border border-white/5 rounded-2xl overflow-hidden transition-colors duration-300 hover:border-brand-gold/30"
+                className="sleek-card rounded-2xl overflow-hidden transition-colors duration-300 hover:border-brand-gold/30"
               >
                 <button
                   onClick={() => toggleOpen(faq.id)}
