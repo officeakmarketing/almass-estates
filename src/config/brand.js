@@ -25,8 +25,8 @@ const brandConfig = {
   copy: {
     hero: {
       heading1: "Guaranteed Rent",
-      heading2: "Every Month.",
-      heading3: "We Handle Everything Else.",
+      heading2: "Stop Managing.",
+      heading3: "Start Collecting.",
       subheading: "Our AI instantly checks if your property qualifies and sends you a result within minutes.",
       ctaButton: "Read Client Stories",
       successHeading: "Checking your property now.",

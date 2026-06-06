@@ -113,14 +113,8 @@ const Hero = () => {
           className="w-full lg:w-[55%] flex flex-col items-center lg:items-start text-center lg:text-left lg:mt-16"
         >
           <h1 className="text-[2.5rem] sm:text-5xl lg:text-[3.5rem] xl:text-[4.5rem] 2xl:text-[5rem] font-medium 2xl:font-semibold leading-[1.1] mb-3 lg:mb-4 xl:mb-6 text-white tracking-tight">
-            <span className="hidden sm:inline">
-              <span className="text-gradient-gold italic pr-1.5">{heroCopy.heading1}</span><br />
-              {heroCopy.heading2} <br /> {heroCopy.heading3}
-            </span>
-            <span className="inline sm:hidden">
-              <span className="text-gradient-gold italic pr-1.5">Guaranteed rent</span><br />
-              Stop Managing <br /> Start Collecting
-            </span>
+            <span className="block text-gradient-gold italic pr-1.5 text-[0.85em] mb-1 sm:mb-2 leading-tight">{heroCopy.heading1}</span>
+            {heroCopy.heading2} <br /> {heroCopy.heading3}
           </h1>
 
           <p className="text-gray-400 text-sm sm:text-lg mb-4 lg:mb-6 xl:mb-10 max-w-lg leading-relaxed font-light mx-auto lg:mx-0">
