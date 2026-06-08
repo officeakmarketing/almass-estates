@@ -9,6 +9,7 @@ import Process from "./components/Process";
 import Testimonials from "./components/Testimonials";
 import FAQ from "./components/FAQ";
 import PasswordGate from "./components/PasswordGate";
+import Footer from "./components/Footer";
 
 import brandConfig from "./config/brand";
 
@@ -63,8 +64,9 @@ export default function App() {
         <Testimonials />
         <FAQ />
         <PreFooterCTA />
-  
+        <Footer />
       </div>
     </PasswordGate>
   );
 }
+

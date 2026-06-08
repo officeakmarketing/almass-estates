@@ -100,13 +100,15 @@ const Hero = () => {
 
         {/* Top Logo */}
       <div className="absolute top-6 left-0 w-full flex justify-center sm:top-8 sm:left-10 sm:w-auto sm:block lg:top-8 lg:left-10 z-30">
-        <img src="/images/logo.png" alt="Almass Estates" className="h-16 sm:h-16 lg:h-20 opacity-95 object-contain drop-shadow-[0_0_15px_rgba(200,169,110,0.15)]" />
+        <a href="https://almassestates.co.uk/" target="_blank" rel="noopener noreferrer">
+          <img src="/images/logo.png" alt="Almass Estates" className="h-16 sm:h-16 lg:h-20 opacity-95 object-contain drop-shadow-[0_0_15px_rgba(200,169,110,0.15)]" />
+        </a>
       </div>
 
       {/* Main Hero Content */}
       <div className="flex-grow flex flex-col lg:flex-row items-center justify-center w-full max-w-[1300px] mx-auto gap-8 lg:gap-12 xl:gap-20 pt-28 lg:pt-0 pb-8 lg:pb-0 px-4 sm:px-10 relative">
         {/* Left: Copy & Value Prop */}
-        <motion.div
+        <motion.div 
           variants={fadeUp}
           initial="hidden"
           animate="show"

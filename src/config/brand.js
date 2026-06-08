@@ -184,6 +184,33 @@ const brandConfig = {
       botName: "Aria",
       botAvatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
       greeting: "Hi! I'm Aria, the property assistant for Almass Estates. How can I help?"
+    },
+    footer: {
+      logo: {
+        src: "/images/logo.png",
+        text: "ALMASS ESTATES"
+      },
+      links: [
+        { label: "Guaranteed Rent", url: "https://almassestates.co.uk/" },
+        { label: "Our Portfolio", url: "https://almassestates.co.uk/portfolio" },
+        { label: "Contact", url: "https://almassestates.co.uk/contact" },
+        { label: "Privacy", url: "https://almassestates.co.uk/privacy" },
+        { label: "Terms", url: "https://almassestates.co.uk/terms" }
+      ],
+      contact: {
+        phone: "020 3538 8233",
+        email: "estates@almassestate.com",
+        location: "London, UK"
+      },
+      socials: [
+        { platform: "Facebook", url: "https://www.facebook.com/profile.php?id=61567827752984&mibextid=wwXIfr&rdid=pD9JOgaQRpoCaNBG&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1Dc4Asf4cf%2F%3Fmibextid%3DwwXIfr#", icon: "facebook" },
+        { platform: "TikTok", url: "https://www.tiktok.com/@almassestatesltd?_r=1&_t=ZN-96CDtylixaF", icon: "tiktok" },
+        { platform: "Instagram", url: "https://www.instagram.com/almassestatesltd?igsh=MXZ1dDNqbG8xb3hjaA%3D%3D", icon: "instagram" },
+        { platform: "LinkedIn", url: "https://www.linkedin.com/company/almassestatesltd/", icon: "linkedin" }
+      ],
+      copyright: "© 2026 Almass Estates Ltd. All Rights Reserved.",
+      poweredBy: "Powered by AK Marketing",
+      poweredByUrl: "https://akmarketing.agency/"
     }
   }
 };
