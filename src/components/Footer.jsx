@@ -59,19 +59,19 @@ const Footer = () => {
         }}
       />
 
-      <div className="relative z-10 max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-end gap-12 md:gap-0">
+      <div className="relative z-10 max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center md:items-end gap-16 md:gap-0">
         
         {/* Left Side */}
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-8 md:gap-6 w-full md:w-auto items-center md:items-start text-center md:text-left">
           {/* Logo Section */}
-          <a href="https://almassestates.co.uk/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 mb-2 hover:opacity-80 transition-opacity">
+          <a href="https://almassestates.co.uk/" target="_blank" rel="noopener noreferrer" className="flex flex-col md:flex-row items-center gap-4 mb-2 hover:opacity-80 transition-opacity">
             <img 
               src={footer.logo.src} 
               alt={footer.logo.text} 
-              className="w-12 h-12 object-contain"
+              className="w-16 h-16 md:w-12 md:h-12 object-contain"
             />
             <span 
-              className="text-gradient-gold italic pr-1.5 text-2xl md:text-3xl font-medium tracking-tight"
+              className="text-gradient-gold italic md:pr-1.5 text-2xl md:text-3xl font-medium tracking-tight mt-2 md:mt-0"
               style={{ fontFamily: fonts.serif[0] }}
             >
               {footer.logo.text}
@@ -79,23 +79,28 @@ const Footer = () => {
           </a>
 
           {/* Links */}
-          <div className="flex flex-wrap gap-6 text-sm text-[#C8C4BC] font-medium">
+          <div className="flex flex-col md:flex-row md:flex-wrap w-full md:w-auto text-sm text-[#C8C4BC] font-medium items-center md:gap-6">
             {footer.links.map((link, idx) => (
-              <a 
-                key={idx} 
-                href={link.url} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="hover:text-white transition-colors duration-200"
-              >
-                {link.label}
-              </a>
+              <React.Fragment key={idx}>
+                <a 
+                  href={link.url} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors duration-200 py-3 md:py-0 w-full md:w-auto text-center"
+                >
+                  {link.label}
+                </a>
+                {/* Thin line divider for mobile only */}
+                {idx < footer.links.length - 1 && (
+                  <div className="w-12 h-[1px] bg-white/10 md:hidden my-1"></div>
+                )}
+              </React.Fragment>
             ))}
           </div>
 
           {/* Contact Details */}
-          <div className="flex flex-col gap-3 mt-4">
-            <a href={`tel:${footer.contact.phone.replace(/\s+/g, '')}`} className="text-[#F0EDE8] text-lg hover:text-white transition-colors">
+          <div className="flex flex-col gap-4 md:gap-3 mt-4 items-center md:items-start w-full md:w-auto">
+            <a href={`tel:${footer.contact.phone.replace(/\s+/g, '')}`} className="text-[#F0EDE8] text-lg md:text-lg hover:text-white transition-colors">
               {footer.contact.phone}
             </a>
             <a href={`mailto:${footer.contact.email}`} className="text-[#C8C4BC] hover:text-white transition-colors">
@@ -106,16 +111,16 @@ const Footer = () => {
         </div>
 
         {/* Right Side */}
-        <div className="flex flex-col items-start md:items-end gap-10 md:gap-12 w-full md:w-auto">
+        <div className="flex flex-col items-center md:items-end gap-10 md:gap-12 w-full md:w-auto">
           {/* Social Icons */}
-          <div className="flex gap-4">
+          <div className="flex justify-center md:justify-end gap-5 md:gap-4 w-full md:w-auto">
             {footer.socials.map((social, idx) => (
               <a
                 key={idx}
                 href={social.url}
                 target="_blank"
                 rel="noreferrer"
-                className="w-11 h-11 rounded-full bg-[#1A1A1A] hover:bg-[#2A2A2A] flex items-center justify-center text-white transition-colors"
+                className="w-12 h-12 md:w-11 md:h-11 rounded-full bg-[#1A1A1A] hover:bg-[#2A2A2A] flex items-center justify-center text-white transition-colors"
                 aria-label={social.platform}
               >
                 {renderIcon(social.icon)}
@@ -124,7 +129,7 @@ const Footer = () => {
           </div>
 
           {/* Copyright & Powered By */}
-          <div className="flex flex-col gap-3 text-sm text-[#C8C4BC] md:text-right mt-auto">
+          <div className="flex flex-col items-center md:items-end gap-4 md:gap-3 text-sm text-[#C8C4BC] text-center md:text-right mt-auto">
             <p>{footer.copyright}</p>
             <a 
               href={footer.poweredByUrl} 

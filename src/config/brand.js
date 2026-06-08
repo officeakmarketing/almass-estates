@@ -208,7 +208,7 @@ const brandConfig = {
         { platform: "Instagram", url: "https://www.instagram.com/almassestatesltd?igsh=MXZ1dDNqbG8xb3hjaA%3D%3D", icon: "instagram" },
         { platform: "LinkedIn", url: "https://www.linkedin.com/company/almassestatesltd/", icon: "linkedin" }
       ],
-      copyright: "© 2026 Almass Estates Ltd. All Rights Reserved.",
+      copyright: `© ${new Date().getFullYear()} Almass Estates Ltd. All Rights Reserved.`,
       poweredBy: "Powered by AK Marketing",
       poweredByUrl: "https://akmarketing.agency/"
     }
