@@ -11,6 +11,7 @@ const LeadForm = () => {
     propertyAddress: "",
     propertyType: "Flat",
     bedrooms: "Studio",
+    propertyArea: "North",
     currentSituation: "Empty",
     gdpr: false,
   });
@@ -80,6 +81,7 @@ const LeadForm = () => {
       propertyAddress: "",
       propertyType: "Flat",
       bedrooms: "Studio",
+      propertyArea: "North",
       currentSituation: "Empty",
       gdpr: false,
     });
@@ -111,6 +113,11 @@ const LeadForm = () => {
       return;
     }
 
+    if (!formData.propertyArea || formData.propertyArea.trim() === "") {
+      setFormError("Please select a property area.");
+      return;
+    }
+
     if (!formData.propertyAddress.trim() || formData.propertyAddress.trim().length < 5) {
       setFormError("Please enter a valid and complete property address.");
       return;
@@ -130,10 +137,11 @@ const LeadForm = () => {
       property_type: formData.propertyType,
       bedrooms: formData.bedrooms,
       current_situation: formData.currentSituation,
+      property_area: formData.propertyArea,
       property_address: formData.propertyAddress
     };
-
-    try {
+  
+    try {                         
       const response = await fetch("/api/submit", {
         method: "POST",
         headers: {
@@ -292,6 +300,19 @@ const LeadForm = () => {
               <option value="Self managing">Self managing</option>
               <option value="With agent">With agent</option>
               <option value="Other">Other</option>
+            </select>
+
+            <select
+              name="propertyArea"
+              value={formData.propertyArea}
+              onChange={handleChange}
+              className="sleek-input w-full px-4 py-2.5 sm:py-3 lg:py-2.5 xl:py-3 text-white text-sm appearance-none cursor-pointer"
+              required={!isMobile || step === 2}
+            >
+              <option value="North West">North West</option>
+              <option value="North">North</option>
+              <option value="West">West</option>
+              <option value="Central">Central</option>
             </select>
 
             <input
