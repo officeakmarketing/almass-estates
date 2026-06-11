@@ -142,7 +142,7 @@ const LeadForm = () => {
     };
   
     try {                         
-      const response = await fetch("/api/submit", {
+      const response = await fetch("https://hook.eu1.make.com/82ozrdgjjw018csm64at2og4n27jwmrv", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -282,11 +282,11 @@ const LeadForm = () => {
                 className="sleek-input w-1/2 px-4 py-2.5 sm:py-3 lg:py-2.5 xl:py-3 text-white text-sm appearance-none cursor-pointer"
               >
                 <option value="Studio">Studio</option>
-                <option value="1">1 Bedroom</option>
-                <option value="2">2 Bedrooms</option>
-                <option value="3">3 Bedrooms</option>
-                <option value="4">4 Bedrooms</option>
-                <option value="5+">5+ Bedrooms</option>
+                <option value="1 Bedroom">1 Bedroom</option>
+                <option value="2 Bedrooms">2 Bedrooms</option>
+                <option value="3 Bedrooms">3 Bedrooms</option>
+                <option value="4 Bedrooms">4 Bedrooms</option>
+                <option value="5+ Bedrooms">5+ Bedrooms</option>
               </select>
             </div>
 
