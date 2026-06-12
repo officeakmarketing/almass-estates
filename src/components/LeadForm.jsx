@@ -271,7 +271,7 @@ const LeadForm = () => {
               >
                 <option value="Flat">Flat</option>
                 <option value="House">House</option>
-                <option value="HMO">HMO</option>
+                <option value="Hmo">Hmo</option>
                 <option value="Block">Block</option>
                 <option value="Other">Other</option>
               </select>
