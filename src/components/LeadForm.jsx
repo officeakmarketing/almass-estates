@@ -270,6 +270,7 @@ const LeadForm = () => {
                 className="sleek-input w-1/2 px-4 py-2.5 sm:py-3 lg:py-2.5 xl:py-3 text-white text-sm appearance-none cursor-pointer"
               >
                 <option value="Flat">Flat</option>
+                <option value="Appartement">Appartement</option>
                 <option value="House">House</option>
                 <option value="Hmo">Hmo</option>
                 <option value="Block">Block</option>
@@ -311,6 +312,7 @@ const LeadForm = () => {
             >
               <option value="North West">North West</option>
               <option value="North">North</option>
+              <option value="East">East</option>
               <option value="West">West</option>
               <option value="Central">Central</option>
             </select>
