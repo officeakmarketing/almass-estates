@@ -6,29 +6,38 @@ export default async function handler(req, res) {
   try {
     const payload = req.body;
     const webhookUrl = process.env.WEBHOOK_URL;
+    const makeApiKey = process.env.MAKE_API_KEY;
 
-    if (!webhookUrl) {
-      console.error('Missing WEBHOOK_URL environment variable');
-      return res.status(500).json({ message: 'Webhook configuration error on server' });
+    if (!webhookUrl || !makeApiKey) {
+      console.error('Missing environment variables');
+      return res.status(500).json({ message: 'Server configuration error' });
     }
 
-    // Forward the request to LeadConnector
     const response = await fetch(webhookUrl, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'x-make-apikey': makeApiKey
       },
       body: JSON.stringify(payload)
     });
 
     if (!response.ok) {
-      throw new Error(`Webhook responded with status: ${response.status}`);
+      const text = await response.text();
+      throw new Error(`Make error: ${response.status} - ${text}`);
     }
 
-    // Respond back to the React frontend
-    return res.status(200).json({ success: true, message: 'Submitted successfully' });
+    return res.status(200).json({
+      success: true,
+      message: 'Submitted successfully'
+    });
+
   } catch (error) {
     console.error('API Route Error:', error);
-    return res.status(500).json({ success: false, message: 'Internal Server Error' });
+
+    return res.status(500).json({
+      success: false,
+      message: 'Internal Server Error'
+    });
   }
 }

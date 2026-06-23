@@ -149,7 +149,7 @@ const LeadForm = () => {
 
     try {
       const response = await fetch(
-        "https://hook.eu1.make.com/82ozrdgjjw018csm64at2og4n27jwmrv",
+        "/api/submit",
         {
           method: "POST",
           headers: {
