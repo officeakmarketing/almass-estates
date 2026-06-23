@@ -5,7 +5,7 @@ const brandConfig = {
     description: "Find out in minutes if Almass Estates can guarantee your rent. Join 100+ London landlords with 3–5 year leases and £1.8M+ paid out in 2025.",
     favicon: "/fav.png",
   },
-  sitePassword: "almass", 
+
   fonts: {
     googleFontsUrl: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Jost:wght@300;400;500;600;700&display=swap",
     sans: ['Jost', 'sans-serif'],

@@ -8,7 +8,7 @@ import useSmoothScroll from "./hooks/useSmoothScroll";
 import Process from "./components/Process";
 import Testimonials from "./components/Testimonials";
 import FAQ from "./components/FAQ";
-import PasswordGate from "./components/PasswordGate";
+
 import Footer from "./components/Footer";
 
 import brandConfig from "./config/brand";
@@ -54,19 +54,17 @@ export default function App() {
   useSmoothScroll(0.09);
 
   return (
-    <PasswordGate>
-      <div className="font-sans antialiased bg-black min-h-screen">
-        <ScrollProgressBar />
-      
-        <Hero />
-        <PainPoints />
-        <Process/>   
-        <Testimonials />
-        <FAQ />
-        <PreFooterCTA />
-        <Footer />
-      </div>
-    </PasswordGate>
+    <div className="font-sans antialiased bg-black min-h-screen">
+      <ScrollProgressBar />
+    
+      <Hero />
+      <PainPoints />
+      <Process/>   
+      <Testimonials />
+      <FAQ />
+      <PreFooterCTA />
+      <Footer />
+    </div>
   );
 }
 
