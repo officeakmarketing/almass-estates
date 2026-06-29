@@ -186,6 +186,21 @@ const LeadForm = () => {
     }
   };
 
+  const handleMouseEnter = () => {
+    document.body.style.overflow = 'hidden';
+  };
+
+  const handleMouseLeave = () => {
+    document.body.style.overflow = '';
+  };
+
+  // Ensure body scroll is restored if the component unmounts
+  useEffect(() => {
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, []);
+
   const heroCopy = brandConfig.copy.hero;
   const isFlat = formData.propertyType === "Flat";
 
@@ -194,6 +209,12 @@ const LeadForm = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: 0.2 }}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onWheel={(e) => {
+        // Prevent scroll events from bubbling up to the window
+        e.stopPropagation();
+      }}
       className="w-full lg:w-[45%] sleek-card px-4 py-6 sm:p-8 lg:p-6 xl:px-8 xl:py-4 relative h-auto"
     >
       {/* Dev Testing Dropdown */}
@@ -393,7 +414,31 @@ const LeadForm = () => {
           )}
 
           {step === 2 && (
-            <div className="flex flex-col gap-2 sm:gap-4 lg:gap-3 xl:gap-4 max-h-[50vh] sm:max-h-none overflow-y-auto pr-1 pb-1">
+            <>
+              <style>
+                {`
+                  .custom-scrollbar::-webkit-scrollbar {
+                    width: 6px;
+                  }
+                  .custom-scrollbar::-webkit-scrollbar-track {
+                    background: transparent;
+                  }
+                  .custom-scrollbar::-webkit-scrollbar-thumb {
+                    background: rgba(212, 175, 55, 0.4);
+                    border-radius: 10px;
+                  }
+                  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+                    background: rgba(212, 175, 55, 0.7);
+                  }
+                `}
+              </style>
+              <div 
+                className="flex flex-col gap-2 sm:gap-4 lg:gap-3 xl:gap-4 max-h-[35vh] sm:max-h-[260px] overflow-y-auto pr-3 pb-2 custom-scrollbar overscroll-contain"
+                style={{
+                  scrollbarWidth: 'thin',
+                  scrollbarColor: 'rgba(212, 175, 55, 0.5) transparent'
+                }}
+              >
               {/* Full property address */}
               <input
                 required={step === 2}
@@ -498,24 +543,8 @@ const LeadForm = () => {
                 </div>
               </div>
 
-              {/* Features & Licence Row */}
+              {/* Parking & Garden */}
               <div className="flex flex-row gap-3 sm:gap-4 lg:gap-3 xl:gap-4">
-                <div className="w-1/2 flex flex-col gap-1">
-                  <label className="text-[10px] text-gray-400 uppercase tracking-widest pl-1">Licence Type</label>
-                  <select
-                    name="licenceType"
-                    value={formData.licenceType}
-                    onChange={handleChange}
-                    className="sleek-input w-full px-4 py-2.5 sm:py-3 lg:py-2.5 xl:py-3 text-white text-sm appearance-none cursor-pointer"
-                  >
-                    <option value="None">None</option>
-                    <option value="HMO">HMO</option>
-                    <option value="C1">C1</option>
-                    <option value="C2">C2</option>
-                    <option value="C4">C4</option>
-                    <option value="Other">Other</option>
-                  </select>
-                </div>
                 <div className="w-1/2 flex flex-col gap-1">
                   <label className="text-[10px] text-gray-400 uppercase tracking-widest pl-1">Parking</label>
                   <select
@@ -528,10 +557,6 @@ const LeadForm = () => {
                     <option value="Yes">Yes</option>
                   </select>
                 </div>
-              </div>
-
-              {/* Garden / Balcony Row */}
-              <div className="flex flex-row gap-3 sm:gap-4 lg:gap-3 xl:gap-4">
                 <div className="w-1/2 flex flex-col gap-1">
                   <label className="text-[10px] text-gray-400 uppercase tracking-widest pl-1">Garden</label>
                   <select
@@ -544,49 +569,71 @@ const LeadForm = () => {
                     <option value="Yes">Yes</option>
                   </select>
                 </div>
-                {isFlat && (
-                  <div className="w-1/2 flex flex-col gap-1">
-                    <label className="text-[10px] text-gray-400 uppercase tracking-widest pl-1">Balcony / Outdoor Space</label>
-                    <select
-                      name="balcony"
-                      value={formData.balcony}
-                      onChange={handleChange}
-                      className="sleek-input w-full px-4 py-2.5 sm:py-3 lg:py-2.5 xl:py-3 text-white text-sm appearance-none cursor-pointer"
-                    >
-                      <option value="No">No</option>
-                      <option value="Yes">Yes</option>
-                    </select>
-                  </div>
-                )}
               </div>
 
-              {/* Flat specific remaining fields */}
+              {/* Flat specific fields */}
               {isFlat && (
-                <div className="flex flex-row gap-3 sm:gap-4 lg:gap-3 xl:gap-4">
-                  <div className="w-1/2 flex flex-col gap-1">
-                    <label className="text-[10px] text-gray-400 uppercase tracking-widest pl-1">Floor Level</label>
-                    <input
-                      type="number"
-                      name="floor"
-                      value={formData.floor}
-                      onChange={handleChange}
-                      className="sleek-input w-full px-4 py-2.5 sm:py-3 lg:py-2.5 xl:py-3 text-white placeholder-gray-500 text-sm"
-                    />
+                <div className="flex flex-col gap-3 sm:gap-4 lg:gap-3 xl:gap-4">
+                  <div className="flex flex-row gap-3 sm:gap-4 lg:gap-3 xl:gap-4">
+                    <div className="w-1/2 flex flex-col gap-1">
+                      <label className="text-[10px] text-gray-400 uppercase tracking-widest pl-1">Balcony / Outdoor Space</label>
+                      <select
+                        name="balcony"
+                        value={formData.balcony}
+                        onChange={handleChange}
+                        className="sleek-input w-full px-4 py-2.5 sm:py-3 lg:py-2.5 xl:py-3 text-white text-sm appearance-none cursor-pointer"
+                      >
+                        <option value="No">No</option>
+                        <option value="Yes">Yes</option>
+                      </select>
+                    </div>
+                    <div className="w-1/2 flex flex-col gap-1">
+                      <label className="text-[10px] text-gray-400 uppercase tracking-widest pl-1">Floor Level</label>
+                      <input
+                        type="number"
+                        name="floor"
+                        value={formData.floor}
+                        onChange={handleChange}
+                        className="sleek-input w-full px-4 py-2.5 sm:py-3 lg:py-2.5 xl:py-3 text-white placeholder-gray-500 text-sm"
+                      />
+                    </div>
                   </div>
-                  <div className="w-1/2 flex flex-col gap-1">
-                    <label className="text-[10px] text-gray-400 uppercase tracking-widest pl-1">Lift Available</label>
-                    <select
-                      name="lift"
-                      value={formData.lift}
-                      onChange={handleChange}
-                      className="sleek-input w-full px-4 py-2.5 sm:py-3 lg:py-2.5 xl:py-3 text-white text-sm appearance-none cursor-pointer"
-                    >
-                      <option value="No">No</option>
-                      <option value="Yes">Yes</option>
-                    </select>
+                  <div className="flex flex-row gap-3 sm:gap-4 lg:gap-3 xl:gap-4">
+                    <div className="w-1/2 flex flex-col gap-1">
+                      <label className="text-[10px] text-gray-400 uppercase tracking-widest pl-1">Lift Available</label>
+                      <select
+                        name="lift"
+                        value={formData.lift}
+                        onChange={handleChange}
+                        className="sleek-input w-full px-4 py-2.5 sm:py-3 lg:py-2.5 xl:py-3 text-white text-sm appearance-none cursor-pointer"
+                      >
+                        <option value="No">No</option>
+                        <option value="Yes">Yes</option>
+                      </select>
+                    </div>
+                    {/* Placeholder div to keep layout consistent */}
+                    <div className="w-1/2"></div>
                   </div>
                 </div>
               )}
+
+              {/* Licence Type - Always Last */}
+              <div className="flex flex-col gap-1">
+                <label className="text-[10px] text-gray-400 uppercase tracking-widest pl-1">Licence Type</label>
+                <select
+                  name="licenceType"
+                  value={formData.licenceType}
+                  onChange={handleChange}
+                  className="sleek-input w-full px-4 py-2.5 sm:py-3 lg:py-2.5 xl:py-3 text-white text-sm appearance-none cursor-pointer"
+                >
+                  <option value="None">None</option>
+                  <option value="HMO">HMO</option>
+                  <option value="C1">C1</option>
+                  <option value="C2">C2</option>
+                  <option value="C4">C4</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
 
               <label className="flex items-start gap-3 mt-2 sm:mt-3 cursor-pointer group">
                 <div className="relative flex items-center justify-center shrink-0 mt-0.5">
@@ -618,6 +665,7 @@ const LeadForm = () => {
                 </span>
               </label>
             </div>
+            </>
           )}
 
           <div className="flex flex-col gap-1 sm:gap-2 mt-2 sm:mt-4 border-t border-white/5 pt-4">
