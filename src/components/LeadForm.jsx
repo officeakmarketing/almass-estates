@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { CheckCircle2, ArrowRight, ArrowUpRight } from "lucide-react";
+import { CheckCircle2, ArrowRight, ArrowUpRight, MessageCircle } from "lucide-react";
 import brandConfig from "../config/brand";
 
 const LeadForm = () => {
@@ -10,14 +10,31 @@ const LeadForm = () => {
     phone: "",
     propertyAddress: "",
     propertyType: "Flat",
-    bedrooms: "Studio",
-    propertyArea: "North",
-    currentSituation: "Empty",
+    bedrooms: "1",
+    bathrooms: "1",
+    enSuite: "No",
+    wcs: "0",
+    livingRooms: "1",
+    furnishedState: "Furnished",
+    parking: "No",
+    garden: "No",
+    licenceType: "None",
+    // Flat only
+    balcony: "No",
+    floor: "1",
+    lift: "No",
     gdpr: false,
   });
+
   const [submissionState, setSubmissionState] = useState("idle"); // "idle", "loading", "success", "error"
-  const [rentRange, setRentRange] = useState({ min: null, max: null });
-  const [debugInfo, setDebugInfo] = useState(null);
+  const [quoteData, setQuoteData] = useState({ 
+    guaranteedRent: null, 
+    annualIncome: null, 
+    minRent: null, 
+    maxRent: null,
+    confidenceScore: null
+  });
+  const [testMode, setTestMode] = useState("real");
   const [step, setStep] = useState(1);
   const [isMobile, setIsMobile] = useState(false);
   const [formError, setFormError] = useState("");
@@ -79,16 +96,25 @@ const LeadForm = () => {
 
   const resetForm = () => {
     setSubmissionState("idle");
-    setRentRange({ min: null, max: null });
+    setQuoteData({ guaranteedRent: null, annualIncome: null, minRent: null, maxRent: null, confidenceScore: null });
     setFormData({
       fullName: "",
       email: "",
       phone: "",
       propertyAddress: "",
       propertyType: "Flat",
-      bedrooms: "Studio",
-      propertyArea: "North",
-      currentSituation: "Empty",
+      bedrooms: "1",
+      bathrooms: "1",
+      enSuite: "No",
+      wcs: "0",
+      livingRooms: "1",
+      furnishedState: "Furnished",
+      parking: "No",
+      garden: "No",
+      licenceType: "None",
+      balcony: "No",
+      floor: "1",
+      lift: "No",
       gdpr: false,
     });
     setStep(1);
@@ -98,40 +124,6 @@ const LeadForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const contactError = validateContactInfo();
-    if (contactError) {
-      setFormError(contactError);
-      return;
-    }
-
-    if (!formData.propertyType || formData.propertyType.trim() === "") {
-      setFormError("Please select a property type.");
-      return;
-    }
-
-    if (!formData.bedrooms || formData.bedrooms.trim() === "") {
-      setFormError("Please select the number of bedrooms.");
-      return;
-    }
-
-    if (!formData.currentSituation || formData.currentSituation.trim() === "") {
-      setFormError("Please select your current situation.");
-      return;
-    }
-
-    if (!formData.propertyArea || formData.propertyArea.trim() === "") {
-      setFormError("Please select a property area.");
-      return;
-    }
-
-    if (
-      !formData.propertyAddress.trim() ||
-      formData.propertyAddress.trim().length < 5
-    ) {
-      setFormError("Please enter a valid and complete property address.");
-      return;
-    }
-
     if (!formData.gdpr) {
       setFormError("Please accept the privacy policy to continue.");
       return;
@@ -140,16 +132,22 @@ const LeadForm = () => {
     setFormError("");
     setSubmissionState("loading");
 
-    const payload = {
-      full_name: formData.fullName,
-      email: formData.email,
-      phone: formData.phone,
-      property_type: formData.propertyType,
-      bedrooms: formData.bedrooms,
-      current_situation: formData.currentSituation,
-      property_area: formData.propertyArea,
-      property_address: formData.propertyAddress,
-    };
+    // Bypass for frontend visual testing
+    if (testMode === "mock_success") {
+      setTimeout(() => {
+        setQuoteData({
+          guaranteedRent: 2100,
+          annualIncome: 25200,
+          minRent: 2400,
+          maxRent: 2600,
+          confidenceScore: "High"
+        });
+        setSubmissionState("success");
+      }, 1500);
+      return;
+    }
+
+    const payload = { ...formData };
 
     try {
       const response = await fetch(
@@ -168,14 +166,18 @@ const LeadForm = () => {
       }
       
       const data = await response.json().catch(() => ({}));
-      console.log("Raw Response Data from API:", data);
-      setDebugInfo(data);
       
       if (data && data.min_rent != null && data.max_rent != null) {
-        setRentRange({ min: data.min_rent, max: data.max_rent });
+        // Ideally map all the new fields here later when the backend is ready
+        setQuoteData({ 
+          guaranteedRent: data.guaranteed_rent || 0,
+          annualIncome: data.annual_income || 0,
+          minRent: data.min_rent, 
+          maxRent: data.max_rent,
+          confidenceScore: data.confidence_score || "Medium"
+        });
         setSubmissionState("success");
       } else {
-        console.warn("Failing because min_rent or max_rent is null or missing.");
         setSubmissionState("error");
       }
     } catch (error) {
@@ -185,6 +187,7 @@ const LeadForm = () => {
   };
 
   const heroCopy = brandConfig.copy.hero;
+  const isFlat = formData.propertyType === "Flat";
 
   return (
     <motion.div
@@ -193,12 +196,47 @@ const LeadForm = () => {
       transition={{ duration: 0.6, delay: 0.2 }}
       className="w-full lg:w-[45%] sleek-card px-4 py-6 sm:p-8 lg:p-6 xl:px-8 xl:py-4 relative h-auto"
     >
+      {/* Dev Testing Dropdown */}
+      {process.env.NODE_ENV === "development" || true ? (
+        <div className="absolute top-2 right-2 z-50 flex items-center gap-2 bg-black/50 p-1.5 rounded-md border border-white/10 backdrop-blur-sm">
+          <span className="text-[10px] text-gray-400 uppercase tracking-wider">Test Mode:</span>
+          <select 
+            value={testMode} 
+            onChange={(e) => setTestMode(e.target.value)}
+            className="text-[10px] bg-transparent text-brand-gold outline-none cursor-pointer"
+          >
+            <option value="real">Real API Call</option>
+            <option value="mock_success">Mock Quote Results</option>
+          </select>
+          {testMode === "mock_success" && (
+            <button 
+              onClick={(e) => {
+                e.preventDefault();
+                setSubmissionState("loading");
+                setTimeout(() => {
+                  setQuoteData({
+                    guaranteedRent: 2100,
+                    annualIncome: 25200,
+                    minRent: 2400,
+                    maxRent: 2600,
+                    confidenceScore: "High"
+                  });
+                  setSubmissionState("success");
+                }, 1000);
+              }}
+              className="ml-2 text-[10px] bg-brand-gold text-black px-2 py-0.5 rounded hover:bg-brand-gold/80 transition-colors"
+            >
+              Skip Form
+            </button>
+          )}
+        </div>
+      ) : null}
+
       {submissionState === "loading" ? (
         <div className="flex flex-col items-center justify-center text-center py-20">
           <div className="relative w-20 h-20 mb-6">
             <div className="absolute inset-0 border-4 border-brand-gold/20 rounded-full"></div>
             <div className="absolute inset-0 border-4 border-brand-gold rounded-full border-t-transparent animate-spin"></div>
-            {/* Simple logo placeholder for the center of the spinner */}
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="w-8 h-8 bg-brand-gold/20 rounded-sm rotate-45 flex items-center justify-center">
                 <div className="w-4 h-4 bg-brand-gold rounded-sm"></div>
@@ -213,30 +251,63 @@ const LeadForm = () => {
           </p>
         </div>
       ) : submissionState === "success" ? (
-        <div className="flex flex-col items-center justify-center text-center py-12">
-          <div className="w-16 h-16 bg-brand-gold/10 rounded-full flex items-center justify-center mb-6 border border-brand-gold/20">
+        <div className="flex flex-col items-center justify-center text-center py-8 sm:py-12">
+          <div className="w-16 h-16 bg-brand-gold/10 rounded-full flex items-center justify-center mb-4 border border-brand-gold/20">
             <CheckCircle2 className="text-brand-gold w-8 h-8" />
           </div>
-          <h3 className="text-2xl sm:text-3xl font-medium text-white mb-2">
+          <h3 className="text-2xl sm:text-3xl font-medium text-white mb-6">
             Your Estimated Offer
           </h3>
           
-          <div className="my-6 p-6 w-full bg-[#111] rounded-lg border border-brand-gold/20 shadow-[0_0_15px_rgba(212,175,55,0.1)]">
-            <div className="text-brand-gold text-sm uppercase tracking-widest font-medium mb-2">Estimated Range</div>
-            <div className="text-3xl sm:text-4xl font-light text-white tracking-tight">
-              {rentRange.min != null && rentRange.max != null ? `£${Number(rentRange.min).toLocaleString()} - £${Number(rentRange.max).toLocaleString()}` : "£---,---"}
+          <div className="w-full space-y-4 mb-8">
+            {/* Guaranteed Rent */}
+            <div className="p-5 bg-brand-gold/10 rounded-lg border border-brand-gold/30 shadow-[0_0_15px_rgba(212,175,55,0.15)] flex flex-col sm:flex-row justify-between items-center">
+              <div className="text-brand-gold text-sm uppercase tracking-widest font-medium mb-1 sm:mb-0">Guaranteed Rent Offer</div>
+              <div className="text-2xl sm:text-3xl font-medium text-white tracking-tight">
+                {quoteData.guaranteedRent ? `£${Number(quoteData.guaranteedRent).toLocaleString()}` : "£---"} <span className="text-sm text-gray-400 font-light lowercase">/ month</span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* Annual Income */}
+              <div className="p-4 bg-[#111] rounded-lg border border-white/10 flex flex-col justify-center">
+                <div className="text-gray-400 text-xs uppercase tracking-widest font-medium mb-1">Est. Annual Income</div>
+                <div className="text-xl font-light text-white tracking-tight">
+                  {quoteData.annualIncome ? `£${Number(quoteData.annualIncome).toLocaleString()}` : "£---"} <span className="text-xs text-gray-500 font-light lowercase">/ year</span>
+                </div>
+              </div>
+
+              {/* Confidence Score */}
+              <div className="p-4 bg-[#111] rounded-lg border border-white/10 flex flex-col justify-center">
+                <div className="text-gray-400 text-xs uppercase tracking-widest font-medium mb-1">Confidence Score</div>
+                <div className="text-xl font-light text-white tracking-tight flex items-center justify-center sm:justify-start gap-2">
+                  <div className={`w-2 h-2 rounded-full ${quoteData.confidenceScore === 'High' ? 'bg-green-500' : quoteData.confidenceScore === 'Medium' ? 'bg-yellow-500' : 'bg-red-500'}`}></div>
+                  {quoteData.confidenceScore || "---"}
+                </div>
+              </div>
+            </div>
+
+            {/* Open Market Range */}
+            <div className="p-4 bg-[#111] rounded-lg border border-white/10 flex flex-col sm:flex-row justify-between items-center">
+              <div className="text-gray-400 text-xs uppercase tracking-widest font-medium mb-1 sm:mb-0">Est. Open Market Rent</div>
+              <div className="text-lg font-light text-white tracking-tight">
+                {quoteData.minRent && quoteData.maxRent ? `£${Number(quoteData.minRent).toLocaleString()} - £${Number(quoteData.maxRent).toLocaleString()}` : "£---,---"} <span className="text-xs text-gray-500 font-light lowercase">/ month</span>
+              </div>
             </div>
           </div>
           
-          <p className="text-gray-400 text-xs sm:text-sm font-light mb-8 max-w-md mx-auto leading-relaxed italic border-l-2 border-brand-gold/30 pl-4 text-left">
-            This estimate is generated automatically based on the information provided. It is for guidance purposes only and does not constitute a formal valuation or guaranteed offer. A final offer will only be confirmed following a full assessment by our team.
-          </p>
-          <button
-            onClick={resetForm}
-            className="text-brand-gold hover:text-white transition-colors text-sm uppercase tracking-widest font-medium"
+          <a
+            href="https://wa.me/447429026727"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20b858] text-white py-3 sm:py-4 rounded font-medium transition-colors mb-6 shadow-lg shadow-[#25D366]/20"
           >
-            {heroCopy.submitAnother || "Start Over"}
-          </button>
+            <MessageCircle size={20} /> Speak to Our Team
+          </a>
+
+          <p className="text-gray-400 text-[10px] sm:text-xs font-light leading-relaxed border-l-2 border-brand-gold/30 pl-3 text-left">
+            This estimate is generated automatically based on the information provided and our knowledge of the local rental market. It is for guidance purposes only and does not constitute a formal valuation or guaranteed offer. A final offer will only be confirmed following a full assessment by our team.
+          </p>
         </div>
       ) : submissionState === "error" ? (
         <div className="flex flex-col items-center justify-center text-center py-16">
@@ -249,17 +320,6 @@ const LeadForm = () => {
           <p className="text-gray-300 text-base sm:text-lg font-light mb-8 max-w-md mx-auto">
             Our team will be in touch within 72 hours to discuss your property and confirm an offer.
           </p>
-          
-          {/* Temporary Debug Info so the user can read the response on the screen */}
-          {debugInfo && (
-            <div className="w-full text-left bg-black/50 border border-red-500/30 p-4 rounded-md mb-6 overflow-x-auto">
-              <p className="text-red-400 text-xs uppercase mb-2 font-bold tracking-widest">Debug Info (What we received):</p>
-              <pre className="text-[10px] text-gray-400 font-mono whitespace-pre-wrap">
-                {JSON.stringify(debugInfo, null, 2)}
-              </pre>
-            </div>
-          )}
-
           <button
             onClick={resetForm}
             className="text-brand-gold hover:text-white transition-colors text-sm uppercase tracking-widest font-medium"
@@ -329,79 +389,207 @@ const LeadForm = () => {
                   className="sleek-input w-1/2 px-4 py-2.5 sm:py-3 lg:py-2.5 xl:py-3 text-white placeholder-gray-500 text-sm"
                 />
               </div>
-
             </div>
           )}
 
           {step === 2 && (
-            <div className="flex flex-col gap-2 sm:gap-4 lg:gap-3 xl:gap-4">
-              <div className="flex flex-row gap-3 sm:gap-4 lg:gap-3 xl:gap-4">
-                <select
-                  name="propertyType"
-                  value={formData.propertyType}
-                  onChange={handleChange}
-                  className="sleek-input w-1/2 px-4 py-2.5 sm:py-3 lg:py-2.5 xl:py-3 text-white text-sm appearance-none cursor-pointer"
-                >
-                  <option value="Flat">Flat</option>
-                  <option value="Appartement">Appartement</option>
-                  <option value="House">House</option>
-                  <option value="Hmo">Hmo</option>
-                  <option value="Block">Block</option>
-                  <option value="Other">Other</option>
-                </select>
-                <select
-                  name="bedrooms"
-                  value={formData.bedrooms}
-                  onChange={handleChange}
-                  className="sleek-input w-1/2 px-4 py-2.5 sm:py-3 lg:py-2.5 xl:py-3 text-white text-sm appearance-none cursor-pointer"
-                >
-                  <option value="Studio">Studio</option>
-                  <option value="1 Bedroom">1 Bedroom</option>
-                  <option value="2 Bedrooms">2 Bedrooms</option>
-                  <option value="3 Bedrooms">3 Bedrooms</option>
-                  <option value="4 Bedrooms">4 Bedrooms</option>
-                  <option value="5+ Bedrooms">5+ Bedrooms</option>
-                </select>
-              </div>
-
-              <select
-                name="currentSituation"
-                value={formData.currentSituation}
-                onChange={handleChange}
-                className="sleek-input w-full px-4 py-2.5 sm:py-3 lg:py-2.5 xl:py-3 text-white text-sm appearance-none cursor-pointer"
-              >
-                <option value="Empty">Empty</option>
-                <option value="Self managing">Self managing</option>
-                <option value="With agent">With agent</option>
-                <option value="Other">Other</option>
-              </select>
-
-              <select
-                name="propertyArea"
-                value={formData.propertyArea}
-                onChange={handleChange}
-                className="sleek-input w-full px-4 py-2.5 sm:py-3 lg:py-2.5 xl:py-3 text-white text-sm appearance-none cursor-pointer"
-                required={step === 2}
-              >
-                <option value="North West">North West</option>
-                <option value="North">North</option>
-                <option value="East">East</option>
-                <option value="West">West</option>
-                <option value="Central">Central</option>
-              </select>
-
+            <div className="flex flex-col gap-2 sm:gap-4 lg:gap-3 xl:gap-4 max-h-[50vh] sm:max-h-none overflow-y-auto pr-1 pb-1">
+              {/* Full property address */}
               <input
                 required={step === 2}
                 type="text"
                 name="propertyAddress"
                 value={formData.propertyAddress}
                 onChange={handleChange}
-                placeholder="Property Address"
+                placeholder="Full Property Address"
                 className="sleek-input w-full px-4 py-2.5 sm:py-3 lg:py-2.5 xl:py-3 text-white placeholder-gray-500 text-sm"
               />
 
-              <label className="flex items-start gap-3 mt-1 sm:mt-3 cursor-pointer group">
-                <div className="relative flex items-center justify-center shrink-0">
+              {/* Property Type & Furnished */}
+              <div className="flex flex-row gap-3 sm:gap-4 lg:gap-3 xl:gap-4">
+                <div className="w-1/2 flex flex-col gap-1">
+                  <label className="text-[10px] text-gray-400 uppercase tracking-widest pl-1">Property Type</label>
+                  <select
+                    name="propertyType"
+                    value={formData.propertyType}
+                    onChange={handleChange}
+                    className="sleek-input w-full px-4 py-2.5 sm:py-3 lg:py-2.5 xl:py-3 text-white text-sm appearance-none cursor-pointer"
+                  >
+                    <option value="House">House</option>
+                    <option value="Flat">Flat</option>
+                  </select>
+                </div>
+                <div className="w-1/2 flex flex-col gap-1">
+                  <label className="text-[10px] text-gray-400 uppercase tracking-widest pl-1">Furnished State</label>
+                  <select
+                    name="furnishedState"
+                    value={formData.furnishedState}
+                    onChange={handleChange}
+                    className="sleek-input w-full px-4 py-2.5 sm:py-3 lg:py-2.5 xl:py-3 text-white text-sm appearance-none cursor-pointer"
+                  >
+                    <option value="Furnished">Furnished</option>
+                    <option value="Part Furnished">Part Furnished</option>
+                    <option value="Unfurnished">Unfurnished</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Rooms Row 1 */}
+              <div className="flex flex-row gap-3 sm:gap-4 lg:gap-3 xl:gap-4">
+                <div className="w-1/3 flex flex-col gap-1">
+                  <label className="text-[10px] text-gray-400 uppercase tracking-widest pl-1">Bedrooms</label>
+                  <input
+                    type="number"
+                    min="1"
+                    name="bedrooms"
+                    value={formData.bedrooms}
+                    onChange={handleChange}
+                    className="sleek-input w-full px-4 py-2.5 sm:py-3 lg:py-2.5 xl:py-3 text-white placeholder-gray-500 text-sm"
+                  />
+                </div>
+                <div className="w-1/3 flex flex-col gap-1">
+                  <label className="text-[10px] text-gray-400 uppercase tracking-widest pl-1">Bathrooms</label>
+                  <input
+                    type="number"
+                    min="1"
+                    name="bathrooms"
+                    value={formData.bathrooms}
+                    onChange={handleChange}
+                    className="sleek-input w-full px-4 py-2.5 sm:py-3 lg:py-2.5 xl:py-3 text-white placeholder-gray-500 text-sm"
+                  />
+                </div>
+                <div className="w-1/3 flex flex-col gap-1">
+                  <label className="text-[10px] text-gray-400 uppercase tracking-widest pl-1">Living Rooms</label>
+                  <input
+                    type="number"
+                    min="0"
+                    name="livingRooms"
+                    value={formData.livingRooms}
+                    onChange={handleChange}
+                    className="sleek-input w-full px-4 py-2.5 sm:py-3 lg:py-2.5 xl:py-3 text-white placeholder-gray-500 text-sm"
+                  />
+                </div>
+              </div>
+
+              {/* Rooms Row 2 & En-suite */}
+              <div className="flex flex-row gap-3 sm:gap-4 lg:gap-3 xl:gap-4">
+                <div className="w-1/2 flex flex-col gap-1">
+                  <label className="text-[10px] text-gray-400 uppercase tracking-widest pl-1">WCs</label>
+                  <input
+                    type="number"
+                    min="0"
+                    name="wcs"
+                    value={formData.wcs}
+                    onChange={handleChange}
+                    className="sleek-input w-full px-4 py-2.5 sm:py-3 lg:py-2.5 xl:py-3 text-white placeholder-gray-500 text-sm"
+                  />
+                </div>
+                <div className="w-1/2 flex flex-col gap-1">
+                  <label className="text-[10px] text-gray-400 uppercase tracking-widest pl-1">Any En-suites?</label>
+                  <select
+                    name="enSuite"
+                    value={formData.enSuite}
+                    onChange={handleChange}
+                    className="sleek-input w-full px-4 py-2.5 sm:py-3 lg:py-2.5 xl:py-3 text-white text-sm appearance-none cursor-pointer"
+                  >
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Features & Licence Row */}
+              <div className="flex flex-row gap-3 sm:gap-4 lg:gap-3 xl:gap-4">
+                <div className="w-1/2 flex flex-col gap-1">
+                  <label className="text-[10px] text-gray-400 uppercase tracking-widest pl-1">Licence Type</label>
+                  <select
+                    name="licenceType"
+                    value={formData.licenceType}
+                    onChange={handleChange}
+                    className="sleek-input w-full px-4 py-2.5 sm:py-3 lg:py-2.5 xl:py-3 text-white text-sm appearance-none cursor-pointer"
+                  >
+                    <option value="None">None</option>
+                    <option value="HMO">HMO</option>
+                    <option value="C1">C1</option>
+                    <option value="C2">C2</option>
+                    <option value="C4">C4</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+                <div className="w-1/2 flex flex-col gap-1">
+                  <label className="text-[10px] text-gray-400 uppercase tracking-widest pl-1">Parking</label>
+                  <select
+                    name="parking"
+                    value={formData.parking}
+                    onChange={handleChange}
+                    className="sleek-input w-full px-4 py-2.5 sm:py-3 lg:py-2.5 xl:py-3 text-white text-sm appearance-none cursor-pointer"
+                  >
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Garden / Balcony Row */}
+              <div className="flex flex-row gap-3 sm:gap-4 lg:gap-3 xl:gap-4">
+                <div className="w-1/2 flex flex-col gap-1">
+                  <label className="text-[10px] text-gray-400 uppercase tracking-widest pl-1">Garden</label>
+                  <select
+                    name="garden"
+                    value={formData.garden}
+                    onChange={handleChange}
+                    className="sleek-input w-full px-4 py-2.5 sm:py-3 lg:py-2.5 xl:py-3 text-white text-sm appearance-none cursor-pointer"
+                  >
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                  </select>
+                </div>
+                {isFlat && (
+                  <div className="w-1/2 flex flex-col gap-1">
+                    <label className="text-[10px] text-gray-400 uppercase tracking-widest pl-1">Balcony / Outdoor Space</label>
+                    <select
+                      name="balcony"
+                      value={formData.balcony}
+                      onChange={handleChange}
+                      className="sleek-input w-full px-4 py-2.5 sm:py-3 lg:py-2.5 xl:py-3 text-white text-sm appearance-none cursor-pointer"
+                    >
+                      <option value="No">No</option>
+                      <option value="Yes">Yes</option>
+                    </select>
+                  </div>
+                )}
+              </div>
+
+              {/* Flat specific remaining fields */}
+              {isFlat && (
+                <div className="flex flex-row gap-3 sm:gap-4 lg:gap-3 xl:gap-4">
+                  <div className="w-1/2 flex flex-col gap-1">
+                    <label className="text-[10px] text-gray-400 uppercase tracking-widest pl-1">Floor Level</label>
+                    <input
+                      type="number"
+                      name="floor"
+                      value={formData.floor}
+                      onChange={handleChange}
+                      className="sleek-input w-full px-4 py-2.5 sm:py-3 lg:py-2.5 xl:py-3 text-white placeholder-gray-500 text-sm"
+                    />
+                  </div>
+                  <div className="w-1/2 flex flex-col gap-1">
+                    <label className="text-[10px] text-gray-400 uppercase tracking-widest pl-1">Lift Available</label>
+                    <select
+                      name="lift"
+                      value={formData.lift}
+                      onChange={handleChange}
+                      className="sleek-input w-full px-4 py-2.5 sm:py-3 lg:py-2.5 xl:py-3 text-white text-sm appearance-none cursor-pointer"
+                    >
+                      <option value="No">No</option>
+                      <option value="Yes">Yes</option>
+                    </select>
+                  </div>
+                </div>
+              )}
+
+              <label className="flex items-start gap-3 mt-2 sm:mt-3 cursor-pointer group">
+                <div className="relative flex items-center justify-center shrink-0 mt-0.5">
                   <input
                     required={step === 2}
                     type="checkbox"
@@ -416,7 +604,7 @@ const LeadForm = () => {
                     strokeWidth={3}
                   />
                 </div>
-                <span className="text-[11px] sm:text-xs text-gray-400 leading-tight font-light">
+                <span className="text-[11px] sm:text-xs text-gray-400 leading-tight font-light pt-0.5">
                   I agree to the processing of my data in accordance with the{" "}
                   <a
                     href={heroCopy.gdprLink}
@@ -432,7 +620,7 @@ const LeadForm = () => {
             </div>
           )}
 
-          <div className="flex flex-col gap-1 sm:gap-2 mt-2 sm:mt-4">
+          <div className="flex flex-col gap-1 sm:gap-2 mt-2 sm:mt-4 border-t border-white/5 pt-4">
             {heroCopy.submitButtonTopMicro && (
               <div className={`text-center text-[11px] sm:text-xs font-medium text-brand-gold/90 uppercase tracking-widest ${step === 1 ? "max-sm:hidden" : ""}`}>
                 {heroCopy.submitButtonTopMicro}
