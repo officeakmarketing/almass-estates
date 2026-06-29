@@ -16,7 +16,7 @@ const LeadForm = () => {
     gdpr: false,
   });
   const [submissionState, setSubmissionState] = useState("idle"); // "idle", "loading", "success", "error"
-  const [estimatedOffer, setEstimatedOffer] = useState("");
+  const [rentRange, setRentRange] = useState({ min: null, max: null });
   const [step, setStep] = useState(1);
   const [isMobile, setIsMobile] = useState(false);
   const [formError, setFormError] = useState("");
@@ -78,7 +78,7 @@ const LeadForm = () => {
 
   const resetForm = () => {
     setSubmissionState("idle");
-    setEstimatedOffer("");
+    setRentRange({ min: null, max: null });
     setFormData({
       fullName: "",
       email: "",
@@ -168,8 +168,8 @@ const LeadForm = () => {
       
       const data = await response.json().catch(() => ({}));
       
-      if (data && data.estimate) {
-        setEstimatedOffer(data.estimate);
+      if (data && data.min_rent && data.max_rent) {
+        setRentRange({ min: data.min_rent, max: data.max_rent });
         setSubmissionState("success");
       } else {
         setSubmissionState("error");
@@ -220,7 +220,7 @@ const LeadForm = () => {
           <div className="my-6 p-6 w-full bg-[#111] rounded-lg border border-brand-gold/20 shadow-[0_0_15px_rgba(212,175,55,0.1)]">
             <div className="text-brand-gold text-sm uppercase tracking-widest font-medium mb-2">Estimated Range</div>
             <div className="text-3xl sm:text-4xl font-light text-white tracking-tight">
-              {estimatedOffer || "£---,---"}
+              {rentRange.min && rentRange.max ? `£${rentRange.min.toLocaleString()} - £${rentRange.max.toLocaleString()}` : "£---,---"}
             </div>
           </div>
           
