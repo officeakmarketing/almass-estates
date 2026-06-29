@@ -464,7 +464,7 @@ const LeadForm = () => {
               </div>
             )}
             <div className={`text-center text-[11px] sm:text-xs text-brand-gold font-medium mt-1 sm:mt-1.5 ${step === 1 ? "max-sm:hidden" : ""}`}>
-              Join 100+ London landlords already on the programme
+              Join 100+ London landlords already in the programme
             </div>
           </div>
         </form>
