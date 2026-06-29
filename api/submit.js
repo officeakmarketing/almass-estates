@@ -7,25 +7,45 @@ export default async function handler(req, res) {
     // Whitelist only the fields we expect from the frontend
     // This prevents malicious users from injecting arbitrary data into your Make scenario
     const {
-      full_name,
+      fullName,
       email,
       phone,
-      property_type,
+      propertyAddress,
+      propertyType,
       bedrooms,
-      current_situation,
-      property_area,
-      property_address
+      bathrooms,
+      enSuite,
+      wcs,
+      livingRooms,
+      furnishedState,
+      parking,
+      garden,
+      licenceType,
+      balcony,
+      floor,
+      lift,
+      gdpr
     } = req.body || {};
 
     const payload = {
-      full_name,
+      fullName,
       email,
       phone,
-      property_type,
+      propertyAddress,
+      propertyType,
       bedrooms,
-      current_situation,
-      property_area,
-      property_address
+      bathrooms,
+      enSuite,
+      wcs,
+      livingRooms,
+      furnishedState,
+      parking,
+      garden,
+      licenceType,
+      balcony,
+      floor,
+      lift,
+      gdpr
     };
 
     const webhookUrl = process.env.WEBHOOK_URL;
