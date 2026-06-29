@@ -26,10 +26,17 @@ export default async function handler(req, res) {
       const text = await response.text();
       throw new Error(`Make error: ${response.status} - ${text}`);
     }
+    let responseData = {};
+    try {
+      responseData = await response.json();
+    } catch (e) {
+      // If the response is not valid JSON, we just ignore and send empty data
+    }
 
     return res.status(200).json({
       success: true,
-      message: 'Submitted successfully'
+      message: 'Submitted successfully',
+      estimate: responseData.estimate || null
     });
 
   } catch (error) {

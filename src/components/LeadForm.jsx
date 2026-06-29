@@ -15,7 +15,8 @@ const LeadForm = () => {
     currentSituation: "Empty",
     gdpr: false,
   });
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submissionState, setSubmissionState] = useState("idle"); // "idle", "loading", "success", "error"
+  const [estimatedOffer, setEstimatedOffer] = useState("");
   const [step, setStep] = useState(1);
   const [isMobile, setIsMobile] = useState(false);
   const [formError, setFormError] = useState("");
@@ -76,7 +77,8 @@ const LeadForm = () => {
   };
 
   const resetForm = () => {
-    setIsSubmitted(false);
+    setSubmissionState("idle");
+    setEstimatedOffer("");
     setFormData({
       fullName: "",
       email: "",
@@ -135,6 +137,7 @@ const LeadForm = () => {
     }
 
     setFormError("");
+    setSubmissionState("loading");
 
     const payload = {
       full_name: formData.fullName,
@@ -162,13 +165,18 @@ const LeadForm = () => {
       if (!response.ok) {
         throw new Error("API submission failed.");
       }
-
-      setIsSubmitted(true);
+      
+      const data = await response.json().catch(() => ({}));
+      
+      if (data && data.estimate) {
+        setEstimatedOffer(data.estimate);
+        setSubmissionState("success");
+      } else {
+        setSubmissionState("error");
+      }
     } catch (error) {
       console.error("Submission Error:", error);
-      setFormError(
-        "There was a problem submitting your request. Please try again.",
-      );
+      setSubmissionState("error");
     }
   };
 
@@ -181,22 +189,67 @@ const LeadForm = () => {
       transition={{ duration: 0.6, delay: 0.2 }}
       className="w-full lg:w-[45%] sleek-card px-4 py-6 sm:p-8 lg:p-6 xl:px-8 xl:py-4 relative h-auto"
     >
-      {isSubmitted ? (
-        <div className="flex flex-col items-center justify-center text-center py-16">
-          <div className="w-20 h-20 bg-brand-gold/10 rounded-full flex items-center justify-center mb-6 border border-brand-gold/20">
-            <CheckCircle2 className="text-brand-gold w-10 h-10" />
+      {submissionState === "loading" ? (
+        <div className="flex flex-col items-center justify-center text-center py-20">
+          <div className="relative w-20 h-20 mb-6">
+            <div className="absolute inset-0 border-4 border-brand-gold/20 rounded-full"></div>
+            <div className="absolute inset-0 border-4 border-brand-gold rounded-full border-t-transparent animate-spin"></div>
+            {/* Simple logo placeholder for the center of the spinner */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-8 h-8 bg-brand-gold/20 rounded-sm rotate-45 flex items-center justify-center">
+                <div className="w-4 h-4 bg-brand-gold rounded-sm"></div>
+              </div>
+            </div>
           </div>
-          <h3 className="text-2xl sm:text-3xl font-medium text-white mb-3">
-            {heroCopy.successHeading}
+          <h3 className="text-xl sm:text-2xl font-medium text-white mb-3">
+            Analysing your property...
           </h3>
-          <p className="text-gray-400 text-base font-light mb-8 max-w-sm mx-auto">
-            {heroCopy.successMessage}
+          <p className="text-gray-400 text-sm font-light max-w-sm mx-auto">
+            Please wait while we generate your estimated offer based on live market data.
+          </p>
+        </div>
+      ) : submissionState === "success" ? (
+        <div className="flex flex-col items-center justify-center text-center py-12">
+          <div className="w-16 h-16 bg-brand-gold/10 rounded-full flex items-center justify-center mb-6 border border-brand-gold/20">
+            <CheckCircle2 className="text-brand-gold w-8 h-8" />
+          </div>
+          <h3 className="text-2xl sm:text-3xl font-medium text-white mb-2">
+            Your Estimated Offer
+          </h3>
+          
+          <div className="my-6 p-6 w-full bg-[#111] rounded-lg border border-brand-gold/20 shadow-[0_0_15px_rgba(212,175,55,0.1)]">
+            <div className="text-brand-gold text-sm uppercase tracking-widest font-medium mb-2">Estimated Range</div>
+            <div className="text-3xl sm:text-4xl font-light text-white tracking-tight">
+              {estimatedOffer || "£---,---"}
+            </div>
+          </div>
+          
+          <p className="text-gray-400 text-xs sm:text-sm font-light mb-8 max-w-md mx-auto leading-relaxed italic border-l-2 border-brand-gold/30 pl-4 text-left">
+            This estimate is generated automatically based on the information provided. It is for guidance purposes only and does not constitute a formal valuation or guaranteed offer. A final offer will only be confirmed following a full assessment by our team.
           </p>
           <button
             onClick={resetForm}
             className="text-brand-gold hover:text-white transition-colors text-sm uppercase tracking-widest font-medium"
           >
-            {heroCopy.submitAnother}
+            {heroCopy.submitAnother || "Start Over"}
+          </button>
+        </div>
+      ) : submissionState === "error" ? (
+        <div className="flex flex-col items-center justify-center text-center py-16">
+          <div className="w-20 h-20 bg-[#111] rounded-full flex items-center justify-center mb-6 border border-white/10">
+            <CheckCircle2 className="text-brand-gold w-10 h-10" />
+          </div>
+          <h3 className="text-2xl sm:text-3xl font-medium text-white mb-4">
+            Thank You
+          </h3>
+          <p className="text-gray-300 text-base sm:text-lg font-light mb-8 max-w-md mx-auto">
+            Our team will be in touch within 72 hours to discuss your property and confirm an offer.
+          </p>
+          <button
+            onClick={resetForm}
+            className="text-brand-gold hover:text-white transition-colors text-sm uppercase tracking-widest font-medium"
+          >
+            Return to form
           </button>
         </div>
       ) : (
