@@ -167,11 +167,13 @@ const LeadForm = () => {
       }
       
       const data = await response.json().catch(() => ({}));
+      console.log("Raw Response Data from API:", data);
       
       if (data && data.min_rent != null && data.max_rent != null) {
         setRentRange({ min: data.min_rent, max: data.max_rent });
         setSubmissionState("success");
       } else {
+        console.warn("Failing because min_rent or max_rent is null or missing.");
         setSubmissionState("error");
       }
     } catch (error) {
