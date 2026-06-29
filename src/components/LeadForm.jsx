@@ -17,6 +17,7 @@ const LeadForm = () => {
   });
   const [submissionState, setSubmissionState] = useState("idle"); // "idle", "loading", "success", "error"
   const [rentRange, setRentRange] = useState({ min: null, max: null });
+  const [debugInfo, setDebugInfo] = useState(null);
   const [step, setStep] = useState(1);
   const [isMobile, setIsMobile] = useState(false);
   const [formError, setFormError] = useState("");
@@ -168,6 +169,7 @@ const LeadForm = () => {
       
       const data = await response.json().catch(() => ({}));
       console.log("Raw Response Data from API:", data);
+      setDebugInfo(data);
       
       if (data && data.min_rent != null && data.max_rent != null) {
         setRentRange({ min: data.min_rent, max: data.max_rent });
@@ -247,6 +249,17 @@ const LeadForm = () => {
           <p className="text-gray-300 text-base sm:text-lg font-light mb-8 max-w-md mx-auto">
             Our team will be in touch within 72 hours to discuss your property and confirm an offer.
           </p>
+          
+          {/* Temporary Debug Info so the user can read the response on the screen */}
+          {debugInfo && (
+            <div className="w-full text-left bg-black/50 border border-red-500/30 p-4 rounded-md mb-6 overflow-x-auto">
+              <p className="text-red-400 text-xs uppercase mb-2 font-bold tracking-widest">Debug Info (What we received):</p>
+              <pre className="text-[10px] text-gray-400 font-mono whitespace-pre-wrap">
+                {JSON.stringify(debugInfo, null, 2)}
+              </pre>
+            </div>
+          )}
+
           <button
             onClick={resetForm}
             className="text-brand-gold hover:text-white transition-colors text-sm uppercase tracking-widest font-medium"
