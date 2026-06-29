@@ -56,11 +56,15 @@ export default async function handler(req, res) {
       // If the response is not valid JSON, we just ignore and send empty data
     }
 
+    // Try to find the rent values in various common formats Make might return
+    const min_rent = responseData.min_rent ?? responseData.minRent ?? (responseData.data && (responseData.data.min_rent ?? responseData.data.minRent)) ?? null;
+    const max_rent = responseData.max_rent ?? responseData.maxRent ?? (responseData.data && (responseData.data.max_rent ?? responseData.data.maxRent)) ?? null;
+
     return res.status(200).json({
       success: true,
       message: 'Submitted successfully',
-      min_rent: responseData.min_rent || null,
-      max_rent: responseData.max_rent || null
+      min_rent,
+      max_rent
     });
 
   } catch (error) {

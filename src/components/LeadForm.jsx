@@ -168,7 +168,7 @@ const LeadForm = () => {
       
       const data = await response.json().catch(() => ({}));
       
-      if (data && data.min_rent && data.max_rent) {
+      if (data && data.min_rent != null && data.max_rent != null) {
         setRentRange({ min: data.min_rent, max: data.max_rent });
         setSubmissionState("success");
       } else {
@@ -220,7 +220,7 @@ const LeadForm = () => {
           <div className="my-6 p-6 w-full bg-[#111] rounded-lg border border-brand-gold/20 shadow-[0_0_15px_rgba(212,175,55,0.1)]">
             <div className="text-brand-gold text-sm uppercase tracking-widest font-medium mb-2">Estimated Range</div>
             <div className="text-3xl sm:text-4xl font-light text-white tracking-tight">
-              {rentRange.min && rentRange.max ? `£${rentRange.min.toLocaleString()} - £${rentRange.max.toLocaleString()}` : "£---,---"}
+              {rentRange.min != null && rentRange.max != null ? `£${Number(rentRange.min).toLocaleString()} - £${Number(rentRange.max).toLocaleString()}` : "£---,---"}
             </div>
           </div>
           
