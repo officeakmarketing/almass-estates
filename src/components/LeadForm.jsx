@@ -124,6 +124,38 @@ const LeadForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!formData.propertyAddress.trim()) {
+      setFormError("Please enter your full property address.");
+      return;
+    }
+    
+    if (formData.bedrooms !== "Studio" && formData.bedrooms !== "6+" && (isNaN(parseInt(formData.bedrooms)) || parseInt(formData.bedrooms) < 1)) {
+      setFormError("Please enter a valid number of bedrooms.");
+      return;
+    }
+    
+    if (isNaN(parseInt(formData.bathrooms)) || parseInt(formData.bathrooms) < 1) {
+      setFormError("Please enter a valid number of bathrooms.");
+      return;
+    }
+    
+    if (isNaN(parseInt(formData.livingRooms)) || parseInt(formData.livingRooms) < 0) {
+      setFormError("Please enter a valid number of living rooms.");
+      return;
+    }
+    
+    if (isNaN(parseInt(formData.wcs)) || parseInt(formData.wcs) < 0) {
+      setFormError("Please enter a valid number of WCs.");
+      return;
+    }
+
+    if (formData.propertyType === "Flat") {
+      if (formData.floor === "" || isNaN(parseInt(formData.floor))) {
+        setFormError("Please enter a valid floor level.");
+        return;
+      }
+    }
+
     if (!formData.gdpr) {
       setFormError("Please accept the privacy policy to continue.");
       return;
@@ -483,14 +515,20 @@ const LeadForm = () => {
               <div className="flex flex-row gap-3 sm:gap-4 lg:gap-3 xl:gap-4">
                 <div className="w-1/3 flex flex-col gap-1">
                   <label className="text-[10px] text-gray-400 uppercase tracking-widest pl-1">Bedrooms</label>
-                  <input
-                    type="number"
-                    min="1"
+                  <select
                     name="bedrooms"
                     value={formData.bedrooms}
                     onChange={handleChange}
-                    className="sleek-input w-full px-4 py-2.5 sm:py-3 lg:py-2.5 xl:py-3 text-white placeholder-gray-500 text-sm"
-                  />
+                    className="sleek-input w-full px-4 py-2.5 sm:py-3 lg:py-2.5 xl:py-3 text-white text-sm appearance-none cursor-pointer"
+                  >
+                    <option value="Studio">Studio</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6+">6+</option>
+                  </select>
                 </div>
                 <div className="w-1/3 flex flex-col gap-1">
                   <label className="text-[10px] text-gray-400 uppercase tracking-widest pl-1">Bathrooms</label>
