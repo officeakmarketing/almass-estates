@@ -34,7 +34,6 @@ const LeadForm = () => {
     maxRent: null,
     confidenceScore: null
   });
-  const [testMode, setTestMode] = useState("real");
   const [step, setStep] = useState(1);
   const [isMobile, setIsMobile] = useState(false);
   const [formError, setFormError] = useState("");
@@ -164,21 +163,6 @@ const LeadForm = () => {
     setFormError("");
     setSubmissionState("loading");
 
-    // Bypass for frontend visual testing
-    if (testMode === "mock_success") {
-      setTimeout(() => {
-        setQuoteData({
-          guaranteedRent: 2100,
-          annualIncome: 25200,
-          minRent: 2400,
-          maxRent: 2600,
-          confidenceScore: "High"
-        });
-        setSubmissionState("success");
-      }, 1500);
-      return;
-    }
-
     const payload = { ...formData };
 
     try {
@@ -249,41 +233,6 @@ const LeadForm = () => {
       }}
       className="w-full lg:w-[45%] sleek-card px-4 py-6 sm:p-8 lg:p-6 xl:px-8 xl:py-4 relative h-auto"
     >
-      {/* Dev Testing Dropdown */}
-      {process.env.NODE_ENV === "development" || true ? (
-        <div className="absolute top-2 right-2 z-50 flex items-center gap-2 bg-black/50 p-1.5 rounded-md border border-white/10 backdrop-blur-sm">
-          <span className="text-[10px] text-gray-400 uppercase tracking-wider">Test Mode:</span>
-          <select 
-            value={testMode} 
-            onChange={(e) => setTestMode(e.target.value)}
-            className="text-[10px] bg-transparent text-brand-gold outline-none cursor-pointer"
-          >
-            <option value="real">Real API Call</option>
-            <option value="mock_success">Mock Quote Results</option>
-          </select>
-          {testMode === "mock_success" && (
-            <button 
-              onClick={(e) => {
-                e.preventDefault();
-                setSubmissionState("loading");
-                setTimeout(() => {
-                  setQuoteData({
-                    guaranteedRent: 2100,
-                    annualIncome: 25200,
-                    minRent: 2400,
-                    maxRent: 2600,
-                    confidenceScore: "High"
-                  });
-                  setSubmissionState("success");
-                }, 1000);
-              }}
-              className="ml-2 text-[10px] bg-brand-gold text-black px-2 py-0.5 rounded hover:bg-brand-gold/80 transition-colors"
-            >
-              Skip Form
-            </button>
-          )}
-        </div>
-      ) : null}
 
       {submissionState === "loading" ? (
         <div className="flex flex-col items-center justify-center text-center py-20">
