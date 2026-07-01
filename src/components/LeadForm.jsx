@@ -313,8 +313,15 @@ const LeadForm = () => {
 
             {/* Confidence Reason */}
             {quoteData.confidenceReason && (
-              <div className="p-4 bg-[#111] rounded-lg border border-white/10 flex flex-col sm:flex-row items-center text-center sm:text-left">
-                <div className="text-sm font-light text-gray-300 leading-relaxed">
+              <div className="p-4 bg-[#111] rounded-lg border border-white/10 flex flex-col text-left">
+                <div className="text-gray-400 text-xs uppercase tracking-widest font-medium mb-2">Analysis Detail</div>
+                <div 
+                  className="text-sm font-light text-gray-300 leading-relaxed max-h-[120px] overflow-y-auto pr-2 custom-scrollbar"
+                  style={{
+                    scrollbarWidth: 'thin',
+                    scrollbarColor: 'rgba(212, 175, 55, 0.5) transparent'
+                  }}
+                >
                   {quoteData.confidenceReason}
                 </div>
               </div>
