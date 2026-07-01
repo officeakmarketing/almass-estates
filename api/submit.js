@@ -76,15 +76,24 @@ export default async function handler(req, res) {
       // If the response is not valid JSON, we just ignore and send empty data
     }
 
-    // Try to find the rent values in various common formats Make might return
-    const min_rent = responseData.min_rent ?? responseData.minRent ?? (responseData.data && (responseData.data.min_rent ?? responseData.data.minRent)) ?? null;
-    const max_rent = responseData.max_rent ?? responseData.maxRent ?? (responseData.data && (responseData.data.max_rent ?? responseData.data.maxRent)) ?? null;
+    const minRent = responseData.minRent ?? responseData.min_rent ?? (responseData.data && (responseData.data.minRent ?? responseData.data.min_rent)) ?? null;
+    const maxRent = responseData.maxRent ?? responseData.max_rent ?? (responseData.data && (responseData.data.maxRent ?? responseData.data.max_rent)) ?? null;
+    const annualIncome = responseData.annualIncome ?? (responseData.data && responseData.data.annualIncome) ?? null;
+    const marketRentLow = responseData.marketRentLow ?? (responseData.data && responseData.data.marketRentLow) ?? null;
+    const marketRentHigh = responseData.marketRentHigh ?? (responseData.data && responseData.data.marketRentHigh) ?? null;
+    const confidenceScore = responseData.confidenceScore ?? (responseData.data && responseData.data.confidenceScore) ?? null;
+    const confidenceReason = responseData.confidenceReason ?? (responseData.data && responseData.data.confidenceReason) ?? null;
 
     return res.status(200).json({
       success: true,
       message: 'Submitted successfully',
-      min_rent,
-      max_rent
+      minRent,
+      maxRent,
+      annualIncome,
+      marketRentLow,
+      marketRentHigh,
+      confidenceScore,
+      confidenceReason
     });
 
   } catch (error) {
