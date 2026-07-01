@@ -443,6 +443,7 @@ const LeadForm = () => {
                   >
                     <option value="House">House</option>
                     <option value="Flat">Flat</option>
+                    <option value="Hmo">Hmo</option>
                   </select>
                 </div>
                 <div className="w-1/2 flex flex-col gap-1">
