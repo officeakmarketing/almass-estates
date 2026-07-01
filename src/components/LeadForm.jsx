@@ -138,7 +138,7 @@ const LeadForm = () => {
       return;
     }
     
-    if (formData.bedrooms !== "Studio" && formData.bedrooms !== "6+" && (isNaN(parseInt(formData.bedrooms)) || parseInt(formData.bedrooms) < 1)) {
+    if (formData.bedrooms !== "Studio" && (isNaN(parseInt(formData.bedrooms)) || parseInt(formData.bedrooms) < 1)) {
       setFormError("Please enter a valid number of bedrooms.");
       return;
     }
@@ -494,21 +494,27 @@ const LeadForm = () => {
               {/* Rooms Row 1 */}
               <div className="flex flex-row gap-3 sm:gap-4 lg:gap-3 xl:gap-4">
                 <div className="w-1/3 flex flex-col gap-1">
-                  <label className="text-[10px] text-gray-400 uppercase tracking-widest pl-1">Bedrooms</label>
-                  <select
+                  <div className="flex justify-between items-center pr-1">
+                    <label className="text-[10px] text-gray-400 uppercase tracking-widest pl-1">Bedrooms</label>
+                    <label className="flex items-center gap-1 cursor-pointer group">
+                      <input 
+                        type="checkbox" 
+                        checked={formData.bedrooms === "Studio"}
+                        onChange={(e) => setFormData(prev => ({ ...prev, bedrooms: e.target.checked ? "Studio" : "1" }))}
+                        className="accent-brand-gold w-2.5 h-2.5 cursor-pointer"
+                      />
+                      <span className="text-[9px] text-gray-400 uppercase tracking-widest group-hover:text-white transition-colors mt-[1px]">Studio</span>
+                    </label>
+                  </div>
+                  <input
+                    type={formData.bedrooms === "Studio" ? "text" : "number"}
+                    min="1"
                     name="bedrooms"
                     value={formData.bedrooms}
                     onChange={handleChange}
-                    className="sleek-input w-full px-4 py-2.5 sm:py-3 lg:py-2.5 xl:py-3 text-white text-sm appearance-none cursor-pointer"
-                  >
-                    <option value="Studio">Studio</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6+">6+</option>
-                  </select>
+                    readOnly={formData.bedrooms === "Studio"}
+                    className={`sleek-input w-full px-4 py-2.5 sm:py-3 lg:py-2.5 xl:py-3 text-sm transition-colors ${formData.bedrooms === 'Studio' ? 'text-brand-gold bg-brand-gold/5' : 'text-white placeholder-gray-500'}`}
+                  />
                 </div>
                 <div className="w-1/3 flex flex-col gap-1">
                   <label className="text-[10px] text-gray-400 uppercase tracking-widest pl-1">Bathrooms</label>
