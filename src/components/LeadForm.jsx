@@ -267,59 +267,64 @@ const LeadForm = () => {
           </p>
         </div>
       ) : submissionState === "success" ? (
-        <div className="flex flex-col items-center justify-center text-center py-8 sm:py-12">
-          <div className="w-16 h-16 bg-brand-gold/10 rounded-full flex items-center justify-center mb-4 border border-brand-gold/20">
-            <CheckCircle2 className="text-brand-gold w-8 h-8" />
+        <div className="flex flex-col h-full w-full justify-center">
+          {/* Header inline with Tick */}
+          <div className="flex flex-col items-center justify-center text-center mb-4">
+            <div className="flex items-center gap-2 mb-1">
+              <CheckCircle2 className="text-brand-gold w-6 h-6 shrink-0" />
+              <h3 className="text-lg sm:text-xl font-medium text-white">
+                Your Estimated Offer
+              </h3>
+            </div>
+            <p className="text-gray-400 text-xs font-light">Based on live market data</p>
           </div>
-          <h3 className="text-2xl sm:text-3xl font-medium text-white mb-6">
-            Your Estimated Offer
-          </h3>
           
-          <div className="w-full space-y-4 mb-8">
-            {/* Guaranteed Rent Offer */}
-            <div className="p-5 bg-brand-gold/10 rounded-lg border border-brand-gold/30 shadow-[0_0_15px_rgba(212,175,55,0.15)] flex flex-col sm:flex-row justify-between items-center">
-              <div className="text-brand-gold text-sm uppercase tracking-widest font-medium mb-1 sm:mb-0">Guaranteed Rent Offer</div>
-              <div className="text-2xl sm:text-3xl font-medium text-white tracking-tight">
-                {quoteData.minRent && quoteData.maxRent ? `£${Number(quoteData.minRent).toLocaleString()} - £${Number(quoteData.maxRent).toLocaleString()}` : "£---"} <span className="text-sm text-gray-400 font-light lowercase">/ month</span>
+          <div className="w-full flex-grow flex flex-col justify-center space-y-3 mb-4">
+            {/* Guaranteed Rent Offer - Compact but prominent */}
+            <div className="px-4 py-4 sm:py-5 bg-gradient-to-b from-brand-gold/[0.15] to-brand-gold/[0.05] rounded-xl border border-brand-gold/40 shadow-[0_0_20px_rgba(212,175,55,0.15)] flex flex-col items-center justify-center text-center relative overflow-hidden shrink-0">
+              <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-brand-gold/80 to-transparent"></div>
+              <div className="text-brand-gold text-[10px] sm:text-xs uppercase tracking-[0.2em] font-semibold mb-1">Guaranteed Rent Offer</div>
+              <div className="text-3xl sm:text-4xl font-medium text-white tracking-tight flex items-baseline gap-1.5">
+                {quoteData.minRent && quoteData.maxRent ? `£${Number(quoteData.minRent).toLocaleString()} - £${Number(quoteData.maxRent).toLocaleString()}` : "£---"}
+                <span className="text-sm sm:text-base text-brand-gold/80 font-light lowercase tracking-normal">/ mo</span>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {/* Annual Income */}
-              <div className="p-4 bg-[#111] rounded-lg border border-white/10 flex flex-col justify-center">
-                <div className="text-gray-400 text-xs uppercase tracking-widest font-medium mb-1">Est. Annual Income</div>
-                <div className="text-xl font-light text-white tracking-tight">
-                  {quoteData.annualIncome ? `£${Number(quoteData.annualIncome).toLocaleString()}` : "£---"} <span className="text-xs text-gray-500 font-light lowercase">/ year</span>
+            {/* 3-column Grid for stats */}
+            <div className="grid grid-cols-3 gap-2 shrink-0">
+              <div className="p-2.5 sm:p-3 bg-[#111]/80 rounded-xl border border-white/10 flex flex-col items-center text-center hover:border-white/20 transition-colors">
+                <div className="text-gray-400 text-[9px] sm:text-[10px] uppercase tracking-widest font-medium mb-1">Annual</div>
+                <div className="text-sm sm:text-base font-light text-white tracking-tight">
+                  {quoteData.annualIncome ? `£${Number(quoteData.annualIncome).toLocaleString()}` : "---"}
                 </div>
               </div>
-
-              {/* Confidence Score */}
-              <div className="p-4 bg-[#111] rounded-lg border border-white/10 flex flex-col justify-center">
-                <div className="text-gray-400 text-xs uppercase tracking-widest font-medium mb-1">Confidence Score</div>
-                <div className="text-xl font-light text-white tracking-tight flex items-center justify-center sm:justify-start gap-2">
-                  <div className={`w-2 h-2 rounded-full ${quoteData.confidenceScore === 'High' ? 'bg-green-500' : quoteData.confidenceScore === 'Medium' ? 'bg-yellow-500' : 'bg-red-500'}`}></div>
+              <div className="p-2.5 sm:p-3 bg-[#111]/80 rounded-xl border border-white/10 flex flex-col items-center text-center hover:border-white/20 transition-colors">
+                <div className="text-gray-400 text-[9px] sm:text-[10px] uppercase tracking-widest font-medium mb-1">Market</div>
+                <div className="text-sm sm:text-base font-light text-white tracking-tight">
+                  {quoteData.marketRentLow ? `£${Number(quoteData.marketRentLow).toLocaleString()}+` : "---"}
+                </div>
+              </div>
+              <div className="p-2.5 sm:p-3 bg-[#111]/80 rounded-xl border border-white/10 flex flex-col items-center text-center hover:border-white/20 transition-colors">
+                <div className="text-gray-400 text-[9px] sm:text-[10px] uppercase tracking-widest font-medium mb-1">Confidence</div>
+                <div className="text-sm sm:text-base font-light text-white tracking-tight flex items-center gap-1.5">
+                  <div className={`w-2 h-2 rounded-full shadow-[0_0_8px_currentColor] ${quoteData.confidenceScore === 'High' ? 'bg-green-500 text-green-500' : quoteData.confidenceScore === 'Medium' ? 'bg-yellow-500 text-yellow-500' : 'bg-red-500 text-red-500'}`}></div>
                   {quoteData.confidenceScore || "---"}
                 </div>
               </div>
             </div>
 
-            {/* Open Market Range */}
-            <div className="p-4 bg-[#111] rounded-lg border border-white/10 flex flex-col sm:flex-row justify-between items-center">
-              <div className="text-gray-400 text-xs uppercase tracking-widest font-medium mb-1 sm:mb-0">Est. Open Market Rent</div>
-              <div className="text-lg font-light text-white tracking-tight">
-                {quoteData.marketRentLow && quoteData.marketRentHigh ? `£${Number(quoteData.marketRentLow).toLocaleString()} - £${Number(quoteData.marketRentHigh).toLocaleString()}` : "£---,---"} <span className="text-xs text-gray-500 font-light lowercase">/ month</span>
-              </div>
-            </div>
-
             {/* Confidence Reason */}
             {quoteData.confidenceReason && (
-              <div className="p-4 bg-[#111] rounded-lg border border-white/10 flex flex-col text-left">
-                <div className="text-gray-400 text-xs uppercase tracking-widest font-medium mb-2">Analysis Detail</div>
+              <div className="relative p-3 sm:p-4 bg-gradient-to-br from-white/[0.04] to-transparent rounded-xl border border-white/10 flex flex-col text-left shrink-0">
+                <div className="flex items-center gap-2 mb-1.5">
+                  <div className="w-1.5 h-1.5 rounded-full bg-brand-gold"></div>
+                  <div className="text-gray-300 text-[9px] uppercase tracking-[0.15em] font-medium">Market Insight</div>
+                </div>
                 <div 
-                  className="text-sm font-light text-gray-300 leading-relaxed max-h-[120px] overflow-y-auto pr-2 custom-scrollbar"
+                  className="text-[11px] sm:text-xs font-light text-gray-400 leading-relaxed max-h-[50px] overflow-y-auto pr-2 custom-scrollbar"
                   style={{
                     scrollbarWidth: 'thin',
-                    scrollbarColor: 'rgba(212, 175, 55, 0.5) transparent'
+                    scrollbarColor: 'rgba(212, 175, 55, 0.4) transparent'
                   }}
                 >
                   {quoteData.confidenceReason}
@@ -328,18 +333,22 @@ const LeadForm = () => {
             )}
           </div>
           
-          <a
-            href="https://wa.me/447429026727"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20b858] text-white py-3 sm:py-4 rounded font-medium transition-colors mb-6 shadow-lg shadow-[#25D366]/20"
-          >
-            <MessageCircle size={20} /> Speak to Our Team
-          </a>
+          <div className="mt-auto pt-2 shrink-0">
+            <a
+              href="https://wa.me/447429026727"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20b858] text-white py-2.5 sm:py-3 rounded-lg font-medium transition-colors mb-2.5 shadow-[0_0_20px_rgba(37,211,102,0.15)] text-sm shrink-0"
+            >
+              <MessageCircle size={18} /> Speak to Our Team
+            </a>
 
-          <p className="text-gray-400 text-[10px] sm:text-xs font-light leading-relaxed border-l-2 border-brand-gold/30 pl-3 text-left">
-            This estimate is generated automatically based on the information provided and our knowledge of the local rental market. It is for guidance purposes only and does not constitute a formal valuation or guaranteed offer. A final offer will only be confirmed following a full assessment by our team.
-          </p>
+            <div className="w-full text-center px-2">
+              <p className="text-gray-500 text-[9px] sm:text-[10px] font-light leading-snug">
+                This estimate is automatically generated based on our local market knowledge. It is for guidance only and is not a formal valuation.
+              </p>
+            </div>
+          </div>
         </div>
       ) : submissionState === "error" ? (
         <div className="flex flex-col items-center justify-center text-center py-16">
