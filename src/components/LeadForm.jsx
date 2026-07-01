@@ -218,7 +218,7 @@ const LeadForm = () => {
   }, []);
 
   const heroCopy = brandConfig.copy.hero;
-  const isFlat = formData.propertyType === "Flat";
+  const isFlat = formData.propertyType === "Flat" || formData.propertyType === "Hmo";
 
   return (
     <motion.div
