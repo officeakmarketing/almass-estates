@@ -28,11 +28,13 @@ const LeadForm = () => {
 
   const [submissionState, setSubmissionState] = useState("idle"); // "idle", "loading", "success", "error"
   const [quoteData, setQuoteData] = useState({ 
-    guaranteedRent: null, 
-    annualIncome: null, 
     minRent: null, 
     maxRent: null,
-    confidenceScore: null
+    annualIncome: null,
+    marketRentLow: null,
+    marketRentHigh: null,
+    confidenceScore: null,
+    confidenceReason: null
   });
   const [step, setStep] = useState(1);
   const [isMobile, setIsMobile] = useState(false);
@@ -95,7 +97,15 @@ const LeadForm = () => {
 
   const resetForm = () => {
     setSubmissionState("idle");
-    setQuoteData({ guaranteedRent: null, annualIncome: null, minRent: null, maxRent: null, confidenceScore: null });
+    setQuoteData({
+      minRent: null, 
+      maxRent: null,
+      annualIncome: null,
+      marketRentLow: null,
+      marketRentHigh: null,
+      confidenceScore: null,
+      confidenceReason: null
+    });
     setFormData({
       fullName: "",
       email: "",
@@ -164,6 +174,9 @@ const LeadForm = () => {
     setSubmissionState("loading");
 
     const payload = { ...formData };
+    if (payload.propertyType !== "Flat") {
+      payload.floor = null;
+    }
 
     try {
       const response = await fetch(
@@ -183,14 +196,15 @@ const LeadForm = () => {
       
       const data = await response.json().catch(() => ({}));
       
-      if (data && data.min_rent != null && data.max_rent != null) {
-        // Ideally map all the new fields here later when the backend is ready
+      if (data && data.success) {
         setQuoteData({ 
-          guaranteedRent: data.guaranteed_rent || 0,
-          annualIncome: data.annual_income || 0,
-          minRent: data.min_rent, 
-          maxRent: data.max_rent,
-          confidenceScore: data.confidence_score || "Medium"
+          minRent: data.minRent,
+          maxRent: data.maxRent,
+          annualIncome: data.annualIncome,
+          marketRentLow: data.marketRentLow,
+          marketRentHigh: data.marketRentHigh,
+          confidenceScore: data.confidenceScore,
+          confidenceReason: data.confidenceReason
         });
         setSubmissionState("success");
       } else {
@@ -262,11 +276,11 @@ const LeadForm = () => {
           </h3>
           
           <div className="w-full space-y-4 mb-8">
-            {/* Guaranteed Rent */}
+            {/* Guaranteed Rent Offer */}
             <div className="p-5 bg-brand-gold/10 rounded-lg border border-brand-gold/30 shadow-[0_0_15px_rgba(212,175,55,0.15)] flex flex-col sm:flex-row justify-between items-center">
               <div className="text-brand-gold text-sm uppercase tracking-widest font-medium mb-1 sm:mb-0">Guaranteed Rent Offer</div>
               <div className="text-2xl sm:text-3xl font-medium text-white tracking-tight">
-                {quoteData.guaranteedRent ? `£${Number(quoteData.guaranteedRent).toLocaleString()}` : "£---"} <span className="text-sm text-gray-400 font-light lowercase">/ month</span>
+                {quoteData.minRent && quoteData.maxRent ? `£${Number(quoteData.minRent).toLocaleString()} - £${Number(quoteData.maxRent).toLocaleString()}` : "£---"} <span className="text-sm text-gray-400 font-light lowercase">/ month</span>
               </div>
             </div>
 
@@ -293,9 +307,18 @@ const LeadForm = () => {
             <div className="p-4 bg-[#111] rounded-lg border border-white/10 flex flex-col sm:flex-row justify-between items-center">
               <div className="text-gray-400 text-xs uppercase tracking-widest font-medium mb-1 sm:mb-0">Est. Open Market Rent</div>
               <div className="text-lg font-light text-white tracking-tight">
-                {quoteData.minRent && quoteData.maxRent ? `£${Number(quoteData.minRent).toLocaleString()} - £${Number(quoteData.maxRent).toLocaleString()}` : "£---,---"} <span className="text-xs text-gray-500 font-light lowercase">/ month</span>
+                {quoteData.marketRentLow && quoteData.marketRentHigh ? `£${Number(quoteData.marketRentLow).toLocaleString()} - £${Number(quoteData.marketRentHigh).toLocaleString()}` : "£---,---"} <span className="text-xs text-gray-500 font-light lowercase">/ month</span>
               </div>
             </div>
+
+            {/* Confidence Reason */}
+            {quoteData.confidenceReason && (
+              <div className="p-4 bg-[#111] rounded-lg border border-white/10 flex flex-col sm:flex-row items-center text-center sm:text-left">
+                <div className="text-sm font-light text-gray-300 leading-relaxed">
+                  {quoteData.confidenceReason}
+                </div>
+              </div>
+            )}
           </div>
           
           <a
