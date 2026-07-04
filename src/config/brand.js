@@ -54,7 +54,7 @@ const brandConfig = {
       items: [
         { num: "01", title: "Rent that never arrives on time", desc: "Chasing late payments destroys your peace of mind and ruins your cash flow. With us, rent lands on the same date every month. Occupied or empty, it makes no difference to your income." },
         { num: "02", title: "Maintenance calls at all hours", desc: "Coordinating contractors and handling tenant complaints turns a passive investment into a stressful second job. We assume full responsibility for repairs, bills and compliance. You will never receive a 2am call about a broken boiler again." },
-        { num: "03", title: "The Renter's Rights Bill", desc: "Constantly changing regulations make compliance a minefield and leave you exposed to difficult evictions. Our commercial lease means the Renters Rights Bill does not apply to you. We take on all the risk, not you." },
+        { num: "03", title: "The Renters' Rights Bill", desc: "Constantly changing regulations make compliance a minefield and leave you exposed to difficult evictions. Our commercial lease means the Renters Rights Bill does not apply to you. We take on all the risk, not you." },
         { num: "04", title: "Empty properties losing money", desc: "Every week your property sits vacant between tenancies is profit disappearing straight out of your pocket. From the day we sign, your rent is guaranteed whether anyone is in the property or not." }
       ]
     },
