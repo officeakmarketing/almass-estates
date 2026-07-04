@@ -27,7 +27,7 @@ const brandConfig = {
       heading1: "Guaranteed Rent",
       heading2: "Stop Managing.",
       heading3: "Start Collecting.",
-      subheading: "Our AI analyzes your details if your property qualifies and sends you a result within minutes.",
+      subheading: "Our AI analyses your details if your property qualifies and sends you a result within minutes.",
       ctaButton: "Read Client Stories",
       successHeading: "Checking your property now.",
       successMessage: "You will receive an email with your result within the next few minutes.",
@@ -72,7 +72,7 @@ const brandConfig = {
         {
           id: "02",
           title: "Instant AI Assessment",
-          description: "Our AI analyzes your details and emails your result within minutes. Match found we confirm interest and next steps. No match we add you to our priority waiting list.",
+          description: "Our AI analyses your details and emails your result within minutes. Match found we confirm interest and next steps. No match we add you to our priority waiting list.",
           image: "/images/step2.webp",
         },
         {
