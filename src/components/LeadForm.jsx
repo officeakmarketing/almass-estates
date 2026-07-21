@@ -23,6 +23,7 @@ const LeadForm = () => {
     balcony: "No",
     floor: "1",
     lift: "No",
+    otherLicence: "",
     gdpr: false,
   });
 
@@ -122,8 +123,8 @@ const LeadForm = () => {
       garden: "No",
       licenceType: "None",
       balcony: "No",
-      floor: "1",
       lift: "No",
+      otherLicence: "",
       gdpr: false,
     });
     setStep(1);
@@ -158,11 +159,16 @@ const LeadForm = () => {
       return;
     }
 
-    if (formData.propertyType === "Flat") {
+    if (formData.propertyType === "Flat" || formData.propertyType === "Block") {
       if (formData.floor === "" || isNaN(parseInt(formData.floor))) {
         setFormError("Please enter a valid floor level.");
         return;
       }
+    }
+
+    if (formData.licenceType === "Other" && (!formData.otherLicence || !formData.otherLicence.trim())) {
+      setFormError("Please specify the licence type.");
+      return;
     }
 
     if (!formData.gdpr) {
@@ -174,8 +180,10 @@ const LeadForm = () => {
     setSubmissionState("loading");
 
     const payload = { ...formData };
-    if (payload.propertyType !== "Flat") {
+    if (payload.propertyType !== "Flat" && payload.propertyType !== "Block") {
       payload.floor = null;
+      payload.balcony = null;
+      payload.lift = null;
     }
 
     try {
@@ -232,7 +240,7 @@ const LeadForm = () => {
   }, []);
 
   const heroCopy = brandConfig.copy.hero;
-  const isFlat = formData.propertyType === "Flat";
+  const isFlatOrBlock = formData.propertyType === "Flat" || formData.propertyType === "Block";
 
   return (
     <motion.div
@@ -267,87 +275,51 @@ const LeadForm = () => {
           </p>
         </div>
       ) : submissionState === "success" ? (
-        <div className="flex flex-col h-full w-full justify-center">
-          {/* Header inline with Tick */}
-          <div className="flex flex-col items-center justify-center text-center mb-4">
-            <div className="flex items-center gap-2 mb-1">
-              <CheckCircle2 className="text-brand-gold w-6 h-6 shrink-0" />
-              <h3 className="text-lg sm:text-xl font-medium text-white">
-                Your Estimated Offer
-              </h3>
-            </div>
-            <p className="text-gray-400 text-xs font-light">Based on live market data</p>
-          </div>
-          
-          <div className="w-full flex-grow flex flex-col justify-center space-y-3 mb-4">
-            {/* Guaranteed Rent Offer - Compact but prominent */}
-            <div className="px-4 py-4 sm:py-5 bg-gradient-to-b from-brand-gold/[0.15] to-brand-gold/[0.05] rounded-xl border border-brand-gold/40 shadow-[0_0_20px_rgba(212,175,55,0.15)] flex flex-col items-center justify-center text-center relative overflow-hidden shrink-0">
-              <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-brand-gold/80 to-transparent"></div>
-              <div className="text-brand-gold text-[10px] sm:text-xs uppercase tracking-[0.2em] font-semibold mb-1">Guaranteed Rent Offer</div>
-              <div className="text-3xl sm:text-4xl font-medium text-white tracking-tight flex items-baseline gap-1.5">
-                {quoteData.minRent && quoteData.maxRent ? `£${Number(quoteData.minRent).toLocaleString()} - £${Number(quoteData.maxRent).toLocaleString()}` : "£---"}
-                <span className="text-sm sm:text-base text-brand-gold/80 font-light lowercase tracking-normal">/ mo</span>
+        <div className="flex flex-col h-full w-full overflow-y-auto custom-scrollbar pr-2 pb-4 pt-2">
+          <div className="space-y-4 text-gray-300 font-light text-[13px] sm:text-sm leading-relaxed">
+            <p>
+              Based on the information you’ve provided and comparable rental properties nearby, Almass Estates would currently be prepared to offer:
+            </p>
+            
+            <div className="bg-white/5 border border-white/10 rounded-xl p-4 sm:p-5 space-y-3 shadow-lg my-4">
+              <div className="flex flex-col border-b border-white/5 pb-3">
+                <span className="text-gray-400 text-xs uppercase tracking-widest font-medium mb-1">Guaranteed Rent Offer</span>
+                <span className="text-white font-medium text-lg sm:text-xl">
+                  {quoteData.minRent ? `£${Number(quoteData.minRent).toLocaleString()} per month` : "---"}
+                </span>
+              </div>
+              <div className="flex flex-col border-b border-white/5 pb-3">
+                <span className="text-gray-400 text-xs uppercase tracking-widest font-medium mb-1">Estimated Annual Income</span>
+                <span className="text-white font-medium text-lg sm:text-xl">
+                  {quoteData.annualIncome ? `£${Number(quoteData.annualIncome).toLocaleString()} per year` : "---"}
+                </span>
+              </div>
+              <div className="flex flex-col">
+                <span className="text-gray-400 text-xs uppercase tracking-widest font-medium mb-1">Estimated Open Market Rent</span>
+                <span className="text-white font-medium text-lg sm:text-xl">
+                  {quoteData.marketRentLow && quoteData.marketRentHigh ? `£${Number(quoteData.marketRentLow).toLocaleString()} - £${Number(quoteData.marketRentHigh).toLocaleString()} per month` : "---"}
+                </span>
               </div>
             </div>
 
-            {/* 3-column Grid for stats */}
-            <div className="grid grid-cols-3 gap-2 shrink-0">
-              <div className="p-2.5 sm:p-3 bg-[#111]/80 rounded-xl border border-white/10 flex flex-col items-center text-center hover:border-white/20 transition-colors">
-                <div className="text-gray-400 text-[9px] sm:text-[10px] uppercase tracking-widest font-medium mb-1">Annual</div>
-                <div className="text-sm sm:text-base font-light text-white tracking-tight">
-                  {quoteData.annualIncome ? `£${Number(quoteData.annualIncome).toLocaleString()}` : "---"}
-                </div>
-              </div>
-              <div className="p-2.5 sm:p-3 bg-[#111]/80 rounded-xl border border-white/10 flex flex-col items-center text-center hover:border-white/20 transition-colors">
-                <div className="text-gray-400 text-[9px] sm:text-[10px] uppercase tracking-widest font-medium mb-1">Market</div>
-                <div className="text-sm sm:text-base font-light text-white tracking-tight">
-                  {quoteData.marketRentLow ? `£${Number(quoteData.marketRentLow).toLocaleString()}+` : "---"}
-                </div>
-              </div>
-              <div className="p-2.5 sm:p-3 bg-[#111]/80 rounded-xl border border-white/10 flex flex-col items-center text-center hover:border-white/20 transition-colors">
-                <div className="text-gray-400 text-[9px] sm:text-[10px] uppercase tracking-widest font-medium mb-1">Confidence</div>
-                <div className="text-sm sm:text-base font-light text-white tracking-tight flex items-center gap-1.5">
-                  <div className={`w-2 h-2 rounded-full shadow-[0_0_8px_currentColor] ${quoteData.confidenceScore === 'High' ? 'bg-green-500 text-green-500' : quoteData.confidenceScore === 'Medium' ? 'bg-yellow-500 text-yellow-500' : 'bg-red-500 text-red-500'}`}></div>
-                  {quoteData.confidenceScore || "---"}
-                </div>
-              </div>
-            </div>
+            <p>
+              Your property appears to be well suited to our Guaranteed Rent programme and one of our specialists will be in touch shortly to discuss the next steps.
+            </p>
 
-            {/* Confidence Reason */}
-            {quoteData.confidenceReason && (
-              <div className="relative p-3 sm:p-4 bg-gradient-to-br from-white/[0.04] to-transparent rounded-xl border border-white/10 flex flex-col text-left shrink-0">
-                <div className="flex items-center gap-2 mb-1.5">
-                  <div className="w-1.5 h-1.5 rounded-full bg-brand-gold"></div>
-                  <div className="text-gray-300 text-[9px] uppercase tracking-[0.15em] font-medium">Market Insight</div>
-                </div>
-                <div 
-                  className="text-[11px] sm:text-xs font-light text-gray-400 leading-relaxed max-h-[50px] overflow-y-auto pr-2 custom-scrollbar"
-                  style={{
-                    scrollbarWidth: 'thin',
-                    scrollbarColor: 'rgba(212, 175, 55, 0.4) transparent'
-                  }}
-                >
-                  {quoteData.confidenceReason}
-                </div>
-              </div>
-            )}
+            <p className="text-[11px] sm:text-xs text-gray-500 italic mt-4">
+              Please note this offer is generated automatically and is not binding. Offers may vary following a full assessment by one of our specialists.
+            </p>
           </div>
           
-          <div className="mt-auto pt-2 shrink-0">
+          <div className="mt-6">
             <a
               href="https://wa.me/447429026727"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20b858] text-white py-2.5 sm:py-3 rounded-lg font-medium transition-colors mb-2.5 shadow-[0_0_20px_rgba(37,211,102,0.15)] text-sm shrink-0"
+              className="w-full flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20b858] text-white py-3 rounded-lg font-medium transition-colors shadow-lg"
             >
               <MessageCircle size={18} /> Speak to Our Team
             </a>
-
-            <div className="w-full text-center px-2">
-              <p className="text-gray-500 text-[9px] sm:text-[10px] font-light leading-snug">
-                This estimate is automatically generated based on our local market knowledge. It is for guidance only and is not a formal valuation.
-              </p>
-            </div>
           </div>
         </div>
       ) : submissionState === "error" ? (
@@ -482,7 +454,7 @@ const LeadForm = () => {
                   >
                     <option value="House">House</option>
                     <option value="Flat">Flat</option>
-                    <option value="Hmo">Hmo</option>
+                    <option value="Block">Block of Flats</option>
                   </select>
                 </div>
                 <div className="w-1/2 flex flex-col gap-1">
@@ -605,7 +577,7 @@ const LeadForm = () => {
               </div>
 
               {/* Flat specific fields */}
-              {isFlat && (
+              {isFlatOrBlock && (
                 <div className="flex flex-col gap-3 sm:gap-4 lg:gap-3 xl:gap-4">
                   <div className="flex flex-row gap-3 sm:gap-4 lg:gap-3 xl:gap-4">
                     <div className="w-1/2 flex flex-col gap-1">
@@ -651,21 +623,37 @@ const LeadForm = () => {
               )}
 
               {/* Licence Type - Always Last */}
-              <div className="flex flex-col gap-1">
-                <label className="text-[10px] text-gray-400 uppercase tracking-widest pl-1">Licence Type</label>
-                <select
-                  name="licenceType"
-                  value={formData.licenceType}
-                  onChange={handleChange}
-                  className="sleek-input w-full px-4 py-2.5 sm:py-3 lg:py-2.5 xl:py-3 text-white text-sm appearance-none cursor-pointer"
-                >
-                  <option value="None">None</option>
-                  <option value="Hmo">Hmo</option>
-                  <option value="C1">C1</option>
-                  <option value="C2">C2</option>
-                  <option value="C4">C4</option>
-                  <option value="Other">Other</option>
-                </select>
+              <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-1">
+                  <label className="text-[10px] text-gray-400 uppercase tracking-widest pl-1">Licence Type</label>
+                  <select
+                    name="licenceType"
+                    value={formData.licenceType}
+                    onChange={handleChange}
+                    className="sleek-input w-full px-4 py-2.5 sm:py-3 lg:py-2.5 xl:py-3 text-white text-sm appearance-none cursor-pointer"
+                  >
+                    <option value="None">None</option>
+                    <option value="HMO">HMO</option>
+                    <option value="C1">C1</option>
+                    <option value="C2">C2</option>
+                    <option value="C4">C4</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+                
+                {formData.licenceType === "Other" && (
+                  <div className="flex flex-col gap-1">
+                    <label className="text-[10px] text-gray-400 uppercase tracking-widest pl-1">Please Specify</label>
+                    <input
+                      type="text"
+                      name="otherLicence"
+                      value={formData.otherLicence}
+                      onChange={handleChange}
+                      placeholder="Enter licence type"
+                      className="sleek-input w-full px-4 py-2.5 sm:py-3 lg:py-2.5 xl:py-3 text-white placeholder-gray-500 text-sm"
+                    />
+                  </div>
+                )}
               </div>
 
               <label className="flex items-start gap-3 mt-2 sm:mt-3 cursor-pointer group">
