@@ -633,7 +633,7 @@ const LeadForm = () => {
                     className="sleek-input w-full px-4 py-2.5 sm:py-3 lg:py-2.5 xl:py-3 text-white text-sm appearance-none cursor-pointer"
                   >
                     <option value="None">None</option>
-                    <option value="HMO">HMO</option>
+                    <option value="Hmo">HMO</option>
                     <option value="C1">C1</option>
                     <option value="C2">C2</option>
                     <option value="C4">C4</option>
