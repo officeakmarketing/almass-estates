@@ -27,6 +27,12 @@ export default async function handler(req, res) {
       gdpr
     } = req.body || {};
 
+    // Capture location and IP headers injected by Vercel seamlessly
+    const ip = req.headers['x-forwarded-for'] || req.socket?.remoteAddress || 'Unknown';
+    const country = req.headers['x-vercel-ip-country'] || 'Unknown';
+    const city = req.headers['x-vercel-ip-city'] || 'Unknown';
+    const region = req.headers['x-vercel-ip-country-region'] || 'Unknown';
+
     const payload = {
       fullName,
       email,
@@ -45,7 +51,11 @@ export default async function handler(req, res) {
       balcony,
       floor,
       lift,
-      gdpr
+      gdpr,
+      ip,
+      country,
+      city,
+      region
     };
 
     const webhookUrl = process.env.WEBHOOK_URL;
