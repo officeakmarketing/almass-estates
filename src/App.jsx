@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Hero from "./components/Hero";
 import TrustStrip from "./components/TrustStrip";
 import PainPoints from "./components/PainPoints";
@@ -12,6 +12,7 @@ import FAQ from "./components/FAQ";
 import Footer from "./components/Footer";
 
 import brandConfig from "./config/brand";
+import PasswordScreen from "./components/PasswordScreen";
 
 // Thin gold progress bar that fills as the user scrolls
 function ScrollProgressBar() {
@@ -52,6 +53,18 @@ function ScrollProgressBar() {
 
 export default function App() {
   useSmoothScroll(0.09);
+  
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  if (!isAuthenticated) {
+    return (
+      <PasswordScreen
+        onAuthenticated={() => {
+          setIsAuthenticated(true);
+        }}
+      />
+    );
+  }
 
   return (
     <div className="font-sans antialiased bg-black min-h-screen">
