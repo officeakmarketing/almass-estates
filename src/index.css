@@ -1,6 +1,5 @@
 @import "tailwindcss";
 @config "../tailwind.config.js";
-@import "tailwindcss";
 
 /* Add this to prevent ANY horizontal scrolling/resizing issues */
 html, body {
