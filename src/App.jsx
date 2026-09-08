@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import Hero from "./components/Hero";
 import TrustStrip from "./components/TrustStrip";
 import PainPoints from "./components/PainPoints";
@@ -10,7 +10,6 @@ import Testimonials from "./components/Testimonials";
 import FAQ from "./components/FAQ";
 
 import Footer from "./components/Footer";
-import ConfidenceScore from "./components/ConfidenceScore";
 
 import brandConfig from "./config/brand";
 
@@ -54,16 +53,9 @@ function ScrollProgressBar() {
 export default function App() {
   useSmoothScroll(0.09);
 
-  // State to hold the confidence score from your webhook.
-  // Replace 85 with null or 0 in production until the webhook fires.
-  const [webhookScore, setWebhookScore] = useState(85);
-
   return (
     <div className="font-sans antialiased bg-black min-h-screen">
       <ScrollProgressBar />
-      
-      {/* Display the score if it exists */}
-      <ConfidenceScore score={webhookScore} />
     
       <Hero />
       <PainPoints />

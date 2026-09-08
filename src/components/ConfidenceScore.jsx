@@ -17,7 +17,7 @@ export default function ConfidenceScore({ score }) {
 
   return (
     <div
-      className={`fixed top-4 right-4 z-50 flex items-center gap-3 px-4 py-2 rounded-xl border backdrop-blur-md shadow-lg transition-all duration-300 ${colorClass}`}
+      className={`inline-flex items-center justify-center gap-3 px-4 py-2 rounded-xl border backdrop-blur-md shadow-lg transition-all duration-300 mb-4 ${colorClass}`}
     >
       <div className="flex flex-col">
         <span className="text-xs font-semibold uppercase tracking-wider opacity-80">

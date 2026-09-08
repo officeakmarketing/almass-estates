@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { CheckCircle2, ArrowRight, ArrowUpRight, MessageCircle } from "lucide-react";
 import brandConfig from "../config/brand";
+import ConfidenceScore from "./ConfidenceScore";
 
 const LeadForm = () => {
   const [formData, setFormData] = useState({
@@ -276,6 +277,9 @@ const LeadForm = () => {
         </div>
       ) : submissionState === "success" ? (
         <div className="flex flex-col h-full w-full overflow-y-auto custom-scrollbar pr-2 pb-4 pt-2">
+          <div className="w-full flex justify-center">
+            <ConfidenceScore score={quoteData.confidenceScore} />
+          </div>
           <div className="space-y-4 text-gray-300 font-light text-[13px] sm:text-sm leading-relaxed">
             <p>
               Based on the information you’ve provided and comparable rental properties nearby, Almass Estates would currently be prepared to offer:
