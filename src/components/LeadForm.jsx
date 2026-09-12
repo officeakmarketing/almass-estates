@@ -14,6 +14,7 @@ const LeadForm = () => {
     bedrooms: "1",
     bathrooms: "1",
     enSuite: "No",
+    enSuiteCount: "1",
     wcs: "0",
     livingRooms: "1",
     furnishedState: "Furnished",
@@ -117,6 +118,7 @@ const LeadForm = () => {
       bedrooms: "1",
       bathrooms: "1",
       enSuite: "No",
+      enSuiteCount: "1",
       wcs: "0",
       livingRooms: "1",
       furnishedState: "Furnished",
@@ -147,6 +149,11 @@ const LeadForm = () => {
     
     if (isNaN(parseInt(formData.bathrooms)) || parseInt(formData.bathrooms) < 1) {
       setFormError("Please enter a valid number of bathrooms.");
+      return;
+    }
+    
+    if (formData.enSuite === "Yes" && (isNaN(parseInt(formData.enSuiteCount)) || parseInt(formData.enSuiteCount) < 1)) {
+      setFormError("Please enter a valid number of en-suites.");
       return;
     }
     
@@ -181,6 +188,10 @@ const LeadForm = () => {
     setSubmissionState("loading");
 
     const payload = { ...formData };
+    if (payload.enSuite === "No") {
+      payload.enSuiteCount = null;
+    }
+    
     if (payload.propertyType !== "Flat" && payload.propertyType !== "Block") {
       payload.floor = null;
       payload.balcony = null;
@@ -549,6 +560,24 @@ const LeadForm = () => {
                   </select>
                 </div>
               </div>
+
+              {formData.enSuite === "Yes" && (
+                <div className="flex flex-row gap-3 sm:gap-4 lg:gap-3 xl:gap-4">
+                  <div className="w-1/2 flex flex-col gap-1">
+                    <label className="text-[10px] text-gray-400 uppercase tracking-widest pl-1">How many en-suites?</label>
+                    <input
+                      type="number"
+                      min="1"
+                      name="enSuiteCount"
+                      value={formData.enSuiteCount}
+                      onChange={handleChange}
+                      placeholder="e.g. 1"
+                      className="sleek-input w-full px-4 py-2.5 sm:py-3 lg:py-2.5 xl:py-3 text-white placeholder-gray-500 text-sm"
+                    />
+                  </div>
+                  <div className="w-1/2"></div>
+                </div>
+              )}
 
               {/* Parking & Garden */}
               <div className="flex flex-row gap-3 sm:gap-4 lg:gap-3 xl:gap-4">
