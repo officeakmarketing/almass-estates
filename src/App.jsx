@@ -10,6 +10,7 @@ import Testimonials from "./components/Testimonials";
 import FAQ from "./components/FAQ";
 
 import Footer from "./components/Footer";
+import CookieConsent from "./components/CookieConsent";
 
 import brandConfig from "./config/brand";
 
@@ -64,6 +65,7 @@ export default function App() {
       <FAQ />
       <PreFooterCTA />
       <Footer />
+      <CookieConsent />
     </div>
   );
 }
