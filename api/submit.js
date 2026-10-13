@@ -94,7 +94,15 @@ export default async function handler(req, res) {
     const marketRentLow = responseData.marketRentLow ?? (responseData.data && responseData.data.marketRentLow) ?? null;
     const marketRentHigh = responseData.marketRentHigh ?? (responseData.data && responseData.data.marketRentHigh) ?? null;
     const confidenceScore = responseData.confidenceScore ?? (responseData.data && responseData.data.confidenceScore) ?? null;
-    const confidenceReason = responseData.confidenceReason ?? (responseData.data && responseData.data.confidenceReason) ?? null;
+    const rawConfidenceReason = responseData.confidenceReason ?? (responseData.data && responseData.data.confidenceReason) ?? null;
+
+    // Temporarily strip brand name from any text returned by the AI
+    const sanitize = (str) =>
+      typeof str === 'string'
+        ? str.replace(/almass\s+estates/gi, 'our company').replace(/almass/gi, 'our company')
+        : str;
+
+    const confidenceReason = sanitize(rawConfidenceReason);
 
     return res.status(200).json({
       success: true,
