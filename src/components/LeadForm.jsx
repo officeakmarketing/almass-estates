@@ -280,7 +280,7 @@ const LeadForm = () => {
         <div className="flex flex-col h-full w-full overflow-y-auto custom-scrollbar pr-2 pb-4 pt-2">
           <div className="space-y-4 text-gray-300 font-light text-[13px] sm:text-sm leading-relaxed">
             <p>
-              Based on the information you’ve provided and comparable rental properties nearby, Almass Estates would currently be prepared to offer:
+              Based on the information you’ve provided and comparable rental properties nearby, we would currently be prepared to offer:
             </p>
             
             <div className="bg-white/5 border border-white/10 rounded-xl p-4 sm:p-5 space-y-3 shadow-lg my-4">
@@ -315,15 +315,10 @@ const LeadForm = () => {
           </div>
           
           <div className="mt-6">
-            <a
-              href="https://wa.me/447429026727"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20b858] text-white py-3 rounded-lg font-medium transition-colors shadow-lg"
-            >
-              <MessageCircle size={18} /> Speak to Our Team
-            </a>
-          </div>
+              <p className="text-center text-gray-400 text-sm font-light">
+                Our team will be in touch with you shortly to discuss the next steps.
+              </p>
+            </div>
         </div>
       ) : submissionState === "error" ? (
         <div className="flex flex-col items-center justify-center text-center py-16">

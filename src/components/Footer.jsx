@@ -68,14 +68,16 @@ const Footer = () => {
             <img 
               src={footer.logo.src} 
               alt={footer.logo.text} 
-              className="w-16 h-16 md:w-12 md:h-12 object-contain"
+              className="w-16 h-16 md:w-12 md:h-12 object-contain invisible"
             />
-            <span 
-              className="text-gradient-gold italic md:pr-1.5 text-2xl md:text-3xl font-medium tracking-tight mt-2 md:mt-0"
-              style={{ fontFamily: fonts.serif[0] }}
-            >
-              {footer.logo.text}
-            </span>
+            {footer.logo.text && (
+              <span 
+                className="text-gradient-gold italic md:pr-1.5 text-2xl md:text-3xl font-medium tracking-tight mt-2 md:mt-0"
+                style={{ fontFamily: fonts.serif[0] }}
+              >
+                {footer.logo.text}
+              </span>
+            )}
           </a>
 
           {/* Links */}
@@ -100,12 +102,16 @@ const Footer = () => {
 
           {/* Contact Details */}
           <div className="flex flex-col gap-4 md:gap-3 mt-4 items-center md:items-start w-full md:w-auto">
-            <a href={`tel:${footer.contact.phone.replace(/\s+/g, '')}`} className="text-[#F0EDE8] text-lg md:text-lg hover:text-white transition-colors">
-              {footer.contact.phone}
-            </a>
-            <a href={`mailto:${footer.contact.email}`} className="text-[#C8C4BC] hover:text-white transition-colors">
-              {footer.contact.email}
-            </a>
+            {footer.contact.phone && (
+              <a href={`tel:${footer.contact.phone.replace(/\s+/g, '')}`} className="text-[#F0EDE8] text-lg md:text-lg hover:text-white transition-colors">
+                {footer.contact.phone}
+              </a>
+            )}
+            {footer.contact.email && (
+              <a href={`mailto:${footer.contact.email}`} className="text-[#C8C4BC] hover:text-white transition-colors">
+                {footer.contact.email}
+              </a>
+            )}
             <span className="text-[#888780]">{footer.contact.location}</span>
           </div>
         </div>
