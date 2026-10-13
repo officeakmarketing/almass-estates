@@ -1,8 +1,8 @@
 
 const brandConfig = {
   metadata: {
-    title: "Guaranteed Rent for London Landlords",
-    description: "Find out in minutes if we can guarantee your rent. Join 100+ London landlords with 3–5 year leases and £1.8M+ paid out in 2025.",
+    title: "Almass Estates — Guaranteed Rent for London Landlords",
+    description: "Find out in minutes if Almass Estates can guarantee your rent. Join 100+ London landlords with 3–5 year leases and £1.8M+ paid out in 2025.",
     favicon: "/fav.png",
   },
 
@@ -102,7 +102,7 @@ const brandConfig = {
           id: 1,
           name: "RGR CAPITAL LTD",
           title: "Regev Farkas — Director",
-          text: "Our guaranteed rent partner has consistently paid rent early or on time and has never missed a single payment. They have achieved exceptional rental returns on our behalf and proven to be a trustworthy and proactive partner in our investment strategy.",
+          text: "Almass Estates has consistently paid rent early or on time and has never missed a single payment. They have achieved exceptional rental returns on our behalf and proven to be a trustworthy and proactive partner in our investment strategy.",
           statBoxText: "£10,700/month guaranteed across 3 properties",
           propertyTags: [
             "23 Manor Park Crescent, HA8 7NH · 2 x 3-bed flats · £2,850/mo each",
@@ -116,7 +116,7 @@ const brandConfig = {
           id: 2,
           name: "PRIME LONDON OPCO LTD",
           title: "Eli Moren — Director",
-          text: "All rental payments have been made on time or early, without a single missed payment. Properties kept in excellent condition throughout. We would confidently recommend them for any future partnerships.",
+          text: "All rental payments have been made on time or early, without a single missed payment. Properties kept in excellent condition throughout. We would confidently recommend Almass Estates for any future partnerships.",
           statBoxText: "£8,125/month guaranteed across 2 properties",
           propertyTags: [
             "74 Mount Grove, HA8 9SX · £4,700/mo from Feb 2025",
@@ -130,7 +130,7 @@ const brandConfig = {
           id: 3,
           name: "IMF PROPERTY INVESTMENTS LTD",
           title: "Mohammed Imran — Director",
-          text: "Our guaranteed rent partner has never missed a payment, with all rents paid on or before the due date without exception. The property has been kept in excellent condition with no complaints from neighbours or third parties.",
+          text: "Almass Estates has never missed a payment, with all rents paid on or before the due date without exception. The property has been kept in excellent condition with no complaints from neighbours or third parties.",
           statBoxText: "£4,000/month guaranteed since Dec 2024",
           propertyTags: [
             "60 Sturgess Avenue · 5-bed house · £4,000/mo"
@@ -154,7 +154,7 @@ const brandConfig = {
         {
           id: "Q2",
           question: "Who pays the bills and maintenance?",
-          answer: "We do. All bills, maintenance and repair costs covered by us. Zero deductions, zero surprise costs."
+          answer: "We do. All bills, maintenance and repair costs covered by Almass Estates. Zero deductions, zero surprise costs."
         },
         {
           id: "Q3",
@@ -183,12 +183,12 @@ const brandConfig = {
     chat: {
       botName: "Aria",
       botAvatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-      greeting: "Hi! I'm Aria, your property assistant. How can I help?"
+      greeting: "Hi! I'm Aria, the property assistant for Almass Estates. How can I help?"
     },
     footer: {
       logo: {
         src: "/images/logo.png",
-        text: ""
+        text: "ALMASS ESTATES"
       },
       links: [
         { label: "Guaranteed Rent", url: "https://almassestates.co.uk/" },
@@ -198,8 +198,8 @@ const brandConfig = {
         { label: "Terms", url: "https://almassestates.co.uk/terms" }
       ],
       contact: {
-        phone: "",
-        email: "",
+        phone: "020 3538 8233",
+        email: "office@almassestates.co.uk",
         location: "London, UK"
       },
       socials: [
@@ -208,7 +208,7 @@ const brandConfig = {
         { platform: "Instagram", url: "https://www.instagram.com/almassestatesltd?igsh=MXZ1dDNqbG8xb3hjaA%3D%3D", icon: "instagram" },
         { platform: "LinkedIn", url: "https://www.linkedin.com/company/almassestatesltd/", icon: "linkedin" }
       ],
-      copyright: `© ${new Date().getFullYear()} All Rights Reserved.`,
+      copyright: `© ${new Date().getFullYear()} Almass Estates Ltd. All Rights Reserved.`,
       poweredBy: "Powered by AK Marketing",
       poweredByUrl: "https://akmarketing.agency/"
     }

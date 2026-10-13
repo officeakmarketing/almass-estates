@@ -26,7 +26,7 @@ const Hero = () => {
         {/* Top Logo */}
         <div className="absolute top-6 left-0 w-full flex justify-center sm:top-8 sm:left-10 sm:w-auto sm:block lg:top-8 lg:left-10 z-30">
           <a href="https://almassestates.co.uk/" target="_blank" rel="noopener noreferrer">
-            <img src="/images/logo.png" alt="" className="h-16 sm:h-16 lg:h-20 opacity-95 object-contain drop-shadow-[0_0_15px_rgba(200,169,110,0.15)] invisible" />
+            <img src="/images/logo.png" alt="Almass Estates" className="h-16 sm:h-16 lg:h-20 opacity-95 object-contain drop-shadow-[0_0_15px_rgba(200,169,110,0.15)]" />
           </a>
         </div>
 
